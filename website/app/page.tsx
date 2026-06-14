@@ -201,11 +201,6 @@ export default function Home() {
         <section className="relative min-h-[calc(100dvh-3.5rem)] flex items-center overflow-hidden border-b border-white/10">
           <div className="hero-glow" aria-hidden="true" />
           <div className="hero-grid" aria-hidden="true" />
-          <div className="hero-float-square w-4 h-4" style={{ top: '15%', left: '10%', animationDelay: '0s' }} />
-          <div className="hero-float-square w-3 h-3" style={{ top: '60%', left: '5%', animationDelay: '2s' }} />
-          <div className="hero-float-square w-5 h-5" style={{ top: '25%', right: '12%', animationDelay: '4s' }} />
-          <div className="hero-float-square w-3 h-3" style={{ top: '75%', right: '8%', animationDelay: '6s' }} />
-          <div className="hero-float-square w-6 h-6" style={{ top: '40%', left: '48%', animationDelay: '8s' }} />
           <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 w-full">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
               <div>

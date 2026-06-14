@@ -568,23 +568,6 @@ body {
   100% { transform: translate(36px, 36px); }
 }
 
-/* ─── Hero Floating Squares ─── */
-.hero-float-square {
-  position: absolute;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.3);
-  border-radius: 2px;
-  pointer-events: none;
-  animation: floatSquare 18s ease-in-out infinite;
-}
-
-@keyframes floatSquare {
-  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.4; }
-  25% { transform: translateY(-16px) rotate(90deg); opacity: 0.8; }
-  50% { transform: translateY(-32px) rotate(180deg); opacity: 0.6; }
-  75% { transform: translateY(-16px) rotate(270deg); opacity: 0.9; }
-}
-
 /* ─── Scrollbar Styling ─── */
 ::-webkit-scrollbar {
   width: 6px;
