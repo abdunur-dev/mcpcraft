@@ -48,7 +48,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full dark`} style={{ colorScheme: "dark" }} suppressHydrationWarning>
       <body className="min-h-full flex flex-col bg-[#000000] text-[#ffffff] antialiased">
-        <RootProvider>
+        <RootProvider
+          search={{
+            enabled: true,
+            options: {
+              api: "/api/search",
+            },
+          }}
+        >
           {children}
         </RootProvider>
       </body>
