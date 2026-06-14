@@ -29,39 +29,39 @@ export default function Home() {
       {/* Vercel-Style Top Navigation Grid */}
       <div className="fixed top-0 left-0 right-0 z-50 flex items-stretch border-b border-white/10 bg-black/80 backdrop-blur-md h-14">
         {/* Logo Section */}
-        <div className="flex items-center px-6 border-r border-white/10">
+        <div className="flex items-center px-3 sm:px-6 border-r border-white/10 shrink-0">
           <Link href="/" className="hover:opacity-85 transition-opacity">
             {mcpcraftLogo}
           </Link>
         </div>
 
         {/* Navigation Tabs - Vercel layout */}
-        <div className="flex-1 flex items-stretch">
+        <div className="flex-1 flex items-stretch overflow-x-auto overflow-y-hidden scrollbar-none">
           <Link 
             href="/" 
-            className="group relative flex items-center px-6 border-r border-white/10 bg-white/[0.02] text-white hover:bg-white/[0.04] transition-colors duration-150"
+            className="group relative flex items-center px-3 sm:px-6 border-r border-white/10 bg-white/[0.02] text-white hover:bg-white/[0.04] transition-colors duration-150 shrink-0"
           >
-            <span className="font-mono text-xs uppercase tracking-wider">readme</span>
+            <span className="font-mono text-[10px] sm:text-xs uppercase tracking-wider whitespace-nowrap">readme</span>
             <div className="absolute bottom-0 inset-x-0 h-[2px] bg-white" />
           </Link>
           <Link 
             href="/docs" 
-            className="group relative flex items-center px-6 border-r border-white/10 text-white/50 hover:text-white hover:bg-white/[0.02] transition-colors duration-150"
+            className="group relative flex items-center px-3 sm:px-6 border-r border-white/10 text-white/50 hover:text-white hover:bg-white/[0.02] transition-colors duration-150 shrink-0"
           >
-            <span className="font-mono text-xs uppercase tracking-wider">docs</span>
+            <span className="font-mono text-[10px] sm:text-xs uppercase tracking-wider whitespace-nowrap">docs</span>
           </Link>
           <a 
             href="https://github.com/abdunur-dev/mcpcraft" 
             target="_blank" 
             rel="noreferrer" 
-            className="group relative flex items-center px-6 border-r border-white/10 text-white/50 hover:text-white hover:bg-white/[0.02] transition-colors duration-150"
+            className="group relative flex items-center px-3 sm:px-6 border-r border-white/10 text-white/50 hover:text-white hover:bg-white/[0.02] transition-colors duration-150 shrink-0"
           >
-            <span className="font-mono text-xs uppercase tracking-wider">github</span>
+            <span className="font-mono text-[10px] sm:text-xs uppercase tracking-wider whitespace-nowrap">github</span>
           </a>
         </div>
 
         {/* Version / CTA Section */}
-        <div className="hidden sm:flex items-center px-6 border-l border-white/10">
+        <div className="hidden sm:flex items-center px-6 border-l border-white/10 shrink-0">
           <a
             href="https://npmjs.com/package/mcpcraft"
             target="_blank"
@@ -76,27 +76,27 @@ export default function Home() {
       {/* Main Content Area */}
       <main className="flex-1 pt-14">
         {/* Hero Section — Text + Code side by side */}
-        <section className="relative pt-20 pb-24 border-b border-white/10">
-          <div className="max-w-6xl mx-auto px-6 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <section className="relative pt-16 sm:pt-20 pb-20 sm:pb-24 border-b border-white/10">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
               {/* Left: Text */}
               <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono border border-white/10 bg-white/[0.02] text-white/60 mb-6">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] sm:text-xs font-mono border border-white/10 bg-white/[0.02] text-white/60 mb-4 sm:mb-6">
                   <span className="text-white">●</span> npm install mcpcraft
                 </div>
                 
-                <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-6">
+                <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-4 sm:mb-6">
                   Build MCP Servers <span className="text-white/40 font-light">Fast</span>
                 </h1>
                 
-                <p className="text-base sm:text-lg text-white/60 leading-relaxed font-sans mb-8">
+                <p className="text-sm sm:text-base lg:text-lg text-white/60 leading-relaxed font-sans mb-6 sm:mb-8">
                   A lightweight TypeScript SDK for building Model Context Protocol servers. Zero boilerplate, full type safety, and automatic schema validation.
                 </p>
 
-                <div className="flex flex-col sm:flex-row items-start gap-4">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-start gap-3 sm:gap-4">
                   <Link 
                     href="/docs/installation" 
-                    className="w-full sm:w-auto px-8 py-3 rounded-md text-xs font-mono uppercase tracking-wider bg-white text-black hover:bg-white/90 transition-all font-bold text-center"
+                    className="w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 rounded-md text-[11px] sm:text-xs font-mono uppercase tracking-wider bg-white text-black hover:bg-white/90 transition-all font-bold text-center"
                   >
                     Get Started
                   </Link>
@@ -104,7 +104,7 @@ export default function Home() {
                     href="https://github.com/abdunur-dev/mcpcraft" 
                     target="_blank" 
                     rel="noreferrer"
-                    className="w-full sm:w-auto px-8 py-3 rounded-md text-xs font-mono uppercase tracking-wider bg-transparent border border-white/15 hover:border-white/30 text-white transition-colors text-center"
+                    className="w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 rounded-md text-[11px] sm:text-xs font-mono uppercase tracking-wider bg-transparent border border-white/15 hover:border-white/30 text-white transition-colors text-center"
                   >
                     View GitHub
                   </a>
@@ -112,13 +112,13 @@ export default function Home() {
               </div>
 
               {/* Right: Code */}
-              <div className="rounded-lg border border-white/10 bg-[#050505] shadow-2xl text-left overflow-hidden">
-                <div className="bg-[#0b0b0b] border-b border-white/10 px-4 py-2.5 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                    <span className="text-xs text-white/40 font-mono ml-2">server.ts</span>
+              <div className="-mx-4 sm:mx-0 rounded-none sm:rounded-lg border-x-0 sm:border border-white/10 bg-[#050505] shadow-2xl text-left overflow-hidden">
+                <div className="bg-[#0b0b0b] border-b border-white/10 px-3 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between">
+                  <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+                    <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white/10 shrink-0" />
+                    <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white/10 shrink-0" />
+                    <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white/10 shrink-0" />
+                    <span className="text-[10px] sm:text-xs text-white/40 font-mono ml-1 sm:ml-2 truncate">server.ts</span>
                   </div>
                   <button 
                     onClick={() => handleCopy(`import { createServer, tool } from "mcpcraft"
@@ -138,12 +138,12 @@ server.add(tool({
 }))
 
 server.start()`, "hero-code")}
-                    className="text-xs font-mono text-white/40 hover:text-white flex items-center gap-1.5 transition-colors"
+                    className="text-[10px] sm:text-xs font-mono text-white/40 hover:text-white flex items-center gap-1.5 transition-colors shrink-0"
                   >
                     {copiedText === "hero-code" ? "Copied!" : "Copy"}
                   </button>
                 </div>
-                <pre className="p-6 overflow-x-auto text-xs sm:text-[13px] font-mono leading-relaxed bg-black">
+                <pre className="p-4 sm:p-6 overflow-x-auto text-[11px] sm:text-[13px] font-mono leading-relaxed bg-black">
 <code><div><span className="text-purple-400">import</span> {"{"} createServer, tool {"}"} <span className="text-purple-400">from</span> <span className="text-emerald-300">"mcpcraft"</span></div>
 <div></div>
 <div><span className="text-purple-400">const</span> server = <span className="text-blue-400">createServer</span>({"{"} name: <span className="text-emerald-300">"my-server"</span> {"}"})</div>
@@ -169,26 +169,26 @@ server.start()`, "hero-code")}
 
         {/* Stats Grid */}
         <section className="border-b border-white/10 bg-white/[0.01]">
-          <div className="max-w-5xl mx-auto grid grid-cols-3 divide-x divide-white/10 text-center font-mono">
-            <div className="py-8">
-              <div className="text-xl sm:text-2xl font-bold text-white">&lt; 5 min</div>
-              <div className="text-[11px] text-white/40 uppercase tracking-widest mt-1.5">Time to first server</div>
+          <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 divide-x-0 sm:divide-x divide-white/10 text-center font-mono">
+            <div className="py-6 sm:py-8">
+              <div className="text-lg sm:text-xl lg:text-2xl font-bold text-white">&lt; 5 min</div>
+              <div className="text-[10px] sm:text-[11px] text-white/40 uppercase tracking-widest mt-1">Time to first server</div>
             </div>
-            <div className="py-8">
-              <div className="text-xl sm:text-2xl font-bold text-white">100%</div>
-              <div className="text-[11px] text-white/40 uppercase tracking-widest mt-1.5">Type Safe</div>
+            <div className="py-6 sm:py-8">
+              <div className="text-lg sm:text-xl lg:text-2xl font-bold text-white">100%</div>
+              <div className="text-[10px] sm:text-[11px] text-white/40 uppercase tracking-widest mt-1">Type Safe</div>
             </div>
-            <div className="py-8">
-              <div className="text-xl sm:text-2xl font-bold text-white">MIT</div>
-              <div className="text-[11px] text-white/40 uppercase tracking-widest mt-1.5">License</div>
+            <div className="py-6 sm:py-8">
+              <div className="text-lg sm:text-xl lg:text-2xl font-bold text-white">MIT</div>
+              <div className="text-[10px] sm:text-[11px] text-white/40 uppercase tracking-widest mt-1">License</div>
             </div>
           </div>
         </section>
 
         {/* Monochromatic Features Grid */}
-        <section className="py-24 max-w-6xl mx-auto px-6">
-          <div className="text-center mb-20">
-            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-white mb-4">
+        <section className="py-16 sm:py-24 max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12 sm:mb-20">
+            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-white mb-3 sm:mb-4">
               Everything you need
             </h2>
             <p className="text-white/40 text-sm sm:text-base max-w-xl mx-auto font-sans">
@@ -196,7 +196,7 @@ server.start()`, "hero-code")}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {/* Card 1 */}
             <div className="p-6 rounded-lg border border-white/10 bg-white/[0.01] hover:border-white/20 transition-all duration-200">
               <div className="font-mono text-xs uppercase tracking-widest text-white/40 mb-3">01 / Setup</div>
@@ -254,10 +254,10 @@ server.start()`, "hero-code")}
         </section>
 
         {/* Code Comparison Section (Raw vs mcpcraft) */}
-        <section className="py-24 border-t border-white/10 bg-white/[0.01]">
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-white mb-4">
+        <section className="py-16 sm:py-24 border-t border-white/10 bg-white/[0.01]">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6">
+            <div className="text-center mb-12 sm:mb-16">
+              <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-white mb-3 sm:mb-4">
                 Less code. More done.
               </h2>
               <p className="text-white/40 text-sm max-w-md mx-auto font-sans">
@@ -265,14 +265,14 @@ server.start()`, "hero-code")}
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
               {/* Without mcpcraft */}
-              <div className="flex flex-col h-[420px]">
-                <div className="px-4 py-2 border border-white/10 border-b-0 bg-white/[0.02] rounded-t-md text-xs font-mono text-white/40 flex items-center justify-between">
-                  <span>Without mcpcraft (100+ lines)</span>
-                  <span className="text-white/20">RAW SDK Boilerplate</span>
+              <div className="flex flex-col max-h-[300px] sm:max-h-[420px]">
+                <div className="px-3 sm:px-4 py-1.5 sm:py-2 border border-white/10 border-b-0 bg-white/[0.02] rounded-t-md text-[10px] sm:text-xs font-mono text-white/40 flex items-center justify-between">
+                  <span className="truncate">Without mcpcraft (100+ lines)</span>
+                  <span className="text-white/20 hidden sm:inline">RAW SDK Boilerplate</span>
                 </div>
-                <div className="flex-1 border border-white/10 bg-black rounded-b-md p-5 font-mono text-xs overflow-hidden relative leading-relaxed">
+                <div className="flex-1 border border-white/10 bg-black rounded-b-md p-3 sm:p-5 font-mono text-[10px] sm:text-xs overflow-hidden relative leading-relaxed">
                   <pre className="text-white/30">
 <code>{`import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
@@ -314,12 +314,12 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
               </div>
 
               {/* With mcpcraft */}
-              <div className="flex flex-col h-[420px]">
-                <div className="px-4 py-2 border border-white/15 border-b-0 bg-white/[0.04] rounded-t-md text-xs font-mono text-white flex items-center justify-between">
-                  <span>With mcpcraft (12 lines)</span>
-                  <span className="text-white/55">Simple & Clean</span>
+              <div className="flex flex-col max-h-[300px] sm:max-h-[420px]">
+                <div className="px-3 sm:px-4 py-1.5 sm:py-2 border border-white/15 border-b-0 bg-white/[0.04] rounded-t-md text-[10px] sm:text-xs font-mono text-white flex items-center justify-between">
+                  <span className="truncate">With mcpcraft (12 lines)</span>
+                  <span className="text-white/55 hidden sm:inline">Simple & Clean</span>
                 </div>
-                <div className="flex-1 border border-white/10 bg-[#050505] rounded-b-md p-5 font-mono text-xs overflow-y-auto leading-relaxed">
+                <div className="flex-1 border border-white/10 bg-[#050505] rounded-b-md p-3 sm:p-5 font-mono text-[10px] sm:text-xs overflow-y-auto leading-relaxed">
                   <pre className="text-white/90">
 <code><div><span className="text-purple-400">import</span> {"{"} createServer, tool {"}"} <span className="text-purple-400">from</span> <span className="text-emerald-300">"mcpcraft"</span></div>
 <div></div>
@@ -346,22 +346,22 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         </section>
 
         {/* CTA section */}
-        <section className="py-24 border-t border-white/10 text-center relative overflow-hidden bg-black">
-          <div className="max-w-xl mx-auto px-6 relative z-10">
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-4">
+        <section className="py-16 sm:py-24 border-t border-white/10 text-center relative overflow-hidden bg-black">
+          <div className="max-w-xl mx-auto px-4 sm:px-6 relative z-10">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-3 sm:mb-4">
               Start building in minutes
             </h2>
-            <p className="text-white/40 text-sm mb-8 font-sans">
+            <p className="text-white/40 text-sm mb-6 sm:mb-8 font-sans px-4">
               Install the SDK to create custom API, database, and filesystem integrations for AI agents.
             </p>
 
-            <div className="max-w-xs mx-auto flex items-center justify-between border border-white/10 rounded-md bg-[#050505] pl-4 pr-2 py-1.5 text-xs font-mono text-white/80 mb-8">
-              <span>
+            <div className="max-w-[280px] sm:max-w-xs mx-auto flex items-center justify-between border border-white/10 rounded-md bg-[#050505] pl-3 sm:pl-4 pr-1.5 sm:pr-2 py-1.5 text-[11px] sm:text-xs font-mono text-white/80 mb-6 sm:mb-8">
+              <span className="truncate">
                 $ <span className="text-white">npm install mcpcraft</span>
               </span>
               <button 
                 onClick={() => handleCopy("npm install mcpcraft", "cta-install-cmd")}
-                className="p-1 hover:bg-white/10 rounded transition-colors text-white/40 hover:text-white"
+                className="p-1 hover:bg-white/10 rounded transition-colors text-white/40 hover:text-white shrink-0"
               >
                 {copiedText === "cta-install-cmd" ? "Copied" : "Copy"}
               </button>
@@ -369,7 +369,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
             <Link 
               href="/docs/installation" 
-              className="inline-flex items-center gap-1.5 px-6 py-2.5 rounded-md text-xs font-mono uppercase tracking-wider bg-white text-black hover:bg-white/95 transition-colors font-bold"
+              className="inline-flex items-center gap-1.5 px-5 sm:px-6 py-2.5 rounded-md text-xs font-mono uppercase tracking-wider bg-white text-black hover:bg-white/95 transition-colors font-bold"
             >
               Read the docs &rarr;
             </Link>
@@ -378,17 +378,17 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-white/10 bg-black py-12">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <footer className="border-t border-white/10 bg-black py-10 sm:py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex flex-col items-center sm:items-start gap-1">
             {mcpcraftLogo}
-            <span className="text-xs text-white/30 mt-1 font-sans">Built for the Model Context Protocol ecosystem.</span>
+            <span className="text-xs text-white/30 mt-1 font-sans text-center sm:text-left">Built for the Model Context Protocol ecosystem.</span>
           </div>
-          <div className="flex items-center gap-6 text-xs font-mono text-white/40">
+          <div className="flex items-center gap-4 sm:gap-6 text-[11px] sm:text-xs font-mono text-white/40">
             <Link href="/docs" className="hover:text-white transition-colors">Docs</Link>
             <a href="https://github.com/abdunur-dev/mcpcraft" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">GitHub</a>
             <a href="https://npmjs.com/package/mcpcraft" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">npm</a>
-            <span className="text-white/20">MIT License</span>
+            <span className="text-white/20 hidden sm:inline">MIT License</span>
           </div>
         </div>
       </footer>

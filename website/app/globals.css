@@ -221,6 +221,49 @@ body {
   margin-bottom: 0 !important;
 }
 
+/* Hide scrollbar for nav */
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Docs responsive: ensure content doesn't overflow on small screens */
+#nd-page {
+  min-width: 0;
+}
+
+#nd-page .prose {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+#nd-page .prose figure.shiki {
+  max-width: 100%;
+}
+
+#nd-page .prose figure.shiki > div[role="region"] {
+  max-width: 100%;
+}
+
+#nd-page .prose figure.shiki pre {
+  max-width: 100%;
+}
+
+/* Responsive tables */
+#nd-page .prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Responsive code blocks inside tabs */
+#nd-page .prose div[data-orientation="horizontal"].overflow-hidden {
+  max-width: 100%;
+}
+
 /* Shiki CSS variables theme - hero code colors */
 :root {
   --shiki-foreground: #e4e4e7;
