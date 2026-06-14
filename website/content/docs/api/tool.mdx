@@ -1,0 +1,48 @@
+---
+title: tool()
+description: Define executable tools with schema and type-safety.
+---
+
+# tool()
+
+Defines a callable tool that the LLM/client can execute on your server.
+
+```typescript
+import { tool } from "mcpkit"
+
+const myTool = tool({
+  name: "send_email",
+  description: "Sends an email to a recipient",
+  input: {
+    to: { type: "string", description: "Recipient email" },
+    subject: { type: "string", description: "Subject line", required: false },
+    body: { type: "string", description: "Email content" }
+  },
+  run: async ({ to, subject, body }) => {
+    // your implementation here
+    return { success: true }
+  }
+})
+```
+
+---
+
+## Configuration Options
+
+- **`name`**: `string` (required) - Alphanumeric name using letters, numbers, and underscores only.
+- **`description`**: `string` (required) - Explains what the tool does. Highly descriptive text helps the LLM decide when and how to call this tool.
+- **`input`**: `InputSchema` (optional) - An object where keys represent the parameter names and values are their property configurations:
+  - `type`: `"string" | "number" | "boolean"`
+  - `description`: `string` (optional)
+  - `required`: `boolean` (optional, defaults to `true`)
+- **`run`**: `(args) => any | Promise<any>` (required) - The execution logic. The parameter `args` is automatically typed based on your `input` schema:
+  - `"string"` -> `string`
+  - `"number"` -> `number`
+  - `"boolean"` -> `boolean`
+  - If `required: false` is specified, the type will include `| undefined`.
+
+---
+
+## Runtime Validation
+
+Every tool call receives automatic runtime validation powered by **Zod**. If the client passes arguments that do not conform to your `input` schema (e.g. sending a string to a boolean parameter), the server automatically returns a detailed validation error message to the client without crashing or throwing a protocol exception, allowing the LLM to understand and self-correct its arguments.

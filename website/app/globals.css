@@ -1,0 +1,60 @@
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+
+:root {
+  --background: 240 10% 3.9%; /* #09090b */
+  --foreground: 0 0% 98%; /* #fafafa */
+  
+  --card: 240 6% 7%; /* #111113 */
+  --card-foreground: 0 0% 98%;
+  
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  
+  --primary: 262 83% 58%; /* #7c3aed */
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 240 6% 7%;
+  --secondary-foreground: 0 0% 98%;
+  
+  --muted: 240 6% 7%;
+  --muted-foreground: 240 5% 46%; /* #71717a */
+  
+  --accent: 262 83% 58%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  
+  --border: 240 6% 13%; /* #1f1f23 */
+  --input: 240 6% 13%;
+  --ring: 262 83% 58%;
+  
+  --radius: 0.5rem;
+}
+
+@theme {
+  --color-background: #09090b;
+  --color-surface: #111113;
+  --color-border-custom: #1f1f23;
+  --color-text-primary: #fafafa;
+  --color-text-muted: #71717a;
+  --color-accent-custom: #7c3aed;
+  --color-accent-hover: #6d28d9;
+  --color-code-bg: #0d0d0f;
+  
+  --font-sans: var(--font-inter), sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
+}
+
+/* Base override for code blocks background and other elements */
+pre, code {
+  background-color: #0d0d0f !important;
+}
+
+body {
+  background-color: #09090b;
+  color: #fafafa;
+  font-family: var(--font-sans);
+}

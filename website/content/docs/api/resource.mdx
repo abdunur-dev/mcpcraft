@@ -1,0 +1,45 @@
+---
+title: resource()
+description: Expose read-only files, data, and context templates.
+---
+
+# resource()
+
+Defines a static or dynamic data entity that the client can load into the LLM context.
+
+```typescript
+import { resource } from "mcpkit"
+
+// 1. Static Resource
+const staticResource = resource({
+  name: "system_info",
+  description: "Exposes system information",
+  uri: "info://system",
+  mimeType: "application/json",
+  fetch: async () => {
+    return { platform: process.platform, arch: process.arch }
+  }
+})
+
+// 2. Dynamic Resource Template
+const dynamicTemplate = resource({
+  name: "user_profile",
+  description: "Dynamic profile loader",
+  uri: "users://{userId}/profile",
+  mimeType: "application/json",
+  fetch: async (params) => {
+    const { userId } = params; // fully parsed from URL!
+    return { id: userId, username: `user_${userId}` }
+  }
+})
+```
+
+---
+
+## Configuration Options
+
+- **`name`**: `string` (required) - Name of the resource.
+- **`description`**: `string` (required) - A description of the data returned by the resource.
+- **`uri`**: `string` (required) - The identifier URI (e.g. `info://system`) or a template containing variables inside curly braces (e.g. `users://{userId}/profile`).
+- **`mimeType`**: `string` (optional) - The MIME format of the content (e.g., `application/json` or `text/plain`).
+- **`fetch`**: `(params) => any | Promise<any>` (required) - The resolver function returning the resource data. If your `uri` contains variables, `params` is populated with the parsed values.

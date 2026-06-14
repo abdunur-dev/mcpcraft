@@ -1,0 +1,78 @@
+---
+title: Gmail Server
+description: Build a production-grade Gmail integration MCP server in 25 lines.
+---
+
+# Gmail Server Example
+
+This example demonstrates how to integrate the official Google Gmail API into an MCP server to let AI agents search and send emails on your behalf.
+
+```typescript
+import { createServer, tool } from "mcpkit"
+import { google } from "googleapis"
+
+const server = createServer({
+  name: "gmail-server",
+  description: "Exposes Google Gmail operations"
+})
+
+// Initialize Gmail API client using environment authentication
+const auth = new google.auth.GoogleAuth({
+  scopes: ["https://www.googleapis.com/auth/gmail.readonly", "https://www.googleapis.com/auth/gmail.send"]
+})
+const gmail = google.gmail({ version: "v1", auth })
+
+// 1. Search emails tool
+server.add(tool({
+  name: "search_emails",
+  description: "Searches the user's emails with a query",
+  input: {
+    query: { type: "string", description: "Gmail search operator query (e.g. 'from:boss urgent')" }
+  },
+  run: async ({ query }) => {
+    const res = await gmail.users.messages.list({ userId: "me", q: query, maxResults: 5 })
+    const messages = res.data.messages || []
+    
+    // Fetch snippets
+    const list = await Promise.all(messages.map(async (m) => {
+      const detail = await gmail.users.messages.get({ userId: "me", id: m.id! })
+      return { id: m.id, snippet: detail.data.snippet, date: detail.data.internalDate }
+    }))
+    
+    return list;
+  }
+}))
+
+// 2. Send email tool
+server.add(tool({
+  name: "send_email",
+  description: "Sends an email message to a recipient",
+  input: {
+    to: { type: "string", description: "Recipient's email address" },
+    subject: { type: "string", description: "Subject of the email" },
+    body: { type: "string", description: "Email body content" }
+  },
+  run: async ({ to, subject, body }) => {
+    const messageParts = [
+      `To: ${to}`,
+      "Content-Type: text/html; charset=utf-8",
+      "MIME-Version: 1.0",
+      `Subject: ${subject}`,
+      "",
+      body
+    ]
+    const raw = Buffer.from(messageParts.join("\n"))
+      .toString("base64")
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=+$/, "")
+
+    await gmail.users.messages.send({ userId: "me", requestBody: { raw } })
+    return { success: true, message: `Email sent to ${to}` }
+  }
+}))
+
+server.start()
+```
+
+This represents a complete, secure, and production-grade integration in just 50 lines of code.

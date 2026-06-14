@@ -1,0 +1,65 @@
+---
+title: Basic Server
+description: A complete basic server example with tools and resources.
+---
+
+# Basic Server Example
+
+Here is a full working script demonstrating a server registering multiple tools and resources.
+
+```typescript
+import { createServer, tool, resource } from "mcpkit"
+
+// Initialize the server
+const server = createServer({
+  name: "weather-notification-server",
+  version: "1.0.0",
+  description: "Exposes weather updates and notifications"
+})
+
+// Add weather tool
+server.add(tool({
+  name: "get_weather",
+  description: "Fetches current weather for a city",
+  input: {
+    city: { type: "string", description: "The city name" },
+    celsius: { type: "boolean", description: "Return Celsius?", required: false }
+  },
+  run: async ({ city, celsius }) => {
+    const temp = 22; // dummy value
+    return {
+      city,
+      temperature: celsius !== false ? `${temp}°C` : `${(temp * 9)/5 + 32}°F`,
+      condition: "Partly Cloudy"
+    }
+  }
+}))
+
+// Add notification tool
+server.add(tool({
+  name: "send_slack",
+  description: "Sends a Slack notification",
+  input: {
+    message: { type: "string", description: "Text message" }
+  },
+  run: async ({ message }) => {
+    console.error("Slack Log:", message);
+    return { status: "sent" }
+  }
+}))
+
+// Add system resource
+server.add(resource({
+  name: "system_uptime",
+  description: "Gets the process uptime",
+  uri: "status://uptime",
+  fetch: async () => {
+    return { uptimeSeconds: process.uptime() }
+  }
+}))
+
+// Start the server
+server.start()
+```
+
+Run this with `ts-node` or compile it with `tsc` and run it via standard `node`.
