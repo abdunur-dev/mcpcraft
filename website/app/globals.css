@@ -531,14 +531,14 @@ body {
   border-radius: 50%;
 }
 
-/* ─── Hero Pixel Grid ─── */
+/* ─── Hero Grid ─── */
 .hero-grid {
   position: absolute;
   inset: 0;
   pointer-events: none;
   overflow: hidden;
-  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
-  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  mask-image: radial-gradient(ellipse at center, black 25%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 25%, transparent 75%);
 }
 
 .hero-grid::after {
@@ -547,56 +547,8 @@ body {
   inset: -50%;
   width: 200%;
   height: 200%;
-  background-image: linear-gradient(rgba(255,255,255,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.25) 1px, transparent 1px);
-  background-size: 36px 36px;
-  animation: gridShift 20s linear infinite;
-}
-
-.hero-grid::before {
-  content: "";
-  position: absolute;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
-  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.35) 3px, transparent 0);
-  background-size: 36px 36px;
-  animation: gridShift 20s linear infinite;
-}
-
-@keyframes gridShift {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(36px, 36px); }
-}
-
-/* ─── Page-wide Pixel Grid (follows scroll) ─── */
-.hero-grid-fixed {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-  mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
-}
-
-.hero-grid-fixed::after {
-  content: "";
-  position: absolute;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
-  background-image: linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px);
-  background-size: 36px 36px;
-}
-
-.hero-grid-fixed::before {
-  content: "";
-  position: absolute;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
-  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.28) 3px, transparent 0);
-  background-size: 36px 36px;
+  background-image: linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
 /* ─── Scrollbar Styling ─── */

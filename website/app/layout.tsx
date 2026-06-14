@@ -48,7 +48,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full dark`} style={{ colorScheme: "dark" }} suppressHydrationWarning>
       <body className="min-h-full flex flex-col bg-[#000000] text-[#ffffff] antialiased">
-        <div className="hero-grid-fixed" aria-hidden="true" />
         <RootProvider>
           {children}
         </RootProvider>
