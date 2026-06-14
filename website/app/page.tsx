@@ -75,50 +75,53 @@ export default function Home() {
 
       {/* Main Content Area */}
       <main className="flex-1 pt-14">
-        {/* Minimal Hero Section */}
+        {/* Hero Section — Text + Code side by side */}
         <section className="relative pt-20 pb-24 border-b border-white/10">
-          <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono border border-white/10 bg-white/[0.02] text-white/60 mb-8">
-              <span className="text-white">●</span> npm install mcpcraft
-            </div>
-            
-            <h1 className="text-4xl sm:text-7xl font-extrabold tracking-tight text-white mb-6">
-              Build MCP Servers <span className="text-white/40 font-light">Fast</span>
-            </h1>
-            
-            <p className="text-base sm:text-lg text-white/60 max-w-2xl mx-auto mb-10 leading-relaxed font-sans">
-              A lightweight TypeScript SDK for building Model Context Protocol servers. Zero boilerplate, full type safety, and automatic schema validation.
-            </p>
-
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-              <Link 
-                href="/docs/installation" 
-                className="w-full sm:w-auto px-8 py-3 rounded-md text-xs font-mono uppercase tracking-wider bg-white text-black hover:bg-white/90 transition-all font-bold"
-              >
-                Get Started
-              </Link>
-              <a 
-                href="https://github.com/abdunur-dev/mcpcraft" 
-                target="_blank" 
-                rel="noreferrer"
-                className="w-full sm:w-auto px-8 py-3 rounded-md text-xs font-mono uppercase tracking-wider bg-transparent border border-white/15 hover:border-white/30 text-white transition-colors"
-              >
-                View GitHub
-              </a>
-            </div>
-
-            {/* Quick Demo Code Block */}
-            <div className="max-w-2xl mx-auto rounded-lg border border-white/10 bg-[#050505] shadow-2xl text-left overflow-hidden mb-8">
-              <div className="bg-[#0b0b0b] border-b border-white/10 px-4 py-2.5 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                  <span className="text-xs text-white/40 font-mono ml-2">server.ts</span>
+          <div className="max-w-6xl mx-auto px-6 relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* Left: Text */}
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono border border-white/10 bg-white/[0.02] text-white/60 mb-6">
+                  <span className="text-white">●</span> npm install mcpcraft
                 </div>
-                <button 
-                  onClick={() => handleCopy(`import { createServer, tool } from "mcpcraft"
+                
+                <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-6">
+                  Build MCP Servers <span className="text-white/40 font-light">Fast</span>
+                </h1>
+                
+                <p className="text-base sm:text-lg text-white/60 leading-relaxed font-sans mb-8">
+                  A lightweight TypeScript SDK for building Model Context Protocol servers. Zero boilerplate, full type safety, and automatic schema validation.
+                </p>
+
+                <div className="flex flex-col sm:flex-row items-start gap-4">
+                  <Link 
+                    href="/docs/installation" 
+                    className="w-full sm:w-auto px-8 py-3 rounded-md text-xs font-mono uppercase tracking-wider bg-white text-black hover:bg-white/90 transition-all font-bold text-center"
+                  >
+                    Get Started
+                  </Link>
+                  <a 
+                    href="https://github.com/abdunur-dev/mcpcraft" 
+                    target="_blank" 
+                    rel="noreferrer"
+                    className="w-full sm:w-auto px-8 py-3 rounded-md text-xs font-mono uppercase tracking-wider bg-transparent border border-white/15 hover:border-white/30 text-white transition-colors text-center"
+                  >
+                    View GitHub
+                  </a>
+                </div>
+              </div>
+
+              {/* Right: Code */}
+              <div className="rounded-lg border border-white/10 bg-[#050505] shadow-2xl text-left overflow-hidden">
+                <div className="bg-[#0b0b0b] border-b border-white/10 px-4 py-2.5 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
+                    <span className="text-xs text-white/40 font-mono ml-2">server.ts</span>
+                  </div>
+                  <button 
+                    onClick={() => handleCopy(`import { createServer, tool } from "mcpcraft"
 
 const server = createServer({ name: "my-server" })
 
@@ -135,12 +138,12 @@ server.add(tool({
 }))
 
 server.start()`, "hero-code")}
-                  className="text-xs font-mono text-white/40 hover:text-white flex items-center gap-1.5 transition-colors"
-                >
-                  {copiedText === "hero-code" ? "Copied!" : "Copy"}
-                </button>
-              </div>
-              <pre className="p-6 overflow-x-auto text-xs sm:text-[13px] font-mono leading-relaxed text-white/90 bg-black">
+                    className="text-xs font-mono text-white/40 hover:text-white flex items-center gap-1.5 transition-colors"
+                  >
+                    {copiedText === "hero-code" ? "Copied!" : "Copy"}
+                  </button>
+                </div>
+                <pre className="p-6 overflow-x-auto text-xs sm:text-[13px] font-mono leading-relaxed text-white/90 bg-black">
 <code><span className="text-white/40">import</span> {"{"} createServer, tool {"}"} <span className="text-white/40">from</span> <span className="text-white/80">"mcpcraft"</span>
 
 <span className="text-white/40">const</span> server = <span className="text-white/80">createServer</span>({"{"} name: <span className="text-white/80">"my-server"</span> {"}"})
@@ -158,7 +161,8 @@ server.<span className="text-white/80">add</span>(<span className="text-white/80
 {"}"}))
 
 server.<span className="text-white/80">start</span>()</code>
-              </pre>
+                </pre>
+              </div>
             </div>
           </div>
         </section>
