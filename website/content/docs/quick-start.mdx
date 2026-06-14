@@ -7,50 +7,77 @@ description: Build your first MCP server with mcpcraft in less than 5 minutes.
 
 Create your first Model Context Protocol (MCP) server in under 5 minutes.
 
-## 1. Install
+<Steps>
+<Step>
 
-First, install `mcpcraft` and `zod` in your project folder:
+### Install Dependency
+
+Install `mcpcraft` and `zod` in your project folder:
 
 ```bash
 npm install mcpcraft zod
 ```
 
-## 2. Create your server
+</Step>
 
-Create a file named `server.ts` and add the following code:
+<Step>
+
+### Create Your Server
+
+Create a file named `server.ts` and define your first tool:
 
 ```typescript
-import { createServer, tool } from "mcpcraft"
+import { createServer, tool } from "mcpcraft";
 
 // 1. Initialize the server
 const server = createServer({
   name: "my-first-server",
   version: "1.0.0"
-})
+});
 
-// 2. Register a tool
-server.add(tool({
-  name: "greet",
-  description: "Greets a user by name",
-  input: {
-    name: { type: "string", description: "The user's name" }
-  },
-  run: async ({ name }) => {
-    return { message: `Hello, ${name}!` }
-  }
-}))
+// 2. Register a tool with type-safe schema validation
+server.add(
+  tool({
+    name: "greet",
+    description: "Greets a user by name",
+    input: {
+      name: { type: "string", description: "The name of the user to greet" }
+    },
+    run: async ({ name }) => {
+      return { message: `Hello, ${name}!` };
+    }
+  })
+);
 
 // 3. Start the server on stdio transport
-server.start()
+server.start();
 ```
 
-## 3. Run it
+</Step>
 
-You can run your server using `ts-node`:
+<Step>
+
+### Run the Server
+
+You can execute your server using `ts-node` or compile it with `tsc`:
 
 ```bash
 npx ts-node server.ts
 ```
 
-Your MCP server is now running on standard input/output (stdio) transport, ready to be connected to any compatible MCP host such as Claude Desktop or Cursor!
+Your server is now listening on standard input/output (stdio) streams.
 
+<Callout type="info">
+  Because the server communicates via standard input/output, running it in the terminal will start a blocking process. To test it, connect it to an MCP host like Claude Desktop.
+</Callout>
+
+</Step>
+</Steps>
+
+## Next Steps
+
+Now that you have your first server running, check out the documentation on how to define dynamic resources, configure environments, and create complex integrations:
+
+- [API Reference: createServer](/docs/api/create-server)
+- [Defining Tools](/docs/api/tool)
+- [Defining Resources](/docs/api/resource)

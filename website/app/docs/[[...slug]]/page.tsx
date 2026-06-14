@@ -3,6 +3,12 @@ import { DocsBody, DocsDescription, DocsPage, DocsTitle } from "fumadocs-ui/page
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
+// Explicitly import components to support them in all MDX pages
+import defaultComponents from "fumadocs-ui/mdx";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Callout } from "fumadocs-ui/components/callout";
+
 interface PageProps {
   params: Promise<{ slug?: string[] }>;
 }
@@ -22,7 +28,7 @@ export default async function Page(props: PageProps) {
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
       <DocsBody>
-        <MDX />
+        <MDX components={{ ...defaultComponents, Step, Steps, Tab, Tabs, Callout }} />
       </DocsBody>
     </DocsPage>
   );
@@ -45,3 +51,4 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     description: page.data.description,
   };
 }
+

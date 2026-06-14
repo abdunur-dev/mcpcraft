@@ -1,24 +1,91 @@
 ---
 title: Installation
-description: Get started with mcpcraft in your TypeScript project.
+description: Learn how to configure mcpcraft in your project.
 ---
 
 # Installation
 
-Install `mcpcraft` via npm:
+Set up and configure `mcpcraft` in your project folder.
 
-```bash
-npm install mcpcraft zod
+<Steps>
+<Step>
+
+### Install the Package
+
+First, add `mcpcraft` and `zod` to your project using your preferred package manager:
+
+<Tabs items={['npm', 'pnpm', 'yarn', 'bun']}>
+  <Tab value="npm">
+  ```bash
+  npm install mcpcraft zod
+  ```
+  </Tab>
+  <Tab value="pnpm">
+  ```bash
+  pnpm add mcpcraft zod
+  ```
+  </Tab>
+  <Tab value="yarn">
+  ```bash
+  yarn add mcpcraft zod
+  ```
+  </Tab>
+  <Tab value="bun">
+  ```bash
+  bun add mcpcraft zod
+  ```
+  </Tab>
+</Tabs>
+
+</Step>
+
+<Step>
+
+### Configure TSConfig
+
+`mcpcraft` requires modern TypeScript settings. Ensure your `tsconfig.json` contains at least the following configuration:
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "strict": true
+  }
+}
 ```
 
-## System Requirements
+<Callout type="warn">
+  Without `moduleResolution: NodeNext` (or `Bundler` if using a bundler), you may encounter import issues when importing the low-level transport classes from `@modelcontextprotocol/sdk`.
+</Callout>
 
-- **Node.js**: version 18.0.0 or higher
-- **TypeScript**: version 5.0.0 or higher
+</Step>
+
+<Step>
+
+### Create Your Server
+
+Create a server file (e.g. `server.ts`) and define your tools and resource endpoints:
+
+```typescript
+import { createServer } from "mcpcraft";
+
+const server = createServer({
+  name: "my-mcp-server",
+  version: "1.0.0"
+});
+
+// Start listening on stdio transport
+server.start();
+```
+
+</Step>
+</Steps>
 
 ## Under the Hood
 
-`mcpcraft` is built on top of the official `@modelcontextprotocol/sdk`. When you install `mcpcraft`, the official SDK is installed automatically as a dependency. 
+`mcpcraft` sits on top of the official `@modelcontextprotocol/sdk`. When you install `mcpcraft`, the official SDK is installed automatically as a dependency.
 
-You do not need to write any low-level JSON-RPC boilerplate or manually manage Stdio transport connections; `mcpcraft` handles it all for you.
-
+You do not need to write low-level JSON-RPC message handlers or manually manage standard input/output streams; `mcpcraft` abstracts this into a clean, event-driven interface.

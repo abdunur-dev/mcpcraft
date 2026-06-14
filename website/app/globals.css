@@ -3,58 +3,81 @@
 @import "fumadocs-ui/css/preset.css";
 
 :root {
-  --background: 240 10% 3.9%; /* #09090b */
-  --foreground: 0 0% 98%; /* #fafafa */
+  --background: 0 0% 0%; /* #000000 */
+  --foreground: 0 0% 100%; /* #ffffff */
   
-  --card: 240 6% 7%; /* #111113 */
-  --card-foreground: 0 0% 98%;
+  --card: 0 0% 3%; /* #080808 */
+  --card-foreground: 0 0% 100%;
   
-  --popover: 240 10% 3.9%;
-  --popover-foreground: 0 0% 98%;
+  --popover: 0 0% 0%;
+  --popover-foreground: 0 0% 100%;
   
-  --primary: 262 83% 58%; /* #7c3aed */
-  --primary-foreground: 0 0% 100%;
+  --primary: 0 0% 100%; /* #ffffff */
+  --primary-foreground: 0 0% 0%;
   
-  --secondary: 240 6% 7%;
-  --secondary-foreground: 0 0% 98%;
+  --secondary: 0 0% 6%; /* #0f0f0f */
+  --secondary-foreground: 0 0% 100%;
   
-  --muted: 240 6% 7%;
-  --muted-foreground: 240 5% 46%; /* #71717a */
+  --muted: 0 0% 6%;
+  --muted-foreground: 240 5% 64.9%; /* #a1a1aa */
   
-  --accent: 262 83% 58%;
+  --accent: 0 0% 9%; /* #171717 */
   --accent-foreground: 0 0% 100%;
   
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 0 0% 98%;
   
-  --border: 240 6% 13%; /* #1f1f23 */
-  --input: 240 6% 13%;
-  --ring: 262 83% 58%;
+  --border: 0 0% 9%; /* #171717 */
+  --input: 0 0% 9%;
+  --ring: 0 0% 100%;
   
-  --radius: 0.5rem;
+  --radius: 0.375rem;
+
+  /* Fumadocs variables override */
+  --fd-background: 0 0% 0%;
+  --fd-foreground: 0 0% 100%;
+  --fd-primary: 0 0% 100%;
+  --fd-border: 0 0% 9%;
+  --fd-muted: 0 0% 6%;
+  --fd-muted-foreground: 0 0% 64.9%;
+  --fd-card: 0 0% 3%;
+  --fd-card-foreground: 0 0% 100%;
+  --fd-popover: 0 0% 0%;
+  --fd-popover-foreground: 0 0% 100%;
+  --fd-accent: 0 0% 6%;
+  --fd-accent-foreground: 0 0% 100%;
 }
 
 @theme {
-  --color-background: #09090b;
-  --color-surface: #111113;
-  --color-border-custom: #1f1f23;
-  --color-text-primary: #fafafa;
-  --color-text-muted: #71717a;
-  --color-accent-custom: #7c3aed;
-  --color-accent-hover: #6d28d9;
-  --color-code-bg: #0d0d0f;
+  --color-background: #000000;
+  --color-surface: #080808;
+  --color-border-custom: #171717;
+  --color-text-primary: #ffffff;
+  --color-text-muted: #a1a1aa;
+  --color-accent-custom: #ffffff;
+  --color-accent-hover: #e4e4e7;
+  --color-code-bg: #000000;
   
-  --font-sans: var(--font-inter), sans-serif;
+  --font-sans: var(--font-geist-sans), sans-serif;
   --font-mono: var(--font-geist-mono), monospace;
 }
 
 /* Base override for code blocks background and other elements */
 pre, code {
-  background-color: #0d0d0f !important;
+  background-color: #050505 !important;
+  font-family: var(--font-mono) !important;
 }
 
 body {
-  background-color: #09090b;
-  color: #fafafa;
+  background-color: #000000;
+  color: #ffffff;
   font-family: var(--font-sans);
 }
+
+/* Vercel tab styles custom utility */
+.vercel-tab-active {
+  background-color: #000000;
+  border-bottom: 2px solid #ffffff;
+  color: #ffffff;
+}
+

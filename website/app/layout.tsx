@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import { RootProvider } from "fumadocs-ui/provider/next";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
@@ -41,8 +46,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} h-full dark`} style={{ colorScheme: "dark" }}>
-      <body className="min-h-full flex flex-col bg-[#09090b] text-[#fafafa] antialiased">
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full dark`} style={{ colorScheme: "dark" }} suppressHydrationWarning>
+      <body className="min-h-full flex flex-col bg-[#000000] text-[#ffffff] antialiased">
         <RootProvider>
           {children}
         </RootProvider>
@@ -50,4 +55,5 @@ export default function RootLayout({
     </html>
   );
 }
+
 
