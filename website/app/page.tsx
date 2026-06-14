@@ -5,6 +5,7 @@ import Link from "next/link";
 
 export default function Home() {
   const [copiedText, setCopiedText] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleCopy = (text: string, id: string) => {
     navigator.clipboard.writeText(text);
@@ -26,7 +27,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-black text-white font-sans selection:bg-white/10 selection:text-white">
-      {/* Vercel-Style Top Navigation Grid */}
+      {/* Navigation */}
       <div className="fixed top-0 left-0 right-0 z-50 flex items-stretch border-b border-white/10 bg-black/80 backdrop-blur-md h-14">
         {/* Logo Section */}
         <div className="flex items-center px-3 sm:px-6 border-r border-white/10 shrink-0">
@@ -35,32 +36,32 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* Navigation Tabs - Vercel layout */}
-        <div className="flex-1 flex items-stretch overflow-x-auto overflow-y-hidden scrollbar-none">
+        {/* Desktop Nav Tabs */}
+        <div className="hidden sm:flex flex-1 items-stretch">
           <Link 
             href="/" 
-            className="group relative flex items-center px-3 sm:px-6 border-r border-white/10 bg-white/[0.02] text-white hover:bg-white/[0.04] transition-colors duration-150 shrink-0"
+            className="group relative flex items-center px-6 border-r border-white/10 bg-white/[0.02] text-white hover:bg-white/[0.04] transition-colors duration-150"
           >
-            <span className="font-mono text-[10px] sm:text-xs uppercase tracking-wider whitespace-nowrap">readme</span>
+            <span className="font-mono text-xs uppercase tracking-wider">readme</span>
             <div className="absolute bottom-0 inset-x-0 h-[2px] bg-white" />
           </Link>
           <Link 
             href="/docs" 
-            className="group relative flex items-center px-3 sm:px-6 border-r border-white/10 text-white/50 hover:text-white hover:bg-white/[0.02] transition-colors duration-150 shrink-0"
+            className="group relative flex items-center px-6 border-r border-white/10 text-white/50 hover:text-white hover:bg-white/[0.02] transition-colors duration-150"
           >
-            <span className="font-mono text-[10px] sm:text-xs uppercase tracking-wider whitespace-nowrap">docs</span>
+            <span className="font-mono text-xs uppercase tracking-wider">docs</span>
           </Link>
           <a 
             href="https://github.com/abdunur-dev/mcpcraft" 
             target="_blank" 
             rel="noreferrer" 
-            className="group relative flex items-center px-3 sm:px-6 border-r border-white/10 text-white/50 hover:text-white hover:bg-white/[0.02] transition-colors duration-150 shrink-0"
+            className="group relative flex items-center px-6 border-r border-white/10 text-white/50 hover:text-white hover:bg-white/[0.02] transition-colors duration-150"
           >
-            <span className="font-mono text-[10px] sm:text-xs uppercase tracking-wider whitespace-nowrap">github</span>
+            <span className="font-mono text-xs uppercase tracking-wider">github</span>
           </a>
         </div>
 
-        {/* Version / CTA Section */}
+        {/* Version Badge - Desktop */}
         <div className="hidden sm:flex items-center px-6 border-l border-white/10 shrink-0">
           <a
             href="https://npmjs.com/package/mcpcraft"
@@ -71,12 +72,67 @@ export default function Home() {
             v0.1.0
           </a>
         </div>
+
+        {/* Hamburger - Mobile */}
+        <div className="flex sm:hidden items-center px-4 border-l border-white/10 ml-auto">
+          <button 
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="text-white/60 hover:text-white transition-colors"
+            aria-label="Toggle menu"
+          >
+            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              {menuOpen ? (
+                <>
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </>
+              ) : (
+                <>
+                  <line x1="3" y1="6" x2="21" y2="6" />
+                  <line x1="3" y1="12" x2="21" y2="12" />
+                  <line x1="3" y1="18" x2="21" y2="18" />
+                </>
+              )}
+            </svg>
+          </button>
+        </div>
       </div>
+
+      {/* Mobile Menu Dropdown */}
+      {menuOpen && (
+        <div className="fixed top-14 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-b border-white/10 sm:hidden">
+          <div className="flex flex-col py-2">
+            <Link 
+              href="/" 
+              onClick={() => setMenuOpen(false)}
+              className="px-6 py-3 font-mono text-xs uppercase tracking-wider text-white hover:bg-white/[0.02] transition-colors border-b border-white/5"
+            >
+              readme
+            </Link>
+            <Link 
+              href="/docs" 
+              onClick={() => setMenuOpen(false)}
+              className="px-6 py-3 font-mono text-xs uppercase tracking-wider text-white/50 hover:text-white hover:bg-white/[0.02] transition-colors border-b border-white/5"
+            >
+              docs
+            </Link>
+            <a 
+              href="https://github.com/abdunur-dev/mcpcraft" 
+              target="_blank" 
+              rel="noreferrer"
+              onClick={() => setMenuOpen(false)}
+              className="px-6 py-3 font-mono text-xs uppercase tracking-wider text-white/50 hover:text-white hover:bg-white/[0.02] transition-colors"
+            >
+              github
+            </a>
+          </div>
+        </div>
+      )}
 
       {/* Main Content Area */}
       <main className="flex-1 pt-14">
-        {/* Hero Section — Text + Code side by side */}
-        <section className="relative pt-16 sm:pt-20 pb-20 sm:pb-24 border-b border-white/10">
+        {/* Hero Section — Text + Code side by side, fills viewport */}
+        <section className="relative min-h-[calc(100dvh-3.5rem)] flex items-center py-12 sm:py-16 border-b border-white/10">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
               {/* Left: Text */}
