@@ -143,24 +143,24 @@ server.start()`, "hero-code")}
                     {copiedText === "hero-code" ? "Copied!" : "Copy"}
                   </button>
                 </div>
-                <pre className="p-6 overflow-x-auto text-xs sm:text-[13px] font-mono leading-relaxed text-white/90 bg-black">
-<code>{`import { createServer, tool } from "mcpcraft"
+                <pre className="p-6 overflow-x-auto text-xs sm:text-[13px] font-mono leading-relaxed bg-black">
+<code><span className="text-purple-400">import</span> {"{"} createServer, tool {"}"} <span className="text-purple-400">from</span> <span className="text-emerald-300">"mcpcraft"</span>
 
-const server = createServer({ name: "my-server" })
+<span className="text-purple-400">const</span> server = <span className="text-blue-400">createServer</span>({"{"} name: <span className="text-emerald-300">"my-server"</span> {"}"})
 
-server.add(tool({
-  name: "send_email",
-  description: "Sends an email",
-  input: {
-    to: { type: "string", description: "Recipient" },
-    body: { type: "string", description: "Content" }
-  },
-  run: async ({ to, body }) => {
-    return { success: true }
-  }
-}))
+server.<span className="text-blue-400">add</span>(<span className="text-blue-400">tool</span>({"{"}
+  name: <span className="text-emerald-300">"send_email"</span>,
+  description: <span className="text-emerald-300">"Sends an email"</span>,
+  input: {"{"}
+    to: {"{"} type: <span className="text-emerald-300">"string"</span>, description: <span className="text-emerald-300">"Recipient"</span> {"}"},
+    body: {"{"} type: <span className="text-emerald-300">"string"</span>, description: <span className="text-emerald-300">"Content"</span> {"}"}
+  {"}"},
+  run: <span className="text-purple-400">async</span> ({`{ to, body }`}) <span className="text-purple-400">=&gt;</span> {"{"}
+    <span className="text-purple-400">return</span> {"{"} success: <span className="text-amber-300">true</span> {"}"}
+  {"}"}
+{"}"}))
 
-server.start()`}</code>
+server.<span className="text-blue-400">start</span>()</code>
                 </pre>
               </div>
             </div>
@@ -321,23 +321,23 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                 </div>
                 <div className="flex-1 border border-white/10 bg-[#050505] rounded-b-md p-5 font-mono text-xs overflow-y-auto leading-relaxed">
                   <pre className="text-white/90">
-<code>{`import { createServer, tool } from "mcpcraft"
+<code><span className="text-purple-400">import</span> {"{"} createServer, tool {"}"} <span className="text-purple-400">from</span> <span className="text-emerald-300">"mcpcraft"</span>
 
-const server = createServer({ name: "my-server" })
+<span className="text-purple-400">const</span> server = <span className="text-blue-400">createServer</span>({"{"} name: <span className="text-emerald-300">"my-server"</span> {"}"})
 
-server.add(tool({
-  name: "send_email",
-  description: "Sends an email",
-  input: {
-    to: { type: "string", description: "Recipient" },
-    body: { type: "string", description: "Content" }
-  },
-  run: async ({ to, body }) => {
-    return { success: true }
-  }
-}))
+server.<span className="text-blue-400">add</span>(<span className="text-blue-400">tool</span>({"{"}
+  name: <span className="text-emerald-300">"send_email"</span>,
+  description: <span className="text-emerald-300">"Sends an email"</span>,
+  input: {"{"}
+    to: {"{"} type: <span className="text-emerald-300">"string"</span>, description: <span className="text-emerald-300">"Recipient"</span> {"}"},
+    body: {"{"} type: <span className="text-emerald-300">"string"</span>, description: <span className="text-emerald-300">"Content"</span> {"}"}
+  {"}"},
+  run: <span className="text-purple-400">async</span> ({`{ to, body }`}) <span className="text-purple-400">=&gt;</span> {"{"}
+    <span className="text-purple-400">return</span> {"{"} success: <span className="text-amber-300">true</span> {"}"}
+  {"}"}
+{"}"}))
 
-server.start()`}</code>
+server.<span className="text-blue-400">start</span>()</code>
                   </pre>
                 </div>
               </div>
