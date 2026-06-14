@@ -178,12 +178,29 @@ body {
   font-weight: 500;
 }
 
-/* Let shiki handle code block colors */
+/* Shiki CSS variables theme - hero code colors */
+:root {
+  --shiki-foreground: #e4e4e7;
+  --shiki-background: #050505;
+  --shiki-token-keyword: #a855f7;
+  --shiki-token-string: #6ee7b7;
+  --shiki-token-string-expression: #6ee7b7;
+  --shiki-token-function: #60a5fa;
+  --shiki-token-constant: #e4e4e7;
+  --shiki-token-comment: #6a737d;
+  --shiki-token-parameter: #e4e4e7;
+  --shiki-token-punctuation: #e4e4e7;
+  --shiki-token-link: #60a5fa;
+  --shiki-token-inserted: #6ee7b7;
+  --shiki-token-deleted: #ef4444;
+  --shiki-token-changed: #fcd34d;
+}
+
+/* Prevent prose code styles from leaking into shiki code blocks */
 .shiki code span {
   background-color: transparent !important;
   border: none !important;
   padding: 0 !important;
-  font-weight: 400 !important;
 }
 
 #nd-page .prose a {
