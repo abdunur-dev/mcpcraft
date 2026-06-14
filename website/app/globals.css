@@ -537,8 +537,8 @@ body {
   inset: 0;
   pointer-events: none;
   overflow: hidden;
-  mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
-  -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
 }
 
 .hero-grid::after {
@@ -547,11 +547,9 @@ body {
   inset: -50%;
   width: 200%;
   height: 200%;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px);
-  background-size: 40px 40px;
-  animation: gridShift 16s linear infinite;
+  background-image: linear-gradient(rgba(255,255,255,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.25) 1px, transparent 1px);
+  background-size: 36px 36px;
+  animation: gridShift 20s linear infinite;
 }
 
 .hero-grid::before {
@@ -560,36 +558,31 @@ body {
   inset: -50%;
   width: 200%;
   height: 200%;
-  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.12) 2px, transparent 0);
-  background-size: 40px 40px;
-  animation: gridDotShift 16s linear infinite;
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.35) 3px, transparent 0);
+  background-size: 36px 36px;
+  animation: gridShift 20s linear infinite;
 }
 
 @keyframes gridShift {
   0% { transform: translate(0, 0); }
-  100% { transform: translate(40px, 40px); }
-}
-
-@keyframes gridDotShift {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(40px, 40px); }
+  100% { transform: translate(36px, 36px); }
 }
 
 /* ─── Hero Floating Squares ─── */
 .hero-float-square {
   position: absolute;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 3px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 2px;
   pointer-events: none;
-  animation: floatSquare 20s ease-in-out infinite;
+  animation: floatSquare 18s ease-in-out infinite;
 }
 
 @keyframes floatSquare {
-  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
-  25% { transform: translateY(-20px) rotate(90deg); opacity: 0.6; }
-  50% { transform: translateY(-40px) rotate(180deg); opacity: 0.5; }
-  75% { transform: translateY(-20px) rotate(270deg); opacity: 0.7; }
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.4; }
+  25% { transform: translateY(-16px) rotate(90deg); opacity: 0.8; }
+  50% { transform: translateY(-32px) rotate(180deg); opacity: 0.6; }
+  75% { transform: translateY(-16px) rotate(270deg); opacity: 0.9; }
 }
 
 /* ─── Scrollbar Styling ─── */
