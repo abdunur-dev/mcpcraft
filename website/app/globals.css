@@ -568,6 +568,37 @@ body {
   100% { transform: translate(36px, 36px); }
 }
 
+/* ─── Page-wide Pixel Grid (follows scroll) ─── */
+.hero-grid-fixed {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+}
+
+.hero-grid-fixed::after {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+.hero-grid-fixed::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.28) 3px, transparent 0);
+  background-size: 36px 36px;
+}
+
 /* ─── Scrollbar Styling ─── */
 ::-webkit-scrollbar {
   width: 6px;
