@@ -144,23 +144,23 @@ server.start()`, "hero-code")}
                   </button>
                 </div>
                 <pre className="p-6 overflow-x-auto text-xs sm:text-[13px] font-mono leading-relaxed text-white/90 bg-black">
-<code><span className="text-white/40">import</span> {"{"} createServer, tool {"}"} <span className="text-white/40">from</span> <span className="text-white/80">"mcpcraft"</span>
+<code>{`import { createServer, tool } from "mcpcraft"
 
-<span className="text-white/40">const</span> server = <span className="text-white/80">createServer</span>({"{"} name: <span className="text-white/80">"my-server"</span> {"}"})
+const server = createServer({ name: "my-server" })
 
-server.<span className="text-white/80">add</span>(<span className="text-white/80">tool</span>({"{"}
-  name: <span className="text-white/80">"send_email"</span>,
-  description: <span className="text-white/80">"Sends an email"</span>,
-  input: {"{"}
-    to: {"{"} type: <span className="text-white/80">"string"</span>, description: <span className="text-white/80">"Recipient"</span> {"}"},
-    body: {"{"} type: <span className="text-white/80">"string"</span>, description: <span className="text-white/80">"Content"</span> {"}"}
-  {"}"},
-  run: <span className="text-white/40">async</span> ({`{ to, body }`}) <span className="text-white/40">=&gt;</span> {"{"}
-    <span className="text-white/40">return</span> {"{"} success: <span className="text-white">true</span> {"}"}
-  {"}"}
-{"}"}))
+server.add(tool({
+  name: "send_email",
+  description: "Sends an email",
+  input: {
+    to: { type: "string", description: "Recipient" },
+    body: { type: "string", description: "Content" }
+  },
+  run: async ({ to, body }) => {
+    return { success: true }
+  }
+}))
 
-server.<span className="text-white/80">start</span>()</code>
+server.start()`}</code>
                 </pre>
               </div>
             </div>
