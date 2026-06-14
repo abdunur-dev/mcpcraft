@@ -531,6 +531,48 @@ body {
   border-radius: 50%;
 }
 
+/* ─── Hero Pixel Grid ─── */
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+}
+
+.hero-grid::after {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.035) 1px, transparent 0);
+  background-size: 32px 32px;
+  animation: gridShift 12s linear infinite;
+}
+
+@keyframes gridShift {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(32px, 32px); }
+}
+
+/* ─── Hero Floating Squares ─── */
+.hero-float-square {
+  position: absolute;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 3px;
+  pointer-events: none;
+  animation: floatSquare 24s ease-in-out infinite;
+}
+
+@keyframes floatSquare {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.2; }
+  25% { transform: translateY(-24px) rotate(90deg); opacity: 0.4; }
+  50% { transform: translateY(-48px) rotate(180deg); opacity: 0.3; }
+  75% { transform: translateY(-24px) rotate(270deg); opacity: 0.5; }
+}
+
 /* ─── Scrollbar Styling ─── */
 ::-webkit-scrollbar {
   width: 6px;

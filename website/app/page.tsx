@@ -200,6 +200,12 @@ export default function Home() {
         {/* ── Hero ── */}
         <section className="relative min-h-[calc(100dvh-3.5rem)] flex items-center overflow-hidden border-b border-white/10">
           <div className="hero-glow" aria-hidden="true" />
+          <div className="hero-grid" aria-hidden="true" />
+          <div className="hero-float-square w-4 h-4" style={{ top: '15%', left: '10%', animationDelay: '0s' }} />
+          <div className="hero-float-square w-3 h-3" style={{ top: '60%', left: '5%', animationDelay: '2s' }} />
+          <div className="hero-float-square w-5 h-5" style={{ top: '25%', right: '12%', animationDelay: '4s' }} />
+          <div className="hero-float-square w-3 h-3" style={{ top: '75%', right: '8%', animationDelay: '6s' }} />
+          <div className="hero-float-square w-6 h-6" style={{ top: '40%', left: '48%', animationDelay: '8s' }} />
           <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 w-full">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
               <div>
@@ -219,6 +225,12 @@ export default function Home() {
                 <p className="text-sm sm:text-base lg:text-lg text-white/60 leading-relaxed mb-6 sm:mb-8 animate-slideUp [animation-delay:300ms]">
                   A lightweight TypeScript SDK for building Model Context Protocol servers. Zero boilerplate, full type safety, and automatic schema validation.
                 </p>
+
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-1.5 text-xs text-white/50 font-mono mb-6 animate-slideUp [animation-delay:350ms]">
+                  <span className="flex items-center gap-1.5"><svg className="w-3.5 h-3.5 text-emerald-400/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg> Fully typed schemas</span>
+                  <span className="flex items-center gap-1.5"><svg className="w-3.5 h-3.5 text-emerald-400/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg> Automatic validation</span>
+                  <span className="flex items-center gap-1.5"><svg className="w-3.5 h-3.5 text-emerald-400/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg> 10 lines to a server</span>
+                </div>
 
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-start gap-3 animate-slideUp [animation-delay:400ms]">
                   <Link
@@ -517,31 +529,6 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           </section>
         </AnimateInView>
 
-        {/* ── CTA ── */}
-        <AnimateInView delay={500}>
-          <section className="py-20 sm:py-28 border-t border-white/10 text-center relative overflow-hidden bg-black">
-            <div className="hero-glow" aria-hidden="true" />
-            <div className="max-w-xl mx-auto px-4 sm:px-6 relative z-10">
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-3">
-                Start building in minutes
-              </h2>
-              <p className="text-white/40 text-sm mb-8 px-4">
-                Install the SDK to create custom API, database, and filesystem integrations for AI agents.
-              </p>
-
-              <Link
-                href="/docs/installation"
-                className="group inline-flex items-center gap-2 px-6 py-3 rounded-md text-xs font-mono uppercase tracking-wider bg-white text-black hover:bg-white/95 transition-colors font-bold"
-              >
-                Read the docs
-                <svg className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                  <polyline points="12 5 19 12 12 19" />
-                </svg>
-              </Link>
-            </div>
-          </section>
-        </AnimateInView>
       </main>
 
       {/* Footer */}
