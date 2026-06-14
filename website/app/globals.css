@@ -3,6 +3,7 @@
 @import "fumadocs-ui/css/preset.css";
 
 :root {
+  --fd-nav-height: 56px !important;
   --background: 0 0% 0%; /* #000000 */
   --foreground: 0 0% 100%; /* #ffffff */
   
@@ -74,10 +75,152 @@ body {
   font-family: var(--font-sans);
 }
 
-/* Vercel tab styles custom utility */
-.vercel-tab-active {
+/* Docs page styling to match landing page */
+#nd-sidebar {
   background-color: #000000;
-  border-bottom: 2px solid #ffffff;
+  border-right: 1px solid #171717;
+  font-size: 0.8125rem;
+}
+
+#nd-sidebar [data-active="true"] {
+  color: #ffffff !important;
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+#nd-sidebar a {
+  color: #a1a1aa;
+}
+
+#nd-sidebar a:hover {
   color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+#nd-toc {
+  border-left: 1px solid #171717;
+  background-color: #000000;
+}
+
+#nd-toc a {
+  color: #a1a1aa;
+}
+
+#nd-toc a:hover {
+  color: #ffffff;
+}
+
+#nd-toc a[data-active="true"] {
+  color: #ffffff !important;
+}
+
+#nd-page {
+  background-color: #000000;
+}
+
+#nd-page .prose {
+  color: #e4e4e7;
+}
+
+#nd-page .prose h1,
+#nd-page .prose h2,
+#nd-page .prose h3,
+#nd-page .prose h4 {
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+#nd-page .prose p {
+  color: #a1a1aa;
+  line-height: 1.75;
+}
+
+#nd-page .prose code {
+  color: #ffffff;
+  background-color: #0a0a0a !important;
+  border: 1px solid #171717;
+  border-radius: 4px;
+  padding: 0.125rem 0.375rem;
+  font-size: 0.8125rem;
+}
+
+#nd-page .prose a {
+  color: #ffffff;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  transition: border-color 0.15s;
+}
+
+#nd-page .prose a:hover {
+  border-bottom-color: #ffffff;
+}
+
+#nd-page .prose strong {
+  color: #ffffff;
+}
+
+#nd-page .prose blockquote {
+  border-left-color: #ffffff;
+  color: #a1a1aa;
+}
+
+#nd-page .prose hr {
+  border-color: #171717;
+}
+
+#nd-page .prose pre {
+  background-color: #050505 !important;
+  border: 1px solid #171717;
+  border-radius: 6px;
+}
+
+#nd-page .prose ul li::marker,
+#nd-page .prose ol li::marker {
+  color: #525252;
+}
+
+#nd-page .prose table {
+  border-color: #171717;
+}
+
+#nd-page .prose thead {
+  color: #ffffff;
+  border-bottom-color: #171717;
+}
+
+#nd-page .prose tbody td {
+  border-top-color: #171717;
+}
+
+#nd-page .prose tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+#nd-page .prose img {
+  border: 1px solid #171717;
+  border-radius: 6px;
+}
+
+/* Landing page style nav links */
+#nd-subnav a {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Mobile nav header match */
+#nd-subnav[data-transparent="false"] {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Sidebar nav title */
+#nd-sidebar .font-medium {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 

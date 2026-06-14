@@ -4,9 +4,9 @@ import type { ReactNode } from "react";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <DocsLayout 
-      tree={source.pageTree} 
-      nav={{ 
+    <DocsLayout
+      tree={source.pageTree}
+      nav={{
         title: (
           <div className="flex items-center gap-2">
             <svg className="w-4 h-4 text-white" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -18,7 +18,8 @@ export default function Layout({ children }: { children: ReactNode }) {
             <span className="font-mono text-xs uppercase tracking-wider font-bold text-white">mcpcraft</span>
           </div>
         ),
-        url: "/"
+        url: "/",
+        transparentMode: "top",
       }}
       links={[
         {
@@ -28,14 +29,20 @@ export default function Layout({ children }: { children: ReactNode }) {
         {
           text: "DOCS",
           url: "/docs",
-          active: "nested-url"
+          active: "nested-url",
         },
         {
           text: "GITHUB",
           url: "https://github.com/abdunur-dev/mcpcraft",
-          external: true
-        }
+          external: true,
+        },
       ]}
+      themeSwitch={{
+        enabled: false,
+      }}
+      searchToggle={{
+        enabled: false,
+      }}
     >
       {children}
     </DocsLayout>
