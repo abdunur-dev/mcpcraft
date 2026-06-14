@@ -1,7 +1,9 @@
 {
   "pages": [
+    "index",
     "installation",
     "quick-start",
+    "comparison",
     "api",
     "examples"
   ]

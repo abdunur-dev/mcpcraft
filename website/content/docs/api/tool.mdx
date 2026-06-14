@@ -5,7 +5,7 @@ description: Define executable tools with schema and type-safety.
 
 # tool()
 
-Defines a callable tool that the LLM/client can execute on your server.
+Defines a callable function that LLM clients can execute on your server. Each tool has a name, description, input schema, and execution handler.
 
 ```typescript
 import { tool } from "mcpcraft"
@@ -19,7 +19,7 @@ const myTool = tool({
     body: { type: "string", description: "Email content" }
   },
   run: async ({ to, subject, body }) => {
-    // your implementation here
+    // your implementation
     return { success: true }
   }
 })
@@ -27,23 +27,90 @@ const myTool = tool({
 
 ---
 
-## Configuration Options
+## Options
 
-- **`name`**: `string` (required) - Alphanumeric name using letters, numbers, and underscores only.
-- **`description`**: `string` (required) - Explains what the tool does. Highly descriptive text helps the LLM decide when and how to call this tool.
-- **`input`**: `InputSchema` (optional) - An object where keys represent the parameter names and values are their property configurations:
-  - `type`: `"string" | "number" | "boolean"`
-  - `description`: `string` (optional)
-  - `required`: `boolean` (optional, defaults to `true`)
-- **`run`**: `(args) => any | Promise<any>` (required) - The execution logic. The parameter `args` is automatically typed based on your `input` schema:
-  - `"string"` -> `string`
-  - `"number"` -> `number`
-  - `"boolean"` -> `boolean`
-  - If `required: false` is specified, the type will include `| undefined`.
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | `string` | Yes | Alphanumeric identifier (letters, numbers, underscores) |
+| `description` | `string` | Yes | Explains the tool's purpose to the LLM |
+| `input` | `InputSchema` | No | Parameter definitions with types and descriptions |
+| `run` | `(args) => any` | Yes | Execution handler with typed arguments |
+
+---
+
+## Input Schema
+
+Define parameters using a plain object where each key is a parameter name:
+
+```typescript
+input: {
+  query:    { type: "string",  description: "Search query" },
+  limit:    { type: "number",  description: "Max results", required: false },
+  verbose:  { type: "boolean", description: "Detailed output", required: false }
+}
+```
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `type` | `"string" \| "number" \| "boolean"` | Yes | — | The parameter data type |
+| `description` | `string` | No | — | Describes the parameter to the LLM |
+| `required` | `boolean` | No | `true` | Whether the client must provide this parameter |
+
+### Type Mapping
+
+Parameters are automatically typed in your `run` handler:
+
+| Schema Type | TypeScript Type | Optional (`required: false`) |
+|-------------|-----------------|------------------------------|
+| `"string"` | `string` | `string \| undefined` |
+| `"number"` | `number` | `number \| undefined` |
+| `"boolean"` | `boolean` | `boolean \| undefined` |
 
 ---
 
 ## Runtime Validation
 
-Every tool call receives automatic runtime validation powered by **Zod**. If the client passes arguments that do not conform to your `input` schema (e.g. sending a string to a boolean parameter), the server automatically returns a detailed validation error message to the client without crashing or throwing a protocol exception, allowing the LLM to understand and self-correct its arguments.
+mcpcraft uses **Zod** under the hood to validate all tool inputs at runtime. When a client sends invalid arguments:
 
+- A structured error response is returned to the client
+- The server does **not** crash or throw unhandled exceptions
+- The LLM receives clear feedback and can self-correct
+
+```typescript
+// If client sends: { limit: "ten" } instead of { limit: 10 }
+// Response to client:
+// {
+//   "error": "Validation failed: Expected number, received string at 'limit'"
+// }
+```
+
+---
+
+## Full Example
+
+```typescript
+import { createServer, tool } from "mcpcraft"
+
+const server = createServer({ name: "math-server" })
+
+server.add(tool({
+  name: "calculate",
+  description: "Performs basic arithmetic",
+  input: {
+    a: { type: "number", description: "First operand" },
+    b: { type: "number", description: "Second operand" },
+    operation: { type: "string", description: "One of: add, subtract, multiply, divide" }
+  },
+  run: async ({ a, b, operation }) => {
+    switch (operation) {
+      case "add":      return { result: a + b }
+      case "subtract": return { result: a - b }
+      case "multiply": return { result: a * b }
+      case "divide":   return { result: a / b }
+      default:         return { error: "Unknown operation" }
+    }
+  }
+}))
+
+server.start()
+```

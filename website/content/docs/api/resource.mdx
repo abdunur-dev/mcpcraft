@@ -5,13 +5,13 @@ description: Expose read-only files, data, and context templates.
 
 # resource()
 
-Defines a static or dynamic data entity that the client can load into the LLM context.
+Defines a static or dynamic data source that clients can load into the LLM context. Resources are read-only and identified by URIs.
 
 ```typescript
 import { resource } from "mcpcraft"
 
-// 1. Static Resource
-const staticResource = resource({
+// Static resource
+const systemInfo = resource({
   name: "system_info",
   description: "Exposes system information",
   uri: "info://system",
@@ -21,14 +21,14 @@ const staticResource = resource({
   }
 })
 
-// 2. Dynamic Resource Template
-const dynamicTemplate = resource({
+// Dynamic resource template
+const userProfile = resource({
   name: "user_profile",
   description: "Dynamic profile loader",
   uri: "users://{userId}/profile",
   mimeType: "application/json",
   fetch: async (params) => {
-    const { userId } = params; // fully parsed from URL!
+    const { userId } = params
     return { id: userId, username: `user_${userId}` }
   }
 })
@@ -36,11 +36,60 @@ const dynamicTemplate = resource({
 
 ---
 
-## Configuration Options
+## Options
 
-- **`name`**: `string` (required) - Name of the resource.
-- **`description`**: `string` (required) - A description of the data returned by the resource.
-- **`uri`**: `string` (required) - The identifier URI (e.g. `info://system`) or a template containing variables inside curly braces (e.g. `users://{userId}/profile`).
-- **`mimeType`**: `string` (optional) - The MIME format of the content (e.g., `application/json` or `text/plain`).
-- **`fetch`**: `(params) => any | Promise<any>` (required) - The resolver function returning the resource data. If your `uri` contains variables, `params` is populated with the parsed values.
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | `string` | Yes | Identifies the resource |
+| `description` | `string` | Yes | Describes the data returned to the LLM |
+| `uri` | `string` | Yes | URI identifier (supports `{variable}` templates) |
+| `mimeType` | `string` | No | MIME type, e.g. `application/json` or `text/plain` |
+| `fetch` | `(params) => any` | Yes | Resolver that returns the resource data |
 
+---
+
+## URI Templates
+
+Use `{variable}` syntax in URIs to create dynamic resources that accept parameters:
+
+| URI Pattern | Example Call | `params` Received |
+|-------------|-------------|-------------------|
+| `info://system` | `info://system` | `{}` |
+| `users://{userId}/profile` | `users://42/profile` | `{ userId: "42" }` |
+| `orders://{orgId}/items/{itemId}` | `orders://acme/items/99` | `{ orgId: "acme", itemId: "99" }` |
+
+Variables are automatically parsed from the URI path and passed to your `fetch` handler.
+
+---
+
+## Full Example
+
+```typescript
+import { createServer, resource } from "mcpcraft"
+
+const server = createServer({ name: "data-server" })
+
+server.add(resource({
+  name: "server_status",
+  description: "Current server health metrics",
+  uri: "status://health",
+  mimeType: "application/json",
+  fetch: async () => ({
+    uptime: process.uptime(),
+    memory: process.memoryUsage(),
+    cpu: process.cpuUsage()
+  })
+}))
+
+server.add(resource({
+  name: "document",
+  description: "Fetches a document by ID",
+  uri: "docs://{docId}",
+  mimeType: "text/plain",
+  fetch: async ({ docId }) => {
+    return `Content of document ${docId}`
+  }
+}))
+
+server.start()
+```

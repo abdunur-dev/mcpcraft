@@ -1,0 +1,62 @@
+---
+title: Overview
+description: Everything you need to build MCP servers with mcpcraft.
+---
+
+# Overview
+
+mcpcraft is a lightweight TypeScript SDK for building Model Context Protocol (MCP) servers. Zero boilerplate, full type safety, and automatic schema validation — designed for developers who want to ship fast.
+
+---
+
+## Features
+
+### Zero Boilerplate
+Create a running MCP server in just 10 lines of code. No protocol plumbing, transport configuration, or manual JSON-RPC message handlers required.
+
+### Full Type Safety
+Handler input types are inferred automatically from your tool parameters. Zero type casting, complete autocomplete in your editor.
+
+### Built-in Validation
+Dynamic Zod validation checks all inputs before they reach your handler. Invalid parameters receive clear, structured error messages back to the LLM — no crashes, no protocol exceptions.
+
+### Tools & Resources
+Clean APIs to register both executable tools (for LLM actions) and resources (for context loading). Static files and dynamic URI templates both use the same simple `add()` API.
+
+### Official SDK Foundation
+mcpcraft wraps the official `@modelcontextprotocol/sdk`. It remains fully spec-compliant and compatible with all MCP hosts including Claude Desktop, VS Code Copilot, and custom clients.
+
+### CLI Scaffolding
+Instantly scaffold a new ready-to-run MCP server project configured with TypeScript and mcpcraft in a single command.
+
+---
+
+## Architecture
+
+mcpcraft sits on top of the official `@modelcontextprotocol/sdk`. When you build with mcpcraft, you get:
+
+- **Automatic transport setup** — stdio transport configured and launched with a single `.start()` call
+- **Schema-driven type inference** — your `input` object automatically generates TypeScript types and Zod validators
+- **Chainable API** — register multiple tools and resources fluently with `.add()`
+- **Full protocol compatibility** — all MCP features (tools, resources, notifications, capabilities) are accessible
+
+---
+
+## Quick Comparison
+
+| Feature | Raw SDK | mcpcraft |
+|---------|---------|----------|
+| Lines for a basic server | 100+ | ~12 |
+| Type-safe handlers | Manual | Automatic |
+| Input validation | Manual checks | Zod-powered |
+| Transport config | Manual | Automatic |
+| Boilerplate | Extensive | Minimal |
+
+---
+
+## Next Steps
+
+- [Installation](/docs/installation) — Get started in your project
+- [Quick Start](/docs/quick-start) — Build your first server in 5 minutes
+- [API Reference](/docs/api/create-server) — Explore the full API
+- [Examples](/docs/examples/basic-server) — See real-world usage
