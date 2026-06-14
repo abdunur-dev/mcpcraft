@@ -1,6 +1,6 @@
 ---
 title: Quick Start
-description: Build your first MCP server with mcpkit in less than 5 minutes.
+description: Build your first MCP server with mcpcraft in less than 5 minutes.
 ---
 
 # Quick Start
@@ -9,10 +9,10 @@ Create your first Model Context Protocol (MCP) server in under 5 minutes.
 
 ## 1. Install
 
-First, install `mcpkit` and `zod` in your project folder:
+First, install `mcpcraft` and `zod` in your project folder:
 
 ```bash
-npm install mcpkit zod
+npm install mcpcraft zod
 ```
 
 ## 2. Create your server
@@ -20,7 +20,7 @@ npm install mcpkit zod
 Create a file named `server.ts` and add the following code:
 
 ```typescript
-import { createServer, tool } from "mcpkit"
+import { createServer, tool } from "mcpcraft"
 
 // 1. Initialize the server
 const server = createServer({
@@ -53,3 +53,4 @@ npx ts-node server.ts
 ```
 
 Your MCP server is now running on standard input/output (stdio) transport, ready to be connected to any compatible MCP host such as Claude Desktop or Cursor!
+

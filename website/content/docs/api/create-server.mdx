@@ -1,6 +1,6 @@
 ---
 title: createServer
-description: Initialize and configure your mcpkit server.
+description: Initialize and configure your mcpcraft server.
 ---
 
 # createServer
@@ -8,7 +8,7 @@ description: Initialize and configure your mcpkit server.
 Initialize and configure a new Model Context Protocol (MCP) server instance.
 
 ```typescript
-import { createServer } from "mcpkit"
+import { createServer } from "mcpcraft"
 
 const server = createServer({
   name: "my-server",       // Required. Used to identify the server.
@@ -45,3 +45,4 @@ await server.start()
 
 ### `server.server`
 Exposes the underlying official `Server` instance from `@modelcontextprotocol/sdk/server/index.js` for developers needing low-level access to the protocol capabilities, notifications, or custom transports.
+

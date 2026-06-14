@@ -1,26 +1,26 @@
-# mcpkit
+# mcpcraft
 
-[![npm version](https://img.shields.io/npm/v/mcpkit.svg?style=flat-square)](https://www.npmjs.com/package/mcpkit)
+[![npm version](https://img.shields.io/npm/v/mcpcraft.svg?style=flat-square)](https://www.npmjs.com/package/mcpcraft)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 
 A lightweight and elegant SDK for building Model Context Protocol (MCP) servers fast.
 
 ---
 
-## Why mcpkit?
+## Why mcpcraft?
 
-The official MCP SDK is powerful but requires significant JSON-RPC boilerplate and manual schema definitions. `mcpkit` wraps it to provide a streamlined, zero-config API with automatic TypeScript type inference and Zod runtime schema validation.
+The official MCP SDK is powerful but requires significant JSON-RPC boilerplate and manual schema definitions. `mcpcraft` wraps it to provide a streamlined, zero-config API with automatic TypeScript type inference and Zod runtime schema validation.
 
 ## Install
 
 ```bash
-npm install mcpkit zod
+npm install mcpcraft zod
 ```
 
 ## Quick Start
 
 ```typescript
-import { createServer, tool } from "mcpkit";
+import { createServer, tool } from "mcpcraft";
 
 const server = createServer({ name: "my-mcp-server" });
 
@@ -82,8 +82,9 @@ Defines an MCP resource or resource template.
 
 ## Built on top of the official MCP SDK
 
-`mcpkit` is designed to play nicely with the official ecosystem. It runs directly on top of `@modelcontextprotocol/sdk` and uses the standard stdio transport, meaning it works out-of-the-box with Cursor, Claude Desktop, and all other MCP hosts.
+`mcpcraft` is designed to play nicely with the official ecosystem. It runs directly on top of `@modelcontextprotocol/sdk` and uses the standard stdio transport, meaning it works out-of-the-box with Cursor, Claude Desktop, and all other MCP hosts.
 
 ## License
 
 MIT
+

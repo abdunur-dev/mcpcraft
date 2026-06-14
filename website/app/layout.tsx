@@ -9,19 +9,19 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "mcpkit — Build MCP Servers Fast",
+  title: "mcpcraft — Build MCP Servers Fast",
   description: "Lightweight TypeScript SDK for building MCP servers. Zero boilerplate, full type safety.",
   openGraph: {
-    title: "mcpkit — Build MCP Servers Fast",
+    title: "mcpcraft — Build MCP Servers Fast",
     description: "Lightweight TypeScript SDK for building MCP servers. Zero boilerplate, full type safety.",
-    url: "https://mcpkit.org",
-    siteName: "mcpkit",
+    url: "https://mcpcraft.org",
+    siteName: "mcpcraft",
     images: [
       {
-        url: "https://mcpkit.org/og-image.png",
+        url: "https://mcpcraft.org/og-image.png",
         width: 1200,
         height: 630,
-        alt: "mcpkit — Build MCP Servers Fast"
+        alt: "mcpcraft — Build MCP Servers Fast"
       }
     ],
     locale: "en_US",
@@ -29,9 +29,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "mcpkit — Build MCP Servers Fast",
+    title: "mcpcraft — Build MCP Servers Fast",
     description: "Lightweight TypeScript SDK for building MCP servers. Zero boilerplate, full type safety.",
-    images: ["https://mcpkit.org/og-image.png"],
+    images: ["https://mcpcraft.org/og-image.png"],
   },
 };
 
@@ -50,3 +50,4 @@ export default function RootLayout({
     </html>
   );
 }
+

@@ -8,7 +8,7 @@ description: Define executable tools with schema and type-safety.
 Defines a callable tool that the LLM/client can execute on your server.
 
 ```typescript
-import { tool } from "mcpkit"
+import { tool } from "mcpcraft"
 
 const myTool = tool({
   name: "send_email",
@@ -46,3 +46,4 @@ const myTool = tool({
 ## Runtime Validation
 
 Every tool call receives automatic runtime validation powered by **Zod**. If the client passes arguments that do not conform to your `input` schema (e.g. sending a string to a boolean parameter), the server automatically returns a detailed validation error message to the client without crashing or throwing a protocol exception, allowing the LLM to understand and self-correct its arguments.
+

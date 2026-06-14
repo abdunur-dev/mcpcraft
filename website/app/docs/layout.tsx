@@ -7,7 +7,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     <DocsLayout 
       tree={source.pageTree} 
       nav={{ 
-        title: "mcpkit Docs",
+        title: "mcpcraft Docs",
         url: "/"
       }}
     >
@@ -15,3 +15,4 @@ export default function Layout({ children }: { children: ReactNode }) {
     </DocsLayout>
   );
 }
+

@@ -13,7 +13,7 @@ export default function Home() {
     setTimeout(() => setCopiedText(""), 2000);
   };
 
-  const mcpkitLogo = (
+  const mcpcraftLogo = (
     <div className="flex items-center gap-2">
       <svg className="w-6 h-6 text-[#7c3aed]" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M16 2 L28 9 L28 23 L16 30 L4 23 L4 9 Z" fill="currentColor" fillOpacity="0.15" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/>
@@ -21,7 +21,7 @@ export default function Home() {
         <path d="M16 16 L28 9 L28 23 L16 30 Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/>
         <path d="M4 9 L16 16 L16 30 L4 23 Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/>
       </svg>
-      <span className="font-bold text-lg tracking-tight text-[#fafafa]">mcpkit</span>
+      <span className="font-bold text-lg tracking-tight text-[#fafafa]">mcpcraft</span>
     </div>
   );
 
@@ -30,7 +30,7 @@ export default function Home() {
       {/* Announcement Banner */}
       {bannerVisible && (
         <div className="relative w-full bg-[#7c3aed] text-white px-4 py-2 text-center text-xs sm:text-sm font-medium z-50 flex items-center justify-center gap-2 transition-all">
-          <span>🚀 mcpkit v0.1.0 is out — Build MCP servers in minutes</span>
+          <span>🚀 mcpcraft v0.1.0 is out — Build MCP servers in minutes</span>
           <Link href="/docs/installation" className="underline hover:text-purple-100 transition-colors font-semibold">
             Read the docs &rarr;
           </Link>
@@ -50,7 +50,7 @@ export default function Home() {
       <header className="sticky top-0 z-40 w-full border-b border-[#1f1f23] bg-[#09090b]/80 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link href="/" className="hover:opacity-95 transition-opacity">
-            {mcpkitLogo}
+            {mcpcraftLogo}
           </Link>
           <nav className="flex items-center gap-4 sm:gap-6">
             <Link href="/docs" className="text-sm font-medium text-[#71717a] hover:text-[#fafafa] transition-colors">
@@ -65,7 +65,7 @@ export default function Home() {
               GitHub
             </a>
             <a
-              href="https://npmjs.com/package/mcpkit"
+              href="https://npmjs.com/package/mcpcraft"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#111113] border border-[#1f1f23] text-[#7c3aed]"
@@ -120,7 +120,7 @@ export default function Home() {
                 <span className="text-xs text-[#71717a] font-mono ml-2">server.ts</span>
               </div>
               <button 
-                onClick={() => handleCopy(`import { createServer, tool } from "mcpkit"
+                onClick={() => handleCopy(`import { createServer, tool } from "mcpcraft"
 
 const server = createServer({ name: "my-server" })
 
@@ -150,7 +150,7 @@ server.start()`, "hero-code")}
               </button>
             </div>
             <pre className="p-5 overflow-x-auto text-xs sm:text-sm font-mono leading-relaxed text-[#fafafa] bg-[#0d0d0f]">
-<code><span className="text-purple-400">import</span> {"{"} createServer, tool {"}"} <span className="text-purple-400">from</span> <span className="text-green-300">"mcpkit"</span>
+<code><span className="text-purple-400">import</span> {"{"} createServer, tool {"}"} <span className="text-purple-400">from</span> <span className="text-green-300">"mcpcraft"</span>
 
 <span className="text-purple-400">const</span> server = <span className="text-blue-400">createServer</span>({"{"} name: <span className="text-green-300">"my-server"</span> {"}"})
 
@@ -173,10 +173,10 @@ server.<span className="text-blue-400">start</span>()</code>
           {/* Copy-paste CLI block */}
           <div className="max-w-sm mx-auto flex items-center justify-between border border-[#1f1f23] rounded-lg bg-[#111113] pl-4 pr-2 py-1.5 text-sm font-mono text-[#fafafa]">
             <span className="text-[#71717a]">
-              $ <span className="text-[#fafafa]">npm install mcpkit</span>
+              $ <span className="text-[#fafafa]">npm install mcpcraft</span>
             </span>
             <button 
-              onClick={() => handleCopy("npm install mcpkit", "install-cmd")}
+              onClick={() => handleCopy("npm install mcpcraft", "install-cmd")}
               className="p-1.5 hover:bg-[#1f1f23] rounded transition-colors text-[#71717a] hover:text-[#fafafa]"
               title="Copy install command"
             >
@@ -283,7 +283,7 @@ server.<span className="text-blue-400">start</span>()</code>
             </div>
             <h3 className="text-lg font-bold text-[#fafafa] mb-2">Official SDK</h3>
             <p className="text-sm text-[#71717a] leading-relaxed">
-              mcpkit wraps the official `@modelcontextprotocol/sdk`. It remains fully spec-compliant and compatible with all MCP hosts.
+              mcpcraft wraps the official `@modelcontextprotocol/sdk`. It remains fully spec-compliant and compatible with all MCP hosts.
             </p>
           </div>
 
@@ -296,7 +296,7 @@ server.<span className="text-blue-400">start</span>()</code>
             </div>
             <h3 className="text-lg font-bold text-[#fafafa] mb-2">CLI Scaffolding</h3>
             <p className="text-sm text-[#71717a] leading-relaxed">
-              Instantly scaffold a new ready-to-run MCP server project configured with typescript and mcpkit in a single command.
+              Instantly scaffold a new ready-to-run MCP server project configured with typescript and mcpcraft in a single command.
             </p>
           </div>
         </div>
@@ -326,7 +326,7 @@ server.<span className="text-blue-400">start</span>()</code>
             </div>
             <div className="p-6 font-mono text-xs sm:text-sm space-y-2.5 text-[#fafafa]">
               <div>
-                <span className="text-purple-400">$</span> npx mcpkit init
+                <span className="text-purple-400">$</span> npx mcpcraft init
               </div>
               <div className="text-green-400">
                 ✔ <span className="text-[#fafafa]">What is your server name?</span> <span className="text-[#71717a]">›</span> my-server
@@ -358,10 +358,10 @@ server.<span className="text-blue-400">start</span>()</code>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Without mcpkit */}
+            {/* Without mcpcraft */}
             <div className="flex flex-col h-[480px]">
               <div className="px-4 py-2 border border-red-500/20 bg-red-950/10 rounded-t-lg text-xs font-semibold text-red-400 border-b-0 flex items-center justify-between">
-                <span>Without mcpkit (100+ lines)</span>
+                <span>Without mcpcraft (100+ lines)</span>
                 <span className="text-red-500/50">RAW SDK Boilerplate</span>
               </div>
               <div className="flex-1 border border-[#1f1f23] bg-[#0d0d0f] rounded-b-lg p-5 font-mono text-xs overflow-hidden relative leading-relaxed">
@@ -405,15 +405,15 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
               </div>
             </div>
 
-            {/* With mcpkit */}
+            {/* With mcpcraft */}
             <div className="flex flex-col h-[480px]">
               <div className="px-4 py-2 border border-green-500/20 bg-green-950/10 rounded-t-lg text-xs font-semibold text-green-400 border-b-0 flex items-center justify-between">
-                <span>With mcpkit (12 lines)</span>
+                <span>With mcpcraft (12 lines)</span>
                 <span className="text-green-500/50">Simple & Clean</span>
               </div>
               <div className="flex-1 border border-[#1f1f23] bg-[#0d0d0f] rounded-b-lg p-5 font-mono text-xs overflow-y-auto leading-relaxed">
                 <pre className="text-[#fafafa]">
-<code><span className="text-purple-400">import</span> {"{"} createServer, tool {"}"} <span className="text-purple-400">from</span> <span className="text-green-300">"mcpkit"</span>
+<code><span className="text-purple-400">import</span> {"{"} createServer, tool {"}"} <span className="text-purple-400">from</span> <span className="text-green-300">"mcpcraft"</span>
 
 <span className="text-purple-400">const</span> server = <span className="text-blue-400">createServer</span>({"{"} name: <span className="text-green-300">"my-server"</span> {"}"})
 
@@ -449,9 +449,9 @@ server.<span className="text-blue-400">start</span>()</code>
           </p>
 
           <div className="max-w-xs mx-auto flex items-center justify-between border border-[#1f1f23] rounded-lg bg-[#0d0d0f] pl-4 pr-2 py-1.5 text-sm font-mono text-[#fafafa] mb-6">
-            <span className="text-[#71717a]">$ <span className="text-[#fafafa]">npm install mcpkit</span></span>
+            <span className="text-[#71717a]">$ <span className="text-[#fafafa]">npm install mcpcraft</span></span>
             <button 
-              onClick={() => handleCopy("npm install mcpkit", "cta-install-cmd")}
+              onClick={() => handleCopy("npm install mcpcraft", "cta-install-cmd")}
               className="p-1.5 hover:bg-[#1f1f23] rounded transition-colors text-[#71717a] hover:text-[#fafafa]"
             >
               {copiedText === "cta-install-cmd" ? (
@@ -480,17 +480,18 @@ server.<span className="text-blue-400">start</span>()</code>
       <footer className="mt-auto border-t border-[#1f1f23] bg-[#09090b] py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex flex-col items-center sm:items-start gap-2">
-            {mcpkitLogo}
+            {mcpcraftLogo}
             <span className="text-xs text-[#71717a] mt-1">Built for the Model Context Protocol ecosystem.</span>
           </div>
           <div className="flex items-center gap-6 text-sm text-[#71717a]">
             <Link href="/docs" className="hover:text-[#fafafa] transition-colors">Docs</Link>
             <a href="https://github.com" target="_blank" rel="noreferrer" className="hover:text-[#fafafa] transition-colors">GitHub</a>
-            <a href="https://npmjs.com/package/mcpkit" target="_blank" rel="noreferrer" className="hover:text-[#fafafa] transition-colors">npm</a>
-            <a href="https://raw.githubusercontent.com/username/mcpkit/main/LICENSE" target="_blank" rel="noreferrer" className="hover:text-[#fafafa] transition-colors">MIT License</a>
+            <a href="https://npmjs.com/package/mcpcraft" target="_blank" rel="noreferrer" className="hover:text-[#fafafa] transition-colors">npm</a>
+            <a href="https://raw.githubusercontent.com/username/mcpcraft/main/LICENSE" target="_blank" rel="noreferrer" className="hover:text-[#fafafa] transition-colors">MIT License</a>
           </div>
         </div>
       </footer>
     </div>
   );
 }
+

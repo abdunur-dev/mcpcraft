@@ -41,7 +41,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   }
 
   return {
-    title: `${page.data.title} — mcpkit Docs`,
+    title: `${page.data.title} — mcpcraft Docs`,
     description: page.data.description,
   };
 }

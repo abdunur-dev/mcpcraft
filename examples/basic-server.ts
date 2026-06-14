@@ -4,7 +4,7 @@ import { createServer, tool, resource } from "../src";
 const server = createServer({
   name: "basic-example-server",
   version: "1.0.0",
-  description: "A basic example MCP server built with mcpkit"
+  description: "A basic example MCP server built with mcpcraft"
 });
 
 // Register the get_weather tool
@@ -96,3 +96,4 @@ server.start().catch((error) => {
   console.error("Failed to start server:", error);
   process.exit(1);
 });
+

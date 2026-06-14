@@ -1,5 +1,5 @@
 {
-  "name": "mcpkit",
+  "name": "mcpcraft",
   "version": "0.1.0",
   "description": "The lightweight SDK for building MCP servers fast",
   "main": "dist/index.js",
@@ -28,3 +28,4 @@
     "typescript": "^6.0.3"
   }
 }
+

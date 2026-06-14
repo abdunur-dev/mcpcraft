@@ -119,7 +119,7 @@ export function createServer(options: ServerOptions): McpServerInstance {
         const errMsg = `Validation failed: ${parseResult.error.issues
           .map(e => `${e.path.join(".")}: ${e.message}`)
           .join(", ")}`;
-        console.error(`[mcpkit] Tool "${toolName}" validation error:`, errMsg);
+        console.error(`[mcpcraft] Tool "${toolName}" validation error:`, errMsg);
         return {
           content: [{ type: "text", text: errMsg }],
           isError: true
@@ -146,7 +146,7 @@ export function createServer(options: ServerOptions): McpServerInstance {
         content: [{ type: "text", text: JSON.stringify(result, null, 2) }]
       };
     } catch (err: any) {
-      console.error(`[mcpkit] Tool "${toolName}" execution error:`, err);
+      console.error(`[mcpcraft] Tool "${toolName}" execution error:`, err);
       return {
         content: [{ type: "text", text: `Error: ${err.message || String(err)}` }],
         isError: true
@@ -222,7 +222,7 @@ export function createServer(options: ServerOptions): McpServerInstance {
             }]
           };
         } catch (err: any) {
-          console.error(`[mcpkit] Resource "${uri}" read error:`, err);
+          console.error(`[mcpcraft] Resource "${uri}" read error:`, err);
           throw new Error(`Failed to read resource ${uri}: ${err.message || String(err)}`);
         }
       }
@@ -234,7 +234,7 @@ export function createServer(options: ServerOptions): McpServerInstance {
   const start = async () => {
     const transport = new StdioServerTransport();
     await mcpServer.connect(transport);
-    console.error(`[mcpkit] MCP server "${name}" running on stdio transport`);
+    console.error(`[mcpcraft] MCP server "${name}" running on stdio transport`);
   };
 
   const serverInstance: McpServerInstance = {
@@ -245,3 +245,4 @@ export function createServer(options: ServerOptions): McpServerInstance {
 
   return serverInstance;
 }
+
