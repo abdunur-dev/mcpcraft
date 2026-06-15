@@ -10,6 +10,11 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 import { Snippet } from "@/components/ui/Snippet";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { GridSystem, Grid, GridCell } from "@/components/ui/Grid";
+import { Feedback } from "@/components/ui/Feedback";
+import { CodeBlock } from "@/components/ui/CodeBlock";
+import { AvatarGroup } from "@/components/ui/AvatarGroup";
+import { ThemeSwitcher } from "@/components/ui/ThemeSwitcher";
 
 function AnimateInView({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -38,51 +43,6 @@ function Reveal({
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
       transition={{ duration: 0.6, ease: "easeOut", delay }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-function StaggerReveal({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-  return (
-    <motion.div
-      ref={ref}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
-      variants={{
-        hidden: {},
-        visible: { transition: { staggerChildren: 0.1 } },
-      }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-function FadeUpChild({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <motion.div
-      variants={{
-        hidden: { opacity: 0, y: 24 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-      }}
       className={className}
     >
       {children}
@@ -369,139 +329,135 @@ export default function Home() {
           </section>
         </Reveal>
 
-        {/* ─── Bento Features ─── */}
+        {/* ── Everything You Need ── */}
         <section className="py-24 sm:py-32">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <GridSystem unstable_useContainer>
             <Reveal>
               <div className="text-center mb-16">
-                <h2 className="text-3xl sm:text-4xl font-semibold tracking-[-0.03em] text-white mb-3">
+                <div className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-mono border border-white/10 bg-white/[0.02] text-white/40 uppercase tracking-wider mb-4">Features</div>
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-3">
                   Everything you need
                 </h2>
-                <p className="text-[#888888] text-sm sm:text-base max-w-md mx-auto">
+                <p className="text-white/40 text-sm max-w-md mx-auto">
                   A framework that gets out of your way. Define tools. Ship servers.
                 </p>
               </div>
             </Reveal>
 
-            {/* Row 1: 60/40 */}
-            <StaggerReveal className="grid grid-cols-1 lg:grid-cols-5 gap-4 mb-4">
-              <FadeUpChild className="lg:col-span-3">
-                <div className="bento-card-lg h-full flex flex-col relative overflow-hidden">
-                  <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/[0.02] rounded-full blur-3xl pointer-events-none" />
-                  <div className="relative z-10">
-                    <h3 className="text-lg font-semibold text-white mb-2">Zero Boilerplate</h3>
-                    <p className="text-sm text-[#888888] leading-relaxed mb-6 max-w-sm">
-                      Skip protocol setup entirely. Define tools with a plain object and ship.
-                    </p>
-                    <div className="bg-[#111111] rounded-md border border-white/10 p-4 overflow-x-auto">
-                      <pre className="text-xs font-mono leading-relaxed text-white/80">
-                        <code>
-                          <SyntaxLine><Kw>import</Kw> {'{'} tool {'}'} <Kw>from</Kw> <Str>"mcpcraft"</Str></SyntaxLine>
-                          <SyntaxLine>{' '}</SyntaxLine>
-                          <SyntaxLine><Kw>const</Kw> myTool = <Fn>tool</Fn>({'{}'}</SyntaxLine>
-                          <SyntaxLine>  name: <Str>"hello"</Str>,</SyntaxLine>
-                          <SyntaxLine>  run: <Kw>async</Kw> () =&gt; {'{'} ... {'}'}</SyntaxLine>
-                          <SyntaxLine>{'}'})</SyntaxLine>
-                        </code>
-                      </pre>
-                    </div>
-                  </div>
+            <Grid columns={{ sm: 1, md: 2, lg: 5 }} rows={{ sm: 7, md: 5, lg: 3 }}>
+              <GridCell column={{ sm: '1', md: '1/3', lg: '1/4' }} row={{ sm: '1/3', md: '1/3', lg: '1/2' }} solid>
+                <h3 className="text-lg font-semibold text-white mb-2">Zero Boilerplate</h3>
+                <p className="text-sm text-white/40 leading-relaxed mb-6 max-w-sm">
+                  Skip protocol setup entirely. Define tools with a plain object and ship.
+                </p>
+                <div className="bg-black rounded-md border border-white/10 p-4 overflow-x-auto">
+                  <pre className="text-xs font-mono leading-relaxed text-white/80">
+                    <code>
+                      <SyntaxLine><Kw>import</Kw> {'{'} tool {'}'} <Kw>from</Kw> <Str>"mcpcraft"</Str></SyntaxLine>
+                      <SyntaxLine>{' '}</SyntaxLine>
+                      <SyntaxLine><Kw>const</Kw> myTool = <Fn>tool</Fn>({'{}'}</SyntaxLine>
+                      <SyntaxLine>  name: <Str>"hello"</Str>,</SyntaxLine>
+                      <SyntaxLine>  run: <Kw>async</Kw> () =&gt; {'{'} ... {'}'}</SyntaxLine>
+                      <SyntaxLine>{'}'})</SyntaxLine>
+                    </code>
+                  </pre>
                 </div>
-              </FadeUpChild>
-              <FadeUpChild className="lg:col-span-2">
-                <div className="bento-card h-full flex flex-col items-start justify-center relative overflow-hidden">
-                  <div className="absolute -top-12 -right-12 w-32 h-32 bg-white/[0.03] rounded-full blur-2xl pointer-events-none" />
-                  <div className="relative z-10">
-                    <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 mb-4">
-                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
-                    </div>
-                    <h3 className="text-lg font-semibold text-white mb-2">Full Type Safety</h3>
-                    <p className="text-sm text-[#888888] leading-relaxed max-w-xs">
-                      Inputs inferred automatically. No manual typing. No casting.
-                    </p>
-                  </div>
+              </GridCell>
+              <GridCell column={{ sm: '1', md: '3/5', lg: '4/6' }} row={{ sm: '3', md: '3', lg: '1/2' }}>
+                <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 mb-4">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
                 </div>
-              </FadeUpChild>
-            </StaggerReveal>
+                <h3 className="text-lg font-semibold text-white mb-2">Full Type Safety</h3>
+                <p className="text-sm text-white/40 leading-relaxed">
+                  Inputs inferred automatically. No manual typing. No casting.
+                </p>
+              </GridCell>
 
-            {/* Row 2: 3 equal columns */}
-            <StaggerReveal className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-              {[
-                {
-                  icon: (
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-3.5L6 21l1.5-7.5L2 9h7z" />
-                    </svg>
-                  ),
-                  title: "Runtime Validation",
-                  desc: "Zod-powered validation catches errors before they reach your handler.",
-                },
-                {
-                  icon: (
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /><rect x="14" y="14" width="7" height="7" />
-                    </svg>
-                  ),
-                  title: "Tools & Resources",
-                  desc: "One API for tools, resources, templates. Simple and composable.",
-                },
-                {
-                  icon: (
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M9 12l2 2 4-4" /><circle cx="12" cy="12" r="10" />
-                    </svg>
-                  ),
-                  title: "Standards Compliant",
-                  desc: "100% MCP spec compliant. Works with Claude, Cursor, and more.",
-                },
-              ].map((f, i) => (
-                <FadeUpChild key={i}>
-                  <div className="bento-card h-full flex flex-col">
-                    <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 mb-4">
-                      {f.icon}
-                    </div>
-                    <h3 className="text-base font-semibold text-white mb-2">{f.title}</h3>
-                    <p className="text-sm text-[#888888] leading-relaxed">{f.desc}</p>
-                  </div>
-                </FadeUpChild>
-              ))}
-            </StaggerReveal>
+              <GridCell column={{ sm: '1', md: '1/3', lg: '1/3' }} row={{ sm: '4', md: '4', lg: '2' }}>
+                <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 mb-4">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-3.5L6 21l1.5-7.5L2 9h7z" /></svg>
+                </div>
+                <h3 className="text-base font-semibold text-white mb-2">Runtime Validation</h3>
+                <p className="text-sm text-white/40 leading-relaxed">Zod-powered validation catches errors before they reach your handler.</p>
+              </GridCell>
+              <GridCell column={{ sm: '1', md: '3/5', lg: '3/5' }} row={{ sm: '5', md: '4', lg: '2' }}>
+                <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 mb-4">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /></svg>
+                </div>
+                <h3 className="text-base font-semibold text-white mb-2">Tools & Resources</h3>
+                <p className="text-sm text-white/40 leading-relaxed">One API for tools, resources, templates. Simple and composable.</p>
+              </GridCell>
+              <GridCell column={{ sm: '1', md: '1', lg: '5/6' }} row={{ sm: '6', md: '5', lg: '2' }}>
+                <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 mb-4">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 12l2 2 4-4" /><circle cx="12" cy="12" r="10" /></svg>
+                </div>
+                <h3 className="text-base font-semibold text-white mb-2">Standards Compliant</h3>
+                <p className="text-sm text-white/40 leading-relaxed">100% MCP spec compliant. Works with Claude, Cursor, and more.</p>
+              </GridCell>
 
-            {/* Row 3: 40/60 */}
-            <StaggerReveal className="grid grid-cols-1 lg:grid-cols-5 gap-4">
-              <FadeUpChild className="lg:col-span-2">
-                <div className="bento-card h-full flex flex-col">
-                  <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 mb-4">
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 17 10 11 4 5" /><line x1="12" y1="19" x2="20" y2="19" /></svg>
-                  </div>
-                  <h3 className="text-lg font-semibold text-white mb-2">CLI Scaffolding</h3>
-                  <p className="text-sm text-[#888888] leading-relaxed mb-4">Scaffold a new project in seconds.</p>
-                  <div className="bg-black rounded-md border border-white/10 p-3">
-                    <pre className="text-xs font-mono text-white/80">
-                      <code>
-                        <span className="text-emerald-400">$</span> npx mcpcraft init
-                      </code>
-                    </pre>
-                  </div>
+              <GridCell column={{ sm: '1', md: '1/3', lg: '1/3' }} row={{ sm: '7', md: '6', lg: '3' }}>
+                <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 mb-4">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 17 10 11 4 5" /><line x1="12" y1="19" x2="20" y2="19" /></svg>
                 </div>
-              </FadeUpChild>
-              <FadeUpChild className="lg:col-span-3">
-                <div className="bento-card-lg h-full flex flex-col">
-                  <h3 className="text-lg font-semibold text-white mb-2">Works everywhere</h3>
-                  <p className="text-sm text-[#888888] leading-relaxed mb-6">Any MCP-compatible client, zero configuration.</p>
-                  <div className="flex items-center gap-4">
-                    {clients.map((c) => (
-                      <div key={c.label} className="client-icon group relative" title={c.label}>
-                        {c.icon}
-                        <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] text-[#555555] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
-                          {c.label}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+                <h3 className="text-lg font-semibold text-white mb-2">CLI Scaffolding</h3>
+                <p className="text-sm text-white/40 leading-relaxed mb-4">Scaffold a new project in seconds.</p>
+                <div className="bg-black rounded-md border border-white/10 p-3">
+                  <pre className="text-xs font-mono text-white/80">
+                    <code>
+                      <span className="text-emerald-400">$</span> npx mcpcraft init
+                    </code>
+                  </pre>
                 </div>
-              </FadeUpChild>
-            </StaggerReveal>
+              </GridCell>
+              <GridCell column={{ sm: '1', md: '3/5', lg: '3/6' }} row={{ sm: '8', md: '6', lg: '3' }} solid>
+                <h3 className="text-lg font-semibold text-white mb-2">Works everywhere</h3>
+                <p className="text-sm text-white/40 leading-relaxed mb-6">Any MCP-compatible client, zero configuration.</p>
+                <div className="flex items-center gap-4 mb-8">
+                  {clients.map((c) => (
+                    <div key={c.label} className="client-icon group relative" title={c.label}>
+                      {c.icon}
+                      <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] text-white/40 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+                        {c.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <AvatarGroup
+                  limit={4}
+                  members={[
+                    { username: "evilrabbit" },
+                    { username: "rauno" },
+                    { username: "shuding" },
+                    { username: "skllcrn" },
+                    { username: "rauchg" },
+                  ]}
+                  size={28}
+                />
+              </GridCell>
+            </Grid>
+          </GridSystem>
+        </section>
+
+        {/* ── Feedback ── */}
+        <section className="border-y border-white/10 py-8">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <Feedback dryRun label="mcpcraft" />
+            <div className="flex items-center gap-4">
+              <span className="text-xs font-mono text-white/30">Theme</span>
+              <ThemeSwitcher />
+            </div>
+          </div>
+        </section>
+
+        {/* ── Code Playground ── */}
+        <section className="py-20 sm:py-24 border-t border-white/10">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 text-center">
+            <div className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-mono border border-white/10 bg-white/[0.02] text-white/40 uppercase tracking-wider mb-4">Playground</div>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-3">Try it in any language</h2>
+            <p className="text-white/40 text-sm max-w-md mx-auto mb-10">Switch between languages to see MCPCraft in action.</p>
+            <div className="text-left max-w-2xl mx-auto">
+              <CodeBlockWithSwitcher />
+            </div>
           </div>
         </section>
 
@@ -858,5 +814,84 @@ server.add(emailTool)`,
         </div>
       </section>
     </Reveal>
+  );
+}
+
+const playgroundCode = {
+  js: `const { createServer, tool } = require("mcpcraft");
+
+const server = createServer({ name: "my-server" });
+
+server.add(tool({
+  name: "greet",
+  input: { name: { type: "string" } },
+  run: async ({ name }) => {
+    return { message: "Hello " + name };
+  },
+}));
+
+server.start();`,
+  ts: `import { createServer, tool } from "mcpcraft";
+
+const server = createServer({ name: "my-server" });
+
+server.add(tool({
+  name: "greet",
+  input: { name: { type: "string" } },
+  run: async ({ name }) => {
+    return { message: \`Hello \${name}\` };
+  },
+}));
+
+server.start();`,
+  py: `from mcpcraft import create_server, tool
+
+server = create_server({"name": "my-server"})
+
+@server.add
+@tool({
+    "name": "greet",
+    "input": {"name": {"type": "string"}},
+})
+async def greet(name: str):
+    return {"message": f"Hello {name}"}
+
+server.start()`,
+  rs: `use mcpcraft::{create_server, tool};
+
+#[tokio::main]
+async fn main() {
+    let server = create_server("my-server");
+
+    server.add(tool("greet", |name: String| async move {
+        serde_json::json!({ "message": format!("Hello {}", name) })
+    }));
+
+    server.start().await;
+}`,
+};
+
+const playgroundLangs = [
+  { label: "JavaScript", value: "js" },
+  { label: "TypeScript", value: "ts" },
+  { label: "Python", value: "py" },
+  { label: "Rust", value: "rs" },
+];
+
+function CodeBlockWithSwitcher() {
+  const [lang, setLang] = useState("ts");
+
+  return (
+    <CodeBlock
+      filename={`server.${lang}`}
+      language={lang}
+      switcher={{
+        options: playgroundLangs,
+        value: lang,
+        onChange: (l) => setLang(l),
+      }}
+    >
+      {playgroundCode[lang as keyof typeof playgroundCode]}
+    </CodeBlock>
   );
 }
