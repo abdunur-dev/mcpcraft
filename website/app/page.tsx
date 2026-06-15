@@ -4,6 +4,8 @@ import { useState, useRef, useEffect } from "react";
 import {
   motion,
   useInView,
+  useScroll,
+  useSpring,
   AnimatePresence,
 } from "framer-motion";
 import Link from "next/link";
@@ -192,6 +194,16 @@ function Boo({ children }: { children: React.ReactNode }) {
 export default function Home() {
   const [activeTab, setActiveTab] = useState("npm");
   const [copied, setCopied] = useState("");
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
   const handleCopy = (text: string, id: string) => {
     navigator.clipboard.writeText(text);
@@ -199,139 +211,168 @@ export default function Home() {
     setTimeout(() => setCopied(""), 1500);
   };
 
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  const heroCodeText = `import { createServer, tool } from "mcpcraft"\n\nconst server = createServer({ name: "my-server" })\n\nserver.add(tool({\n  name: "send_email",\n  description: "Sends an email",\n  input: {\n    to: { type: "string", description: "Recipient" },\n    body: { type: "string", description: "Content" }\n  },\n  run: async ({ to, body }) => {\n    return { success: true }\n  }\n}))\n\nserver.start()`;
-
-  const logo = (
-    <div className="flex items-center gap-2">
-      <svg className="w-5 h-5 text-white" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16 2 L28 9 L28 23 L16 30 L4 23 L4 9 Z" fill="currentColor" fillOpacity="0.05" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/>
-        <path d="M16 2 L28 9 L16 16 L4 9 Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/>
-        <path d="M16 16 L28 9 L28 23 L16 30 Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/>
-        <path d="M4 9 L16 16 L16 30 L4 23 Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/>
-      </svg>
-      <span className="font-mono text-sm uppercase tracking-wider font-bold text-white">mcpcraft</span>
-    </div>
-  );
-
   return (
-    <div className="min-h-screen flex flex-col bg-black text-white font-sans selection:bg-white/10 selection:text-white">
-      {/* Navigation */}
-      <div className="fixed top-0 left-0 right-0 z-50 flex items-stretch border-b border-white/10 bg-black/80 backdrop-blur-md h-14">
-        <div className="flex items-center px-3 sm:px-6 border-r border-white/10 shrink-0">
-          <Link href="/" className="hover:opacity-85 transition-opacity">{logo}</Link>
-        </div>
-        <div className="hidden sm:flex flex-1 items-stretch">
-          <Link href="/" className="group relative flex items-center px-6 border-r border-white/10 bg-white/[0.02] text-white hover:bg-white/[0.04] transition-colors duration-150">
-            <span className="font-mono text-xs uppercase tracking-wider">readme</span>
-            <div className="absolute bottom-0 inset-x-0 h-[2px] bg-white" />
-          </Link>
-          <Link href="/docs" className="group relative flex items-center px-6 border-r border-white/10 text-white/50 hover:text-white hover:bg-white/[0.02] transition-colors duration-150">
-            <span className="font-mono text-xs uppercase tracking-wider">docs</span>
-          </Link>
-          <a href="https://github.com/abdunur-dev/mcpcraft" target="_blank" rel="noreferrer" className="group relative flex items-center px-6 border-r border-white/10 text-white/50 hover:text-white hover:bg-white/[0.02] transition-colors duration-150">
-            <span className="font-mono text-xs uppercase tracking-wider">github</span>
-          </a>
-        </div>
-        <div className="hidden sm:flex items-center px-6 border-l border-white/10 shrink-0">
-          <a href="https://npmjs.com/package/mcpcraft" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-mono border border-white/15 text-white/70 hover:text-white hover:border-white/30 transition-all bg-white/[0.02]">v0.1.0</a>
-        </div>
-        <div className="flex sm:hidden items-center px-4 border-l border-white/10 ml-auto">
-          <button onClick={() => setMenuOpen(!menuOpen)} className="text-white/60 hover:text-white transition-colors" aria-label="Toggle menu">
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              {menuOpen ? (
-                <><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></>
-              ) : (
-                <><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></>
-              )}
-            </svg>
-          </button>
-        </div>
-      </div>
+    <div className="min-h-screen bg-[#000000] text-white font-sans selection:bg-white/10 selection:text-white">
+      <motion.div className="scroll-progress" style={{ scaleX }} />
 
-      {menuOpen && (
-        <div className="fixed top-14 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-b border-white/10 sm:hidden">
-          <div className="flex flex-col py-2">
-            <Link href="/" onClick={() => setMenuOpen(false)} className="px-6 py-3 font-mono text-xs uppercase tracking-wider text-white hover:bg-white/[0.02] transition-colors border-b border-white/5">readme</Link>
-            <Link href="/docs" onClick={() => setMenuOpen(false)} className="px-6 py-3 font-mono text-xs uppercase tracking-wider text-white/50 hover:text-white hover:bg-white/[0.02] transition-colors border-b border-white/5">docs</Link>
-            <a href="https://github.com/abdunur-dev/mcpcraft" target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)} className="px-6 py-3 font-mono text-xs uppercase tracking-wider text-white/50 hover:text-white hover:bg-white/[0.02] transition-colors">github</a>
+      {/* ─── Navbar ─── */}
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 h-14 border-b transition-colors duration-200 ${
+          scrolled
+            ? "bg-[rgba(0,0,0,0.8)] backdrop-blur-md border-[rgba(255,255,255,0.08)]"
+            : "bg-transparent border-transparent"
+        }`}
+      >
+        <div className="mx-auto max-w-6xl h-full px-4 sm:px-6 flex items-center justify-between">
+          <Link href="/" className="font-mono text-[15px] text-white tracking-tight">
+            mcpcraft
+          </Link>
+          <div className="flex items-center gap-6 font-mono">
+            <Link href="/docs" className="text-sm text-[#888888] hover:text-white transition-colors duration-150">
+              Docs
+            </Link>
+            <a
+              href="https://github.com/abdunur-dev/mcpcraft"
+              target="_blank"
+              rel="noreferrer"
+              className="text-sm text-[#888888] hover:text-white transition-colors duration-150"
+            >
+              GitHub
+            </a>
+            <a
+              href="https://npmjs.com/package/mcpcraft"
+              target="_blank"
+              rel="noreferrer"
+              className="text-sm text-[#888888] hover:text-white transition-colors duration-150"
+            >
+              npm
+            </a>
           </div>
         </div>
-      )}
+      </nav>
 
-      <main className="flex-1 pt-14">
-        {/* ── Hero ── */}
-        <section className="relative min-h-[calc(100dvh-3.5rem)] flex items-center overflow-hidden border-b border-white/10">
-          <div className="hero-glow" aria-hidden="true" />
-          <div className="hero-grid" aria-hidden="true" />
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 w-full">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
-              <div>
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-mono border border-white/10 bg-white/[0.02] text-white/60 mb-6 animate-fadeIn [animation-delay:100ms]">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-                  </span>
-                  v0.1.0 &mdash; now available
-                </div>
-                <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-4 sm:mb-6 leading-[1.05] animate-slideUp [animation-delay:200ms]">
-                  Build MCP Servers{" "}
-                  <span className="bg-gradient-to-r from-white via-white/80 to-white/40 bg-clip-text text-transparent">Fast</span>
-                </h1>
-                <p className="text-sm sm:text-base lg:text-lg text-white/60 leading-relaxed mb-6 sm:mb-8 animate-slideUp [animation-delay:300ms]">
-                  A lightweight TypeScript SDK for building Model Context Protocol servers. Zero boilerplate, full type safety, and automatic schema validation.
-                </p>
-                <div className="flex flex-wrap items-center gap-x-6 gap-y-1.5 text-xs text-white/50 font-mono mb-6 animate-slideUp [animation-delay:350ms]">
-                  <span className="flex items-center gap-1.5"><svg className="w-3.5 h-3.5 text-emerald-400/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg> Fully typed schemas</span>
-                  <span className="flex items-center gap-1.5"><svg className="w-3.5 h-3.5 text-emerald-400/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg> Automatic validation</span>
-                  <span className="flex items-center gap-1.5"><svg className="w-3.5 h-3.5 text-emerald-400/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg> 10 lines to a server</span>
-                </div>
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-start gap-3 animate-slideUp [animation-delay:400ms]">
-                  <Link href="/docs/installation" className="group w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 rounded-md text-[11px] sm:text-xs font-mono uppercase tracking-wider bg-white text-black hover:bg-white/90 transition-all font-bold text-center inline-flex items-center justify-center gap-2">
-                    Get Started
-                    <svg className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+      <main>
+        {/* ─── Hero ─── */}
+        <section className="min-h-[calc(100dvh-3.5rem)] flex items-center pt-14">
+          <div className="mx-auto max-w-6xl w-full px-4 sm:px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              <div className="flex flex-col gap-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                >
+                  <Link
+                    href="/docs"
+                    className="pill-badge inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[13px] border border-[rgba(255,255,255,0.1)] text-[#888888] hover:border-white/40 transition-colors duration-200 font-mono"
+                  >
+                    mcpcraft v0.1.0 is out
+                    <span className="text-white/40">&rarr;</span>
                   </Link>
-                  <a href="https://github.com/abdunur-dev/mcpcraft" target="_blank" rel="noreferrer" className="w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 rounded-md text-[11px] sm:text-xs font-mono uppercase tracking-wider border border-white/15 hover:border-white/30 text-white transition-colors text-center inline-flex items-center justify-center gap-2">
-                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" /></svg>
+                </motion.div>
+
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  className="text-[56px] sm:text-[64px] leading-[1.1] font-semibold tracking-[-0.03em] text-white max-w-lg"
+                >
+                  Build MCP Servers<br />
+                  <span className="text-[#888888]">Without the Pain.</span>
+                </motion.h1>
+
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  className="text-base sm:text-lg text-[#888888] leading-relaxed max-w-[420px]"
+                >
+                  Lightweight TypeScript SDK for MCP servers.
+                  Zero boilerplate. Full type safety.
+                  Automatic Zod validation.
+                </motion.p>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                  className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3"
+                >
+                  <Link
+                    href="/docs/installation"
+                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-black text-sm font-medium"
+                  >
+                    Get Started
+                    <span className="text-black/60">&rarr;</span>
+                  </Link>
+                  <a
+                    href="https://github.com/abdunur-dev/mcpcraft"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-white/20 text-white text-sm font-medium hover:bg-white hover:text-black transition-all duration-200"
+                  >
                     View GitHub
                   </a>
-                </div>
+                </motion.div>
+
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  className="text-xs text-[#555555] font-mono"
+                >
+                  Open source &middot; MIT License &middot; TypeScript first
+                </motion.p>
               </div>
-              <div className="-mx-4 sm:mx-0 animate-fadeIn [animation-delay:500ms]">
-                <div className="rounded-lg border border-white/10 bg-[#050505] shadow-2xl overflow-hidden">
-                  <div className="bg-[#0b0b0b] border-b border-white/10 px-4 py-2.5 flex items-center justify-between">
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="hidden lg:block"
+              >
+                <div className="code-block-card">
+                  <div className="flex items-center justify-between px-4 py-3 border-b border-[rgba(255,255,255,0.06)]">
                     <div className="flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                      <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                      <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                      <span className="text-xs text-white/40 font-mono ml-2">server.ts</span>
+                      <span className="w-3 h-3 rounded-full bg-red-500/60" />
+                      <span className="w-3 h-3 rounded-full bg-yellow-500/60" />
+                      <span className="w-3 h-3 rounded-full bg-green-500/60" />
+                      <span className="text-xs text-[#555555] font-mono ml-2">server.ts</span>
                     </div>
-                    <button onClick={() => handleCopy(heroCodeText, "hero-code")} className="text-xs font-mono text-white/40 hover:text-white transition-colors">{copied === "hero-code" ? "Copied!" : "Copy"}</button>
+                    <button
+                      onClick={() => handleCopy(mcpcraftCode, "hero")}
+                      className="text-xs font-mono text-[#555555] hover:text-white transition-colors"
+                    >
+                      {copied === "hero" ? (
+                        <svg className="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                      ) : (
+                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" /></svg>
+                      )}
+                    </button>
                   </div>
-                  <pre className="p-5 overflow-x-auto text-sm font-mono leading-relaxed bg-black">
+                  <pre className="p-5 text-sm font-mono leading-relaxed text-white/90 overflow-x-auto">
                     <code>
-                      <div><span className="text-purple-400">import</span> {'{'} createServer, tool {'}'} <span className="text-purple-400">from</span> <span className="text-emerald-300">"mcpcraft"</span></div>
-                      <div>&nbsp;</div>
-                      <div><span className="text-purple-400">const</span> server = <span className="text-blue-400">createServer</span>({'{}'} name: <span className="text-emerald-300">"my-server"</span> {'}'})</div>
-                      <div>&nbsp;</div>
-                      <div>server.<span className="text-blue-400">add</span>(<span className="text-blue-400">tool</span>({'{}'}</div>
-                      <div>  name: <span className="text-emerald-300">"send_email"</span>,</div>
-                      <div>  description: <span className="text-emerald-300">"Sends an email"</span>,</div>
-                      <div>  input: {'{}'}</div>
-                      <div>    to: {'{}'} type: <span className="text-emerald-300">"string"</span>, description: <span className="text-emerald-300">"Recipient"</span> {'}'},</div>
-                      <div>    body: {'{}'} type: <span className="text-emerald-300">"string"</span>, description: <span className="text-emerald-300">"Content"</span> {'}'}</div>
-                      <div>  {'}'},</div>
-                      <div>  run: <span className="text-purple-400">async</span> ({'{'} to, body {'}'}) <span className="text-purple-400">=&gt;</span> {'{}'}</div>
-                      <div>    <span className="text-purple-400">return</span> {'{}'} success: <span className="text-amber-300">true</span> {'}'}</div>
-                      <div>  {'}'}</div>
-                      <div>{'}'}))</div>
-                      <div>&nbsp;</div>
-                      <div>server.<span className="text-blue-400">start</span>()</div>
+                      <SyntaxLine><Kw>import</Kw> {'{'} createServer, tool {'}'} <Kw>from</Kw> <Str>"mcpcraft"</Str></SyntaxLine>
+                      <SyntaxLine>{' '}</SyntaxLine>
+                      <SyntaxLine><Kw>const</Kw> server = <Fn>createServer</Fn>({'{}'} name: <Str>"my-server"</Str> {'}'})</SyntaxLine>
+                      <SyntaxLine>{' '}</SyntaxLine>
+                      <SyntaxLine>server.<Fn>add</Fn>(<Fn>tool</Fn>({'{}'}</SyntaxLine>
+                      <SyntaxLine>  name: <Str>"send_email"</Str>,</SyntaxLine>
+                      <SyntaxLine>  description: <Str>"Sends an email"</Str>,</SyntaxLine>
+                      <SyntaxLine>  input: {'{}'}</SyntaxLine>
+                      <SyntaxLine>    to: {'{}'} type: <Str>"string"</Str>, description: <Str>"Recipient"</Str> {'}'},</SyntaxLine>
+                      <SyntaxLine>    body: {'{}'} type: <Str>"string"</Str>, description: <Str>"Content"</Str> {'}'}</SyntaxLine>
+                      <SyntaxLine>  {'}'},</SyntaxLine>
+                      <SyntaxLine>  run: <Kw>async</Kw> ({'{'} to, body {'}'}) <Kw>=&gt;</Kw> {'{}'}</SyntaxLine>
+                      <SyntaxLine>    <Kw>return</Kw> {'{}'} success: <Boo>true</Boo> {'}'}</SyntaxLine>
+                      <SyntaxLine>  {'}'}</SyntaxLine>
+                      <SyntaxLine>{'}'}))</SyntaxLine>
+                      <SyntaxLine>{' '}</SyntaxLine>
+                      <SyntaxLine>server.<Fn>start</Fn>()</SyntaxLine>
                     </code>
                   </pre>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </section>
