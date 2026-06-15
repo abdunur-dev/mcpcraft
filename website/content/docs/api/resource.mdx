@@ -8,7 +8,7 @@ description: Expose read-only files, data, and context templates.
 Defines a static or dynamic data source that clients can load into the LLM context. Resources are read-only and identified by URIs.
 
 ```typescript
-import { resource } from "mcpcraft"
+import { resource } from "mcpcraft-sdk"
 
 // Static resource
 const systemInfo = resource({
@@ -65,7 +65,7 @@ Variables are automatically parsed from the URI path and passed to your `fetch` 
 ## Full Example
 
 ```typescript
-import { createServer, resource } from "mcpcraft"
+import { createServer, resource } from "mcpcraft-sdk"
 
 const server = createServer({ name: "data-server" })
 

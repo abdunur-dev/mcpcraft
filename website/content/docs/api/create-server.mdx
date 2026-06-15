@@ -8,7 +8,7 @@ description: Initialize and configure your mcpcraft server.
 Initializes a new Model Context Protocol (MCP) server instance with automatic transport configuration.
 
 ```typescript
-import { createServer } from "mcpcraft"
+import { createServer } from "mcpcraft-sdk"
 
 const server = createServer({
   name: "my-server",
@@ -86,7 +86,7 @@ server.server.setRequestHandler(CallToolRequestSchema, async (req) => {
 ## Full Example
 
 ```typescript
-import { createServer, tool, resource } from "mcpcraft"
+import { createServer, tool, resource } from "mcpcraft-sdk"
 
 const server = createServer({
   name: "demo-server",

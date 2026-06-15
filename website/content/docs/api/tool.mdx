@@ -8,7 +8,7 @@ description: Define executable tools with schema and type-safety.
 Defines a callable function that LLM clients can execute on your server. Each tool has a name, description, input schema, and execution handler.
 
 ```typescript
-import { tool } from "mcpcraft"
+import { tool } from "mcpcraft-sdk"
 
 const myTool = tool({
   name: "send_email",
@@ -89,7 +89,7 @@ mcpcraft uses **Zod** under the hood to validate all tool inputs at runtime. Whe
 ## Full Example
 
 ```typescript
-import { createServer, tool } from "mcpcraft"
+import { createServer, tool } from "mcpcraft-sdk"
 
 const server = createServer({ name: "math-server" })
 

@@ -17,22 +17,22 @@ First, add `mcpcraft` and `zod` to your project using your preferred package man
 <Tabs items={['npm', 'pnpm', 'yarn', 'bun']}>
   <Tab value="npm">
   ```bash
-  npm install mcpcraft zod
+  npm install mcpcraft-sdk zod
   ```
   </Tab>
   <Tab value="pnpm">
   ```bash
-  pnpm add mcpcraft zod
+  pnpm add mcpcraft-sdk zod
   ```
   </Tab>
   <Tab value="yarn">
   ```bash
-  yarn add mcpcraft zod
+  yarn add mcpcraft-sdk zod
   ```
   </Tab>
   <Tab value="bun">
   ```bash
-  bun add mcpcraft zod
+  bun add mcpcraft-sdk zod
   ```
   </Tab>
 </Tabs>
@@ -70,7 +70,7 @@ First, add `mcpcraft` and `zod` to your project using your preferred package man
 Create a server file (e.g. `server.ts`) and define your tools and resource endpoints:
 
 ```typescript
-import { createServer } from "mcpcraft";
+import { createServer } from "mcpcraft-sdk";
 
 const server = createServer({
   name: "my-mcp-server",
