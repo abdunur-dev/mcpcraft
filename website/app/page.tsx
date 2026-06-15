@@ -212,7 +212,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#000000] text-white font-sans selection:bg-purple-500/20 selection:text-white">
+    <div className="min-h-screen bg-[#000000] text-white font-sans selection:bg-white/10 selection:text-white">
       <motion.div className="scroll-progress" style={{ scaleX }} />
 
       {/* ─── Navbar ─── */}
@@ -298,33 +298,21 @@ export default function Home() {
                   transition={{ duration: 0.5, delay: 0.4 }}
                   className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3"
                 >
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{ duration: 0.2 }}
+                  <Link
+                    href="/docs/installation"
+                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-black text-sm font-medium"
                   >
-                    <Link
-                      href="/docs/installation"
-                      className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-black text-sm font-medium hover:shadow-[0_0_20px_rgba(124,58,237,0.3)] transition-shadow duration-200"
-                    >
-                      Get Started
-                      <span className="text-black/60">&rarr;</span>
-                    </Link>
-                  </motion.div>
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{ duration: 0.2 }}
+                    Get Started
+                    <span className="text-black/60">&rarr;</span>
+                  </Link>
+                  <a
+                    href="https://github.com/abdunur-dev/mcpcraft"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-white/20 text-white text-sm font-medium hover:bg-white hover:text-black transition-all duration-200"
                   >
-                    <a
-                      href="https://github.com/abdunur-dev/mcpcraft"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-white/20 text-white text-sm font-medium hover:bg-white hover:text-black transition-all duration-200"
-                    >
-                      View GitHub
-                    </a>
-                  </motion.div>
+                    View GitHub
+                  </a>
                 </motion.div>
 
                 <motion.p
@@ -343,7 +331,7 @@ export default function Home() {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 className="hidden lg:block"
               >
-                <div className="code-block-card code-block-card-hero animate-float">
+                <div className="code-block-card">
                   <div className="flex items-center justify-between px-4 py-3 border-b border-[rgba(255,255,255,0.06)]">
                     <div className="flex items-center gap-2">
                       <span className="w-3 h-3 rounded-full bg-red-500/60" />
@@ -427,7 +415,7 @@ export default function Home() {
             <StaggerReveal className="grid grid-cols-1 lg:grid-cols-5 gap-4 mb-4">
               <FadeUpChild className="lg:col-span-3">
                 <div className="bento-card-lg h-full flex flex-col relative overflow-hidden">
-                  <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
+                  <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/[0.02] rounded-full blur-3xl pointer-events-none" />
                   <div className="relative z-10">
                     <h3 className="text-lg font-semibold text-white mb-2">Zero Boilerplate</h3>
                     <p className="text-sm text-[#888888] leading-relaxed mb-6 max-w-sm">
@@ -450,9 +438,9 @@ export default function Home() {
               </FadeUpChild>
               <FadeUpChild className="lg:col-span-2">
                 <div className="bento-card h-full flex flex-col items-start justify-center relative overflow-hidden">
-                  <div className="absolute -top-12 -right-12 w-32 h-32 bg-purple-500/8 rounded-full blur-2xl pointer-events-none" />
+                  <div className="absolute -top-12 -right-12 w-32 h-32 bg-white/[0.03] rounded-full blur-2xl pointer-events-none" />
                   <div className="relative z-10">
-                    <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 mb-4 text-sm font-mono font-bold">
+                    <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 mb-4 text-sm font-mono font-bold">
                       TS
                     </div>
                     <h3 className="text-lg font-semibold text-white mb-2">Full Type Safety</h3>
@@ -497,7 +485,7 @@ export default function Home() {
               ].map((f, i) => (
                 <FadeUpChild key={i}>
                   <div className="bento-card h-full flex flex-col">
-                    <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 mb-4">
                       {f.icon}
                     </div>
                     <h3 className="text-base font-semibold text-white mb-2">{f.title}</h3>
@@ -511,7 +499,7 @@ export default function Home() {
             <StaggerReveal className="grid grid-cols-1 lg:grid-cols-5 gap-4">
               <FadeUpChild className="lg:col-span-2">
                 <div className="bento-card h-full flex flex-col">
-                  <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 mb-4 text-lg">
+                  <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 mb-4 text-lg">
                     {'>_'}
                   </div>
                   <h3 className="text-lg font-semibold text-white mb-2">CLI Scaffolding</h3>
@@ -745,11 +733,11 @@ export default function Home() {
               className="absolute inset-0 pointer-events-none"
               style={{
                 background:
-                  "radial-gradient(ellipse at center, rgba(124,58,237,0.08) 0%, transparent 70%)",
+                  "radial-gradient(ellipse at center, rgba(255,255,255,0.03) 0%, transparent 70%)",
               }}
             />
             <div className="relative z-10 max-w-xl mx-auto px-4 sm:px-6">
-              <div className="text-xs font-mono text-purple-400 mb-4 tracking-wider uppercase">
+              <div className="text-xs font-mono text-white/40 mb-4 tracking-wider uppercase">
                 Open Source
               </div>
               <h2 className="text-3xl sm:text-4xl font-semibold tracking-[-0.03em] text-white mb-3">
@@ -759,24 +747,13 @@ export default function Home() {
                 Join developers building the agentic web.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-                <motion.div
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ duration: 0.2 }}
-                >
                   <Link
                     href="/docs/installation"
-                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-black text-sm font-medium hover:shadow-[0_0_20px_rgba(124,58,237,0.3)] transition-shadow duration-200"
+                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-black text-sm font-medium"
                   >
                     Get Started
                     <span className="text-black/60">&rarr;</span>
                   </Link>
-                </motion.div>
-                <motion.div
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ duration: 0.2 }}
-                >
                   <a
                     href="https://github.com/abdunur-dev/mcpcraft"
                     target="_blank"
@@ -785,7 +762,6 @@ export default function Home() {
                   >
                     View GitHub
                   </a>
-                </motion.div>
               </div>
             </div>
           </section>
@@ -931,7 +907,7 @@ server.add(myTool)`,
                 <div
                   className={`step-dot mb-6 ${activeStep > i || (activeStep === 3 && i === 2) ? "active" : ""}`}
                 />
-                <div className="text-xs font-mono text-purple-400 mb-2">{step.num}</div>
+                <div className="text-xs font-mono text-white/40 mb-2">{step.num}</div>
                 <h3 className="text-base font-semibold text-white mb-3">{step.title}</h3>
                 <div className="bg-[#111111] rounded-xl border border-[rgba(255,255,255,0.06)] p-3 w-full text-left overflow-x-auto">
                   <pre className="text-[11px] font-mono leading-relaxed text-white/70">
