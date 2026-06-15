@@ -50,6 +50,10 @@
 
 @theme {
   --color-background: #000000;
+  --color-surface: #0a0a0a;
+  --color-muted-text: #888888;
+  --color-accent-purple: #7c3aed;
+  --color-code-bg: #111111;
   --color-surface: #080808;
   --color-border-custom: #171717;
   --color-text-primary: #ffffff;
@@ -638,4 +642,226 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.15);
+}
+
+/* ─── Landing Page ─── */
+
+.bento-card {
+  background: #0a0a0a;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 32px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bento-card:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 40px rgba(124, 58, 237, 0.1);
+}
+
+.bento-card-lg {
+  background: #0a0a0a;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 40px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bento-card-lg:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 60px rgba(124, 58, 237, 0.08);
+}
+
+.code-block-card {
+  background: #111111;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+
+.code-block-card:hover {
+  box-shadow: 0 0 80px rgba(124, 58, 237, 0.35);
+}
+
+.code-block-card-hero {
+  box-shadow: 0 0 80px rgba(124, 58, 237, 0.2);
+}
+
+.code-block-card-hero:hover {
+  box-shadow: 0 0 120px rgba(124, 58, 237, 0.4);
+}
+
+/* Floating animation for hero code */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Scroll progress indicator */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  z-index: 100;
+  background: linear-gradient(90deg, #7c3aed, #7c3aed);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+}
+
+/* Pill badge shimmer */
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.pill-badge {
+  position: relative;
+  overflow: hidden;
+}
+
+.pill-badge::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(124,58,237,0.1), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Code comparison */
+.code-comparison-left {
+  position: relative;
+}
+
+.code-comparison-left::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 96px;
+  background: linear-gradient(to top, #000000, transparent);
+  pointer-events: none;
+}
+
+/* VS badge */
+.vs-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #0a0a0a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: #888;
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+/* How it works steps connection line */
+.steps-line {
+  position: absolute;
+  top: 32px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-top: 2px dashed rgba(124, 58, 237, 0.2);
+  z-index: 0;
+}
+
+.steps-line-active {
+  height: 2px;
+  background: #7c3aed;
+  z-index: 1;
+  transition: width 1s ease-out;
+}
+
+/* Step dot */
+.step-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #0a0a0a;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  z-index: 2;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.step-dot.active {
+  border-color: #7c3aed;
+  background: #7c3aed;
+  box-shadow: 0 0 12px rgba(124, 58, 237, 0.4);
+}
+
+/* Client icon circles */
+.client-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #111111;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 18px;
+  font-weight: 600;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.client-icon:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  background: #1a1a1a;
+}
+
+/* Tab underline animation */
+.tab-underline {
+  position: relative;
+}
+
+.tab-underline::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #7c3aed;
+  transition: transform 0.3s ease;
+}
+
+/* ─── Landing Page Responsive ─── */
+@media (max-width: 768px) {
+  .bento-card, .bento-card-lg {
+    padding: 20px;
+  }
+  
+  .code-block-card {
+    border-radius: 12px;
+  }
+  
+  .vs-badge {
+    width: 36px;
+    height: 36px;
+    font-size: 9px;
+  }
+  
+  .client-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
 }
