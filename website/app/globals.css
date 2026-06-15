@@ -4,20 +4,86 @@
 
 :root,
 [data-theme="dark"] {
+  --color-scheme: dark;
+
   --page-bg: #000000;
   --page-text: #ffffff;
+
+  --surface-primary: #000000;
+  --surface-secondary: #0a0a0a;
+  --surface-tertiary: #080808;
+  --surface-code: #050505;
+  --surface-codebar: #0b0b0b;
+  --surface-elevated: #111111;
+
+  --surface-overlay-01: rgba(255,255,255,0.01);
+  --surface-overlay-02: rgba(255,255,255,0.02);
+  --surface-overlay-04: rgba(255,255,255,0.04);
+  --surface-overlay-06: rgba(255,255,255,0.06);
+  --surface-overlay-10: rgba(255,255,255,0.10);
+
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255,255,255,0.6);
+  --text-tertiary: rgba(255,255,255,0.4);
+  --text-muted: rgba(255,255,255,0.3);
+  --text-inverse: #000000;
+
+  --border-default: rgba(255,255,255,0.1);
+  --border-subtle: rgba(255,255,255,0.05);
+  --border-strong: rgba(255,255,255,0.2);
+  --border-hover: rgba(255,255,255,0.3);
+  --border-accent: rgba(255,255,255,0.15);
+
+  --syntax-keyword: #a855f7;
+  --syntax-string: #6ee7b7;
+  --syntax-function: #60a5fa;
+  --syntax-boolean: #fcd34d;
+  --syntax-prompt: #34d399;
+  --syntax-operator: #e4e4e7;
 }
 
-[data-theme="light"] {
-  --page-bg: #ffffff;
-  --page-text: #000000;
-}
-
-/* Light theme overrides */
 [data-theme="light"] {
   --color-scheme: light;
+
+  --page-bg: #ffffff;
+  --page-text: #000000;
+
+  --surface-primary: #ffffff;
+  --surface-secondary: #f5f5f5;
+  --surface-tertiary: #f0f0f0;
+  --surface-code: #fafafa;
+  --surface-codebar: #f0f0f0;
+  --surface-elevated: #eeeeee;
+
+  --surface-overlay-01: rgba(0,0,0,0.01);
+  --surface-overlay-02: rgba(0,0,0,0.02);
+  --surface-overlay-04: rgba(0,0,0,0.04);
+  --surface-overlay-06: rgba(0,0,0,0.06);
+  --surface-overlay-10: rgba(0,0,0,0.10);
+
+  --text-primary: #000000;
+  --text-secondary: rgba(0,0,0,0.6);
+  --text-tertiary: rgba(0,0,0,0.4);
+  --text-muted: rgba(0,0,0,0.3);
+  --text-inverse: #ffffff;
+
+  --border-default: rgba(0,0,0,0.1);
+  --border-subtle: rgba(0,0,0,0.05);
+  --border-strong: rgba(0,0,0,0.2);
+  --border-hover: rgba(0,0,0,0.3);
+  --border-accent: rgba(0,0,0,0.15);
+
+  --syntax-keyword: #7c3aed;
+  --syntax-string: #059669;
+  --syntax-function: #2563eb;
+  --syntax-boolean: #d97706;
+  --syntax-prompt: #059669;
+  --syntax-operator: #525252;
+
+  /* Override hardcoded arbitrary-value Tailwind classes for light mode */
 }
 
+/* Light theme utility overrides */
 [data-theme="light"] .text-white\/40 { color: rgba(0,0,0,0.4); }
 [data-theme="light"] .text-white\/50 { color: rgba(0,0,0,0.5); }
 [data-theme="light"] .text-white\/60 { color: rgba(0,0,0,0.6); }
@@ -34,10 +100,46 @@
 [data-theme="light"] .bg-black { background-color: #ffffff; }
 [data-theme="light"] .bg-black\/80 { background-color: rgba(255,255,255,0.8); }
 [data-theme="light"] .bg-black\/95 { background-color: rgba(255,255,255,0.95); }
+[data-theme="light"] .bg-white { background-color: #f5f5f5; }
+[data-theme="light"] .bg-white\/10 { background-color: rgba(0,0,0,0.1); }
+[data-theme="light"] .bg-white\/90 { background-color: rgba(0,0,0,0.9); }
 [data-theme="light"] .divide-white\/10 > * { border-color: rgba(0,0,0,0.1); }
+
+/* ─── Light theme: override arbitrary-value hex backgrounds ─── */
+[data-theme="light"] [class*="bg-[#050505]"] { background-color: var(--surface-code) !important; }
+[data-theme="light"] [class*="bg-[#0b0b0b]"] { background-color: var(--surface-codebar) !important; }
+[data-theme="light"] [class*="bg-[#0a0a0a]"] { background-color: var(--surface-secondary) !important; }
+
+/* ─── Light theme: override arbitrary-value opacity backgrounds ─── */
+[data-theme="light"] [class*="bg-white/[0.01]"] { background-color: var(--surface-overlay-01); }
+[data-theme="light"] [class*="bg-white/[0.02]"] { background-color: var(--surface-overlay-02); }
+[data-theme="light"] [class*="bg-white/[0.04]"] { background-color: var(--surface-overlay-04); }
+[data-theme="light"] [class*="bg-white/[0.06]"] { background-color: var(--surface-overlay-06); }
+
+/* ─── Light theme: terminal / syntax ─── */
+[data-theme="light"] .terminal-prompt { color: var(--syntax-prompt); }
 [data-theme="light"] .hero-grid { opacity: 0.15; }
 [data-theme="light"] .hero-glow { opacity: 0.3; }
-[data-theme="light"] .client-icon { background: #f0f0f0; border-color: rgba(0,0,0,0.1); }
+
+/* ─── Light theme: syntax highlighting colors ─── */
+[data-theme="light"] .text-purple-400 { color: var(--syntax-keyword); }
+[data-theme="light"] .text-emerald-300 { color: var(--syntax-string); }
+[data-theme="light"] .text-emerald-400 { color: var(--syntax-string); }
+[data-theme="light"] .text-blue-400 { color: var(--syntax-function); }
+[data-theme="light"] .text-amber-300 { color: var(--syntax-boolean); }
+[data-theme="light"] [class*="text-emerald-400/60"] { color: color-mix(in srgb, var(--syntax-string) 60%, transparent); }
+[data-theme="light"] [class*="text-emerald-400/70"] { color: color-mix(in srgb, var(--syntax-string) 70%, transparent); }
+
+/* ─── Light theme: gradient overrides ─── */
+[data-theme="light"] .from-white { --tw-gradient-from: #000; }
+[data-theme="light"] .via-white\/80 { --tw-gradient-via: rgba(0,0,0,0.8); }
+[data-theme="light"] .to-white\/40 { --tw-gradient-to: rgba(0,0,0,0.4); }
+[data-theme="light"] .from-black { --tw-gradient-from: #fff; }
+
+/* ─── Light theme: code background ─── */
+[data-theme="light"] pre { background-color: var(--surface-code) !important; }
+[data-theme="light"] :not(pre) > code { background-color: var(--surface-secondary) !important; }
+[data-theme="light"] #nd-page .prose :not(pre) > code { background-color: var(--surface-secondary) !important; border-color: var(--border-default); }
 
 :root {
   --fd-nav-height: 56px !important;
@@ -132,12 +234,12 @@ pre, code {
 }
 
 pre, :not(pre) > code {
-  background-color: #050505 !important;
+  background-color: var(--surface-code) !important;
 }
 
 body {
-  background-color: #000000;
-  color: #ffffff;
+  background-color: var(--page-bg);
+  color: var(--text-primary);
   font-family: var(--font-sans);
 }
 
@@ -583,8 +685,8 @@ body {
 
 /* ─── Terminal Component ─── */
 .terminal-window {
-  background-color: #050505;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: var(--surface-code);
+  border: 1px solid var(--border-default);
   border-radius: 6px;
   overflow: hidden;
 }
@@ -597,7 +699,7 @@ body {
 }
 
 .terminal-prompt {
-  color: #34d399;
+  color: var(--syntax-prompt);
   user-select: none;
 }
 
@@ -615,7 +717,7 @@ body {
   opacity: 0;
   transition: opacity 0.3s;
   z-index: -1;
-  background: linear-gradient(135deg, rgba(255,255,255,0.06), transparent);
+  background: linear-gradient(135deg, var(--surface-overlay-06), transparent);
 }
 
 .feature-card:hover::before {
@@ -623,7 +725,7 @@ body {
 }
 
 .feature-card:hover {
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: var(--border-strong);
 }
 
 /* ─── Hero Glow ─── */
@@ -641,7 +743,7 @@ body {
   content: "";
   width: 800px;
   height: 800px;
-  background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--surface-overlay-06) 0%, transparent 70%);
   border-radius: 50%;
 }
 
@@ -661,7 +763,7 @@ body {
   inset: -50%;
   width: 200%;
   height: 200%;
-  background-image: linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-image: linear-gradient(var(--surface-overlay-06) 1px, transparent 1px), linear-gradient(90deg, var(--surface-overlay-06) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
@@ -683,27 +785,27 @@ body {
 /* ─── Landing Page ─── */
 
 .bento-card {
-  background: #0a0a0a;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--surface-secondary);
+  border: 1px solid var(--border-subtle);
   border-radius: 16px;
   padding: 32px;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .bento-card:hover {
-  border-color: rgba(255, 255, 255, 0.15);
+  border-color: var(--border-accent);
 }
 
 .bento-card-lg {
-  background: #0a0a0a;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--surface-secondary);
+  border: 1px solid var(--border-default);
   border-radius: 16px;
   padding: 40px;
   transition: border-color 0.3s ease;
 }
 
 .bento-card-lg:hover {
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: var(--border-strong);
 }
 
 /* Scroll progress indicator */
@@ -714,7 +816,7 @@ body {
   width: 100%;
   height: 2px;
   z-index: 100;
-  background: #ffffff;
+  background: var(--text-primary);
   transform-origin: 0 50%;
   transform: scaleX(0);
 }
@@ -724,21 +826,21 @@ body {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: #111111;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #888;
+  color: var(--text-tertiary);
   font-size: 18px;
   font-weight: 600;
   transition: border-color 0.2s, color 0.2s, background 0.2s;
 }
 
 .client-icon:hover {
-  border-color: rgba(255, 255, 255, 0.15);
-  color: #fff;
-  background: #1a1a1a;
+  border-color: var(--border-accent);
+  color: var(--text-primary);
+  background: var(--surface-tertiary);
 }
 
 /* Tab underline animation */
@@ -753,116 +855,8 @@ body {
   left: 0;
   width: 100%;
   height: 2px;
-  background: #ffffff;
+  background: var(--text-primary);
   transition: transform 0.3s ease;
-}
-
-/* ─── Hero Glow ─── */
-.hero-glow {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.hero-glow::before {
-  content: "";
-  width: 800px;
-  height: 800px;
-  background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
-  border-radius: 50%;
-}
-
-/* ─── Hero Grid ─── */
-.hero-grid {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-  mask-image: radial-gradient(ellipse at center, black 25%, transparent 75%);
-  -webkit-mask-image: radial-gradient(ellipse at center, black 25%, transparent 75%);
-}
-
-.hero-grid::after {
-  content: "";
-  position: absolute;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
-  background-image: linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-
-/* ─── Animations ─── */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes glow {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.6; }
-}
-
-.animate-fadeIn {
-  animation: fadeIn 0.8s ease-out both;
-}
-
-.animate-slideUp {
-  animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-/* ─── Terminal Component ─── */
-.terminal-window {
-  background-color: #050505;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-.terminal-body {
-  padding: 1.25rem;
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  line-height: 1.6;
-}
-
-.terminal-prompt {
-  color: #34d399;
-  user-select: none;
-}
-
-/* ─── Feature Card Glow ─── */
-.feature-card {
-  position: relative;
-  isolation: isolate;
-}
-
-.feature-card::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  opacity: 0;
-  transition: opacity 0.3s;
-  z-index: -1;
-  background: linear-gradient(135deg, rgba(255,255,255,0.06), transparent);
-}
-
-.feature-card:hover::before {
-  opacity: 1;
-}
-
-.feature-card:hover {
-  border-color: rgba(255, 255, 255, 0.2);
 }
 
 /* ─── Landing Page Responsive ─── */
