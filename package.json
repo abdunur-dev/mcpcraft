@@ -1,9 +1,12 @@
 {
-  "name": "mcpcraft",
-  "version": "0.1.0",
+  "name": "@abdunur_dev/mcpcraft",
+  "version": "0.1.1",
   "description": "The lightweight SDK for building MCP servers fast",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
@@ -28,4 +31,3 @@
     "typescript": "^6.0.3"
   }
 }
-
