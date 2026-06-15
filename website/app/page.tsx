@@ -560,21 +560,28 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         {/* ── Install ── */}
         <Reveal>
           <section className="py-24 sm:py-32 overflow-hidden">
-            <div className="mx-auto max-w-6xl px-4 sm:px-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                <div>
-                  <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-3">
-                    Start building now
-                  </h2>
-                  <p className="text-white/40 text-sm mb-8">
-                    One command. Zero config.
-                  </p>
-                  <div className="flex bg-[#0a0a0a] rounded-md border border-white/10 p-1 w-fit mb-6">
+            <div className="mx-auto max-w-2xl px-4 sm:px-6 text-center">
+              <div className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-mono border border-white/10 bg-white/[0.02] text-white/40 uppercase tracking-wider mb-4">Install</div>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-3">
+                Start building now
+              </h2>
+              <p className="text-white/40 text-sm mb-10">
+                One command. Zero config.
+              </p>
+              <div className="terminal-window text-left mb-8">
+                <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/10 bg-[#0b0b0b]">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
+                    <span className="text-xs text-white/40 font-mono ml-2">terminal</span>
+                  </div>
+                  <div className="flex bg-[#0a0a0a] rounded border border-white/10 p-0.5">
                     {tabOptions.map((tab) => (
                       <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
-                        className={`px-4 py-1.5 text-sm font-mono rounded transition-all duration-200 ${
+                        className={`px-3 py-1 text-[11px] font-mono rounded transition-all duration-200 ${
                           activeTab === tab.id
                             ? "bg-white text-black"
                             : "text-white/40 hover:text-white"
@@ -584,73 +591,36 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                       </button>
                     ))}
                   </div>
-                  <div className="flex flex-col sm:flex-row items-start gap-3">
-                    <Link
-                      href="/docs/installation"
-                      className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-white text-black text-sm font-medium hover:bg-white/90 transition-all"
-                    >
-                      Get Started
-                      <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
-                    </Link>
-                    <a
-                      href="https://github.com/abdunur-dev/mcpcraft"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md border border-white/20 text-white/70 hover:text-white hover:border-white/40 text-sm font-medium transition-all duration-200"
-                    >
-                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" /></svg>
-                      View GitHub
-                    </a>
-                  </div>
                 </div>
-                <div className="flex flex-col gap-4">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={activeTab}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <Snippet text={tabOptions.find((t) => t.id === activeTab)!.cmd} width="100%" />
-                    </motion.div>
-                  </AnimatePresence>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="rounded-md border border-white/10 bg-black overflow-hidden">
-                      <div className="px-3 py-2 border-b border-white/10 bg-[#050505] flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-red-500/60" />
-                        <span className="w-2 h-2 rounded-full bg-yellow-500/60" />
-                        <span className="w-2 h-2 rounded-full bg-green-500/60" />
-                        <span className="text-[11px] font-mono text-white/40 ml-1.5">server.ts</span>
-                      </div>
-                      <pre className="p-3 text-[11px] font-mono leading-relaxed text-white/80 overflow-x-auto">
-                        <code>
-                          <SyntaxLine><Kw>import</Kw> {'{'} tool {'}'} <Kw>from</Kw> <Str>"mcpcraft"</Str></SyntaxLine>
-                          <SyntaxLine>{' '}</SyntaxLine>
-                          <SyntaxLine><Kw>const</Kw> greet = <Fn>tool</Fn>({'{}'}</SyntaxLine>
-                          <SyntaxLine>  name: <Str>"greet"</Str>,</SyntaxLine>
-                          <SyntaxLine>  run: <Kw>async</Kw> () =&gt; <Str>"hi"</Str></SyntaxLine>
-                          <SyntaxLine>{'}'})</SyntaxLine>
-                        </code>
-                      </pre>
-                    </div>
-                    <div className="rounded-md border border-white/10 bg-black overflow-hidden">
-                      <div className="px-3 py-2 border-b border-white/10 bg-[#050505] flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-red-500/60" />
-                        <span className="w-2 h-2 rounded-full bg-yellow-500/60" />
-                        <span className="w-2 h-2 rounded-full bg-green-500/60" />
-                        <span className="text-[11px] font-mono text-white/40 ml-1.5">run</span>
-                      </div>
-                      <pre className="p-3 text-[11px] font-mono leading-relaxed text-white/80 overflow-x-auto">
-                        <code>
-                          <SyntaxLine><span className="text-emerald-400">$</span> npx ts-node s.ts</SyntaxLine>
-                          <SyntaxLine><span className="text-emerald-400/60">&gt;</span> running on stdio</SyntaxLine>
-                          <SyntaxLine><span className="text-emerald-400/60">&gt;</span> ready</SyntaxLine>
-                        </code>
-                      </pre>
-                    </div>
-                  </div>
-                </div>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeTab}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    <Snippet text={tabOptions.find((t) => t.id === activeTab)!.cmd} width="100%" />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <Link
+                  href="/docs/installation"
+                  className="group inline-flex items-center gap-2 px-6 py-2.5 rounded-md bg-white text-black text-sm font-medium hover:bg-white/90 transition-all"
+                >
+                  Get Started
+                  <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+                </Link>
+                <a
+                  href="https://github.com/abdunur-dev/mcpcraft"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-md border border-white/20 text-white/70 hover:text-white hover:border-white/40 text-sm font-medium transition-all duration-200"
+                >
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" /></svg>
+                  View GitHub
+                </a>
               </div>
             </div>
           </section>
