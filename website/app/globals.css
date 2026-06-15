@@ -2,6 +2,43 @@
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
 
+:root,
+[data-theme="dark"] {
+  --page-bg: #000000;
+  --page-text: #ffffff;
+}
+
+[data-theme="light"] {
+  --page-bg: #ffffff;
+  --page-text: #000000;
+}
+
+/* Light theme overrides */
+[data-theme="light"] {
+  --color-scheme: light;
+}
+
+[data-theme="light"] .text-white\/40 { color: rgba(0,0,0,0.4); }
+[data-theme="light"] .text-white\/50 { color: rgba(0,0,0,0.5); }
+[data-theme="light"] .text-white\/60 { color: rgba(0,0,0,0.6); }
+[data-theme="light"] .text-white\/70 { color: rgba(0,0,0,0.7); }
+[data-theme="light"] .text-white\/80 { color: rgba(0,0,0,0.8); }
+[data-theme="light"] .text-white\/90 { color: rgba(0,0,0,0.9); }
+[data-theme="light"] .text-white\/30 { color: rgba(0,0,0,0.3); }
+[data-theme="light"] .text-white\/10 { color: rgba(0,0,0,0.1); }
+[data-theme="light"] .text-white { color: #000000; }
+[data-theme="light"] .border-white\/10 { border-color: rgba(0,0,0,0.1); }
+[data-theme="light"] .border-white\/5 { border-color: rgba(0,0,0,0.05); }
+[data-theme="light"] .border-white\/15 { border-color: rgba(0,0,0,0.15); }
+[data-theme="light"] .border-white\/20 { border-color: rgba(0,0,0,0.2); }
+[data-theme="light"] .bg-black { background-color: #ffffff; }
+[data-theme="light"] .bg-black\/80 { background-color: rgba(255,255,255,0.8); }
+[data-theme="light"] .bg-black\/95 { background-color: rgba(255,255,255,0.95); }
+[data-theme="light"] .divide-white\/10 > * { border-color: rgba(0,0,0,0.1); }
+[data-theme="light"] .hero-grid { opacity: 0.15; }
+[data-theme="light"] .hero-glow { opacity: 0.3; }
+[data-theme="light"] .client-icon { background: #f0f0f0; border-color: rgba(0,0,0,0.1); }
+
 :root {
   --fd-nav-height: 56px !important;
   --background: 0 0% 0%;

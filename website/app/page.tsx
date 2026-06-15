@@ -207,10 +207,12 @@ export default function Home() {
             <span className="font-mono text-xs uppercase tracking-wider">github</span>
           </a>
         </div>
-        <div className="hidden sm:flex items-center px-6 border-l border-white/10 shrink-0">
+        <div className="hidden sm:flex items-center gap-3 px-4 border-l border-white/10 shrink-0">
           <a href="https://npmjs.com/package/mcpcraft" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-mono border border-white/15 text-white/70 hover:text-white hover:border-white/30 transition-all bg-white/[0.02]">v0.1.0</a>
+          <ThemeSwitcher />
         </div>
-        <div className="flex sm:hidden items-center px-4 border-l border-white/10 ml-auto">
+        <div className="flex sm:hidden items-center gap-3 px-4 border-l border-white/10 ml-auto">
+          <ThemeSwitcher />
           <button onClick={() => setMenuOpen(!menuOpen)} className="text-white/60 hover:text-white transition-colors" aria-label="Toggle menu">
             <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               {menuOpen ? (
@@ -315,15 +317,15 @@ export default function Home() {
             <div className="mx-auto max-w-5xl grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 divide-x-0 sm:divide-x divide-white/10 text-center font-mono">
               <div className="py-8">
                 <CountUp target={5} suffix="" />
-                <div className="text-[11px] text-[#555555] uppercase tracking-widest mt-1">Time to first server</div>
+                <div className="text-[11px] text-white/40 uppercase tracking-widest mt-1">Time to first server</div>
               </div>
               <div className="py-8">
                 <CountUp target={100} suffix="%" />
-                <div className="text-[11px] text-[#555555] uppercase tracking-widest mt-1">TypeScript coverage</div>
+                <div className="text-[11px] text-white/40 uppercase tracking-widest mt-1">TypeScript coverage</div>
               </div>
               <div className="py-8">
                 <div className="text-2xl font-bold text-white">MIT</div>
-                <div className="text-[11px] text-[#555555] uppercase tracking-widest mt-1">License</div>
+                <div className="text-[11px] text-white/40 uppercase tracking-widest mt-1">License</div>
               </div>
             </div>
           </section>
@@ -440,12 +442,8 @@ export default function Home() {
 
         {/* ── Feedback ── */}
         <section className="border-y border-white/10 py-8">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 flex items-center justify-center sm:justify-start">
             <Feedback dryRun label="mcpcraft" />
-            <div className="flex items-center gap-4">
-              <span className="text-xs font-mono text-white/30">Theme</span>
-              <ThemeSwitcher />
-            </div>
           </div>
         </section>
 

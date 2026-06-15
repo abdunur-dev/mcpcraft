@@ -1,21 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export function ThemeSwitcher({ className = "" }: { className?: string }) {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
 
+  useEffect(() => {
+    const saved = localStorage.getItem("theme") as "dark" | "light" | null;
+    if (saved) {
+      setTheme(saved);
+      applyTheme(saved);
+    }
+  }, []);
+
+  function applyTheme(t: "dark" | "light") {
+    document.documentElement.setAttribute("data-theme", t);
+    document.documentElement.style.colorScheme = t;
+    localStorage.setItem("theme", t);
+  }
+
   const toggle = () => {
     const next = theme === "dark" ? "light" : "dark";
     setTheme(next);
-    document.documentElement.classList.toggle("dark", next === "dark");
-    document.documentElement.style.colorScheme = next;
+    applyTheme(next);
   };
 
   return (
     <button
       onClick={toggle}
-      className={`relative w-14 h-7 rounded-full border border-white/10 bg-[#0a0a0a] transition-colors duration-200 ${className}`}
+      className="relative w-14 h-7 rounded-full border border-white/10 bg-[#0a0a0a] transition-colors duration-200 shrink-0"
       aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
     >
       <span
