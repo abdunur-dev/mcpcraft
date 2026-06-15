@@ -260,30 +260,30 @@ export default function Home() {
 
       <main className="flex-1 pt-14">
         {/* ── Hero ── */}
-        <section className="relative min-h-[calc(100dvh-3.5rem)] flex items-center overflow-hidden border-b border-white/10">
+        <section className="relative min-h-dvh sm:min-h-[calc(100dvh-3.5rem)] flex items-center overflow-hidden border-b border-white/10">
           <div className="hero-glow" aria-hidden="true" />
           <div className="hero-grid" aria-hidden="true" />
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 w-full">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 w-full py-12 sm:py-0">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-12 items-center">
               <div>
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-mono border border-white/10 bg-white/[0.02] text-white/60 mb-6 animate-fadeIn [animation-delay:100ms]">
+                <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full text-[10px] sm:text-[11px] font-mono border border-white/10 bg-white/[0.02] text-white/60 mb-4 sm:mb-6 animate-fadeIn [animation-delay:100ms]">
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                   </span>
                   v0.1.0 &mdash; now available
                 </div>
-                <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-4 sm:mb-6 leading-[1.05] animate-slideUp [animation-delay:200ms]">
+                <h1 className="text-[clamp(1.75rem,7vw,4.5rem)] sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-3 sm:mb-6 leading-[1.05] animate-slideUp [animation-delay:200ms]">
                   MCP Servers,{" "}
                   <span className="bg-gradient-to-r from-white via-white/80 to-white/40 bg-clip-text text-transparent">Zero Boilerplate</span>
                 </h1>
-                <p className="text-sm sm:text-base lg:text-lg text-white/60 leading-relaxed mb-6 sm:mb-8 animate-slideUp [animation-delay:300ms]">
+                <p className="text-[13px] sm:text-base lg:text-lg text-white/60 leading-relaxed mb-4 sm:mb-8 animate-slideUp [animation-delay:300ms]">
                   TypeScript SDK for the Model Context Protocol. Define tools with plain objects &mdash; full type safety, auto-generated schemas, zero protocol boilerplate.
                 </p>
-                <div className="flex flex-wrap items-center gap-x-6 gap-y-1.5 text-xs text-white/50 font-mono mb-6 animate-slideUp [animation-delay:350ms]">
-                  <span className="flex items-center gap-1.5"><svg className="w-3.5 h-3.5 text-emerald-400/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg> Zero boilerplate</span>
-                  <span className="flex items-center gap-1.5"><svg className="w-3.5 h-3.5 text-emerald-400/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg> Full TypeScript</span>
-                  <span className="flex items-center gap-1.5"><svg className="w-3.5 h-3.5 text-emerald-400/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg> Auto schema gen</span>
+                <div className="flex flex-wrap items-center gap-x-5 sm:gap-x-6 gap-y-1.5 text-[11px] sm:text-xs text-white/50 font-mono mb-5 sm:mb-6 animate-slideUp [animation-delay:350ms]">
+                  <span className="flex items-center gap-1.5"><svg className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg> Zero boilerplate</span>
+                  <span className="flex items-center gap-1.5"><svg className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg> Full TypeScript</span>
+                  <span className="flex items-center gap-1.5"><svg className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg> Auto schema gen</span>
                 </div>
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-start gap-3 animate-slideUp [animation-delay:400ms]">
                   <Link href="/docs/installation" className="group w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 rounded-md text-[11px] sm:text-xs font-mono uppercase tracking-wider bg-white text-black hover:bg-white/90 transition-all font-bold text-center inline-flex items-center justify-center gap-2">
@@ -307,7 +307,7 @@ export default function Home() {
                     </div>
                     <button onClick={() => handleCopy(heroCodeText, "hero-code")} className="text-xs font-mono text-white/40 hover:text-white transition-colors">{copied === "hero-code" ? "Copied!" : "Copy"}</button>
                   </div>
-                  <pre className="p-5 overflow-x-auto text-sm font-mono leading-relaxed bg-black">
+                  <pre className="p-4 sm:p-5 overflow-x-auto text-[11px] sm:text-sm font-mono leading-relaxed bg-black">
                     <code>
                       <div><span className="text-purple-400">import</span> {'{'} createServer, tool {'}'} <span className="text-purple-400">from</span> <span className="text-emerald-300">"mcpcraft"</span></div>
                       <div>&nbsp;</div>
@@ -337,15 +337,12 @@ export default function Home() {
         {/* ─── Credibility Bar ─── */}
         <Reveal>
           <section className="border-y border-white/10">
-            <div className="mx-auto max-w-5xl grid grid-cols-2 sm:grid-cols-4 divide-x divide-white/10 text-center font-mono">
+            <div className="mx-auto max-w-5xl grid grid-cols-2 sm:grid-cols-3 divide-x divide-white/10 text-center font-mono">
               <div className="py-6">
                 <div className="text-xs text-white/60">Latest release</div>
                 <div className="text-sm text-white mt-0.5">v0.1.0 &mdash; Jun 2026</div>
               </div>
-              <div className="py-6">
-                <div className="text-xs text-white/60">License</div>
-                <div className="text-sm text-white mt-0.5">MIT</div>
-              </div>
+
               <div className="py-6">
                 <div className="text-xs text-white/60">Node.js</div>
                 <div className="text-sm text-white mt-0.5">18+ required</div>
@@ -604,24 +601,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                   </motion.div>
                 </AnimatePresence>
               </div>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-                <Link
-                  href="/docs/installation"
-                  className="group inline-flex items-center gap-2 px-6 py-2.5 rounded-md bg-white text-black text-sm font-medium hover:bg-white/90 transition-all"
-                >
-                  Get Started
-                  <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
-                </Link>
-                <a
-                  href="https://github.com/abdunur-dev/mcpcraft"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-md border border-white/20 text-white/70 hover:text-white hover:border-white/40 text-sm font-medium transition-all duration-200"
-                >
-                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" /></svg>
-                  View GitHub
-                </a>
-              </div>
+
             </div>
           </section>
         </Reveal>
