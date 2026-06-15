@@ -307,7 +307,7 @@ export default function Home() {
                     </div>
                     <button onClick={() => handleCopy(heroCodeText, "hero-code")} className="text-xs font-mono text-white/40 hover:text-white transition-colors">{copied === "hero-code" ? "Copied!" : "Copy"}</button>
                   </div>
-                  <pre className="p-5 pb-8 overflow-x-auto text-sm font-mono leading-relaxed bg-black relative">
+                  <pre className="p-5 overflow-x-auto text-sm font-mono leading-relaxed bg-black">
                     <code>
                       <div><span className="text-purple-400">import</span> {'{'} createServer, tool {'}'} <span className="text-purple-400">from</span> <span className="text-emerald-300">"mcpcraft"</span></div>
                       <div>&nbsp;</div>
@@ -320,7 +320,12 @@ export default function Home() {
                       <div>    to: {'{}'} type: <span className="text-emerald-300">"string"</span>, description: <span className="text-emerald-300">"Recipient"</span> {'}'},</div>
                       <div>    body: {'{}'} type: <span className="text-emerald-300">"string"</span>, description: <span className="text-emerald-300">"Content"</span> {'}'}</div>
                       <div>  {'}'},</div>
-                      <div className="text-white/30">// ...</div>
+                      <div>  run: <span className="text-purple-400">async</span> ({'{'} to, body {'}'}) <span className="text-purple-400">=&gt;</span> {'{}'}</div>
+                      <div>    <span className="text-purple-400">return</span> {'{}'} success: <span className="text-amber-300">true</span> {'}'}</div>
+                      <div>  {'}'}</div>
+                      <div>{'}'}))</div>
+                      <div>&nbsp;</div>
+                      <div>server.<span className="text-blue-400">start</span>()</div>
                     </code>
                   </pre>
                 </div>
