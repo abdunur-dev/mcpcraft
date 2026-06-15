@@ -1,0 +1,152 @@
+---
+title: Deployment
+description: Deploy your MCP server to production — Vercel, Docker, and bare metal.
+---
+
+# Deployment
+
+MCP servers communicate over **stdio** (standard input/output) or **SSE** (server-sent events). The transport determines where and how you deploy.
+
+---
+
+## stdio (Local & Desktop)
+
+Stdio is the simplest transport — your server runs as a child process of the MCP client. No network setup, no ports.
+
+**Use when:** running with Claude Desktop, VS Code Copilot, or local development.
+
+```json
+// claude_desktop_config.json
+{
+  "mcpServers": {
+    "my-server": {
+      "command": "node",
+      "args": ["dist/server.js"],
+      "env": {
+        "API_KEY": "sk-..."
+      }
+    }
+  }
+}
+```
+
+No deployment needed — just build and point the config to your script.
+
+---
+
+## Vercel (Serverless)
+
+For remote access, deploy your MCP server as a Vercel serverless function. The function listens for incoming SSE connections from MCP clients.
+
+<Steps>
+<Step>
+
+### Create the API route
+
+```typescript
+// api/mcp.ts
+import { createServer, tool } from "mcpcraft-sdk"
+
+const server = createServer({ name: "my-server" })
+
+server.add(tool({
+  name: "get_weather",
+  description: "Fetches weather for a city",
+  input: {
+    city: { type: "string", description: "City name" }
+  },
+  run: async ({ city }) => {
+    const res = await fetch(
+      `https://api.open-meteo.com/v1/forecast?latitude=...&current_weather=true`
+    )
+    return await res.json()
+  }
+}))
+
+export default server
+```
+
+</Step>
+
+<Step>
+
+### Configure Vercel
+
+```json
+// vercel.json
+{
+  "functions": {
+    "api/mcp.ts": {
+      "maxDuration": 60
+    }
+  }
+}
+```
+
+</Step>
+
+<Step>
+
+### Set environment variables
+
+```bash
+vercel env add API_KEY
+vercel env add DATABASE_URL
+```
+
+</Step>
+
+<Step>
+
+### Deploy
+
+```bash
+vercel deploy --prod
+```
+
+Your server is now live at `https://your-project.vercel.app/api/mcp`.
+
+</Step>
+</Steps>
+
+<Callout type="warn">
+  Serverless functions have cold starts and execution time limits. For latency-sensitive workloads, consider a long-running container instead.
+</Callout>
+
+---
+
+## Docker
+
+For full control over runtime and scaling.
+
+```dockerfile
+FROM node:20-alpine
+
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
+
+COPY dist/ ./dist/
+
+EXPOSE 3000
+CMD ["node", "dist/server.js"]
+```
+
+```bash
+docker build -t mcp-server .
+docker run -e API_KEY=sk-... mcp-server
+```
+
+---
+
+## Production Checklist
+
+| Concern | Recommendation |
+|---------|---------------|
+| **Environment variables** | Use `.env` locally, Vercel env vars or Docker secrets in production |
+| **Error monitoring** | Wrap handlers in `try/catch` and log to stdout/stderr |
+| **Rate limiting** | Implement per-client rate limits if exposing over SSE |
+| **Authentication** | Use API keys or JWT for SSE endpoints (stdio is local-only) |
+| **Graceful shutdown** | Listen for `SIGTERM`/`SIGINT` to close connections cleanly |
+| **Logging** | Structured JSON logs (`pino`, `console.log` with context) |
+| **Health checks** | Add a `ping` tool that returns `{ status: "ok" }` |

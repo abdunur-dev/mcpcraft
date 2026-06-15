@@ -1,0 +1,175 @@
+---
+title: File System Server
+description: Build an MCP server that reads, writes, and searches files with path traversal protection.
+---
+
+# File System Server
+
+A practical file system server that gives an LLM controlled access to read, search, and manage files in a sandboxed directory.
+
+```typescript
+import { createServer, tool } from "mcpcraft-sdk"
+import fs from "fs/promises"
+import path from "path"
+
+const ROOT = path.resolve(process.cwd(), "workspace")
+
+function safePath(userPath: string): string | null {
+  const resolved = path.resolve(ROOT, userPath)
+  return resolved.startsWith(ROOT) ? resolved : null
+}
+
+async function ensureRoot() {
+  await fs.mkdir(ROOT, { recursive: true })
+}
+
+const server = createServer({ name: "fs-server" })
+
+// ── List directory ──
+server.add(tool({
+  name: "list_dir",
+  description: "Lists files and directories at a given path inside the workspace",
+  input: {
+    dir: { type: "string", description: "Relative directory path (e.g. '.' or 'docs')" }
+  },
+  run: async ({ dir }) => {
+    try {
+      const d = safePath(dir ?? ".")
+      if (!d) return { error: "Access denied: path is outside the workspace" }
+
+      await ensureRoot()
+      const entries = await fs.readdir(d, { withFileTypes: true })
+      return {
+        path: dir || ".",
+        entries: entries.map(e => ({
+          name: e.name,
+          type: e.isDirectory() ? "directory" : "file",
+          size: e.isFile() ? 0 : null // size filled in read_file
+        }))
+      }
+    } catch (err) {
+      if ((err as NodeJS.ErrnoException).code === "ENOENT") {
+        return { error: `Directory not found: "${dir}"` }
+      }
+      return { error: `Failed to list directory: ${err instanceof Error ? err.message : "Unknown error"}` }
+    }
+  }
+}))
+
+// ── Read file ──
+server.add(tool({
+  name: "read_file",
+  description: "Reads the contents of a file inside the workspace",
+  input: {
+    filepath: { type: "string", description: "Relative file path (e.g. 'docs/readme.md')" }
+  },
+  run: async ({ filepath }) => {
+    try {
+      const fp = safePath(filepath ?? "")
+      if (!fp) return { error: "Access denied: path is outside the workspace" }
+
+      await ensureRoot()
+      const stat = await fs.stat(fp)
+      if (!stat.isFile()) return { error: `Not a file: "${filepath}"` }
+
+      const content = await fs.readFile(fp, "utf-8")
+      return {
+        path: filepath,
+        size: stat.size,
+        lines: content.split("\n").length,
+        content
+      }
+    } catch (err) {
+      if ((err as NodeJS.ErrnoException).code === "ENOENT") {
+        return { error: `File not found: "${filepath}"` }
+      }
+      return { error: `Failed to read file: ${err instanceof Error ? err.message : "Unknown error"}` }
+    }
+  }
+}))
+
+// ── Write file ──
+server.add(tool({
+  name: "write_file",
+  description: "Writes content to a file inside the workspace (creates directories as needed)",
+  input: {
+    filepath: { type: "string", description: "Relative file path (e.g. 'notes/todo.md')" },
+    content: { type: "string", description: "File content to write" }
+  },
+  run: async ({ filepath, content }) => {
+    try {
+      const fp = safePath(filepath ?? "")
+      if (!fp) return { error: "Access denied: path is outside the workspace" }
+
+      if (!filepath) return { error: "File path is required" }
+
+      await ensureRoot()
+      await fs.mkdir(path.dirname(fp), { recursive: true })
+      await fs.writeFile(fp, content ?? "", "utf-8")
+
+      return { saved: true, path: filepath, size: (content ?? "").length }
+    } catch (err) {
+      return { error: `Failed to write file: ${err instanceof Error ? err.message : "Unknown error"}` }
+    }
+  }
+}))
+
+// ── Search files ──
+server.add(tool({
+  name: "search_files",
+  description: "Recursively searches for files matching a glob-like name pattern",
+  input: {
+    pattern: { type: "string", description: "Filename pattern to match (e.g. '*.md', '*.ts')" }
+  },
+  run: async ({ pattern }) => {
+    try {
+      const p = (pattern ?? "").trim()
+      if (!p) return { error: "Search pattern is required" }
+
+      await ensureRoot()
+      const results: string[] = []
+      const regex = new RegExp(
+        "^" + p.replace(/\./g, "\\.").replace(/\*/g, ".*") + "$",
+        "i"
+      )
+
+      async function walk(dir: string) {
+        const entries = await fs.readdir(dir, { withFileTypes: true })
+        for (const entry of entries) {
+          const full = path.join(dir, entry.name)
+          if (entry.isDirectory()) {
+            if (!entry.name.startsWith(".")) await walk(full)
+          } else if (regex.test(entry.name)) {
+            results.push(path.relative(ROOT, full))
+          }
+        }
+      }
+
+      await walk(ROOT)
+      return { pattern: p, matches: results.length, files: results.slice(0, 50) }
+    } catch (err) {
+      return { error: `Failed to search files: ${err instanceof Error ? err.message : "Unknown error"}` }
+    }
+  }
+}))
+
+server.start()
+```
+
+## Key Patterns
+
+| Pattern | Why |
+|---------|-----|
+| `safePath()` | Prevents path traversal attacks — all file ops sandboxed under `workspace/` |
+| `ensureRoot()` | Creates the workspace directory on first access |
+| `ENOENT` checks | Returns user-friendly "not found" instead of raw errors |
+| Recursive walk | Allows the LLM to discover files without knowing exact paths |
+| Regex from glob | Simple pattern matching (`*.md`, `*.ts`) without extra dependencies |
+
+## Running It
+
+```bash
+npx ts-node fs-server.ts
+```
+
+All files are sandboxed inside the `workspace/` directory in your project root. Tell the LLM to "list files, read docs/readme.md, and save a summary to notes/summary.md".

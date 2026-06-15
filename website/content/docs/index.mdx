@@ -5,17 +5,59 @@ description: Build MCP servers in minutes with mcpcraft-sdk — the lightweight 
 
 ## What is MCP?
 
-The **Model Context Protocol (MCP)** is an open standard that lets AI apps (Claude, Cursor, VS Code Copilot) call functions and read data from your server — the same way HTTP lets browsers talk to APIs.
+The **Model Context Protocol (MCP)** is an open standard that lets AI applications discover and call functions on your server — the same way HTTP lets browsers talk to web APIs.
 
-An MCP server exposes **tools** (functions an LLM can execute) and **resources** (data an LLM can read). Without MCP, you'd need to build custom integrations for every AI app. With MCP, you write it once and any compatible client can use it.
+Think of it as a universal plugin system for AI:
+
+| Layer | Web Analogy | MCP Analogy |
+|-------|------------|-------------|
+| Client | Browser (Chrome, Firefox) | AI App (Claude, Cursor, VS Code Copilot) |
+| Protocol | HTTP | MCP (JSON-RPC over stdio/SSE) |
+| Server | Express, Next.js API | Your MCP server |
+| Endpoint | REST route (`GET /users`) | Tool (`get_weather`) or Resource (`status://health`) |
+
+An MCP server exposes two kinds of endpoints:
+
+- **Tools** — functions an LLM can *execute* (send an email, query a database, fetch an API). Return structured data.
+- **Resources** — data an LLM can *read* (configuration, documentation, live metrics). Identified by URI, like `docs://readme`.
+
+Without MCP, you'd need custom integrations for every AI app. With MCP, you write your server once and any compatible client can use it.
 
 <Callout type="info">
-  MCP is to AI what HTTP is to the web — a universal protocol that decouples clients from servers. mcpcraft-sdk is to MCP what Express is to HTTP.
+  MCP is to AI what HTTP is to the web — a universal protocol that decouples clients from servers.
 </Callout>
+
+## How It Works
+
+```
+┌─────────────────┐      JSON-RPC       ┌──────────────────┐      ┌─────────────┐
+│   AI Agent      │ ◄──── stdio/SSE ───► │  MCP Client      │ ──►  │  Your MCP   │
+│  (Claude,       │                      │  (Claude Desktop, │      │  Server     │
+│   Cursor, ...)  │                      │   VS Code, ...)   │      │             │
+└─────────────────┘                      └──────────────────┘      └──────┬──────┘
+                                                                          │
+                                                            ┌─────────────┼─────────────┐
+                                                            ▼             ▼             ▼
+                                                     ┌─────────┐  ┌──────────┐  ┌──────────┐
+                                                     │  Tools  │  │Resources │  │  CLI     │
+                                                     │ (exec)  │  │ (read)   │  │(scaffold)│
+                                                     └─────────┘  └──────────┘  └──────────┘
+```
+
+When a user asks "What's the weather in Tokyo?", the flow is:
+
+1. The AI agent decides it needs weather data
+2. It asks the MCP client for available tools
+3. The client sends a `tools/list` request to your server over stdio
+4. Your server responds with the `get_weather` tool definition (name, description, input schema)
+5. The AI agent sees the tool and decides to call it with `{ city: "Tokyo" }`
+6. The client sends a `tools/call` request to your server
+7. Your `run` handler executes, fetches live weather data, and returns it
+8. The AI agent receives the response and crafts a natural language answer
 
 ## Why mcpcraft-sdk?
 
-The official `@modelcontextprotocol/sdk` requires ~100 lines of boilerplate for a simple server. mcpcraft-sdk distills that down to ~10 lines — with automatic schema generation, type inference, and input validation.
+The official `@modelcontextprotocol/sdk` gives you full control — but requires ~100 lines of boilerplate per server. mcpcraft-sdk distills that down to ~10 lines with automatic schema generation, type inference, and input validation.
 
 ```typescript
 import { createServer, tool } from "mcpcraft-sdk"
@@ -36,9 +78,25 @@ server.add(tool({
 server.start()
 ```
 
-<Callout type="success">
-  That's it. 12 lines and your MCP server is ready to connect to any MCP-compatible client.
-</Callout>
+| What the raw SDK makes you write | What mcpcraft-sdk does for you |
+|----------------------------------|-------------------------------|
+| `Server` constructor + capability declaration | `createServer({ name })` |
+| Manual JSON-RPC handlers (`setRequestHandler`) | `server.add(tool({...}))` |
+| `inputSchema` as raw JSON Schema | `input` as plain object → auto-generated |
+| Manual type checks in handler | Inferred types + Zod validation |
+| `StdioServerTransport` + `server.connect()` | `server.start()` |
+
+## CLI, SDK & Templates
+
+mcpcraft-sdk ships as three integrated layers:
+
+| Layer | What it does | Command |
+|-------|-------------|---------|
+| **SDK** (`mcpcraft-sdk`) | Runtime library for building MCP servers. Provides `createServer`, `tool`, `resource`. | `npm install mcpcraft-sdk` |
+| **CLI** (`mcpcraft-sdk/cli`) | Scaffolds new projects, generates boilerplate, runs dev servers. | `npx mcpcraft-sdk init` |
+| **Templates** | Starter projects for common patterns. `init` prompts you to pick one (basic, gmail, weather). | Included in CLI |
+
+The CLI is optional — you can use the SDK directly by installing the package. Templates are for when you want to skip the setup and start coding immediately.
 
 ## Features
 
@@ -51,27 +109,19 @@ Handler parameters are typed automatically from your input schema — full autoc
 ### Built-in Validation
 Every tool input is validated with Zod before reaching your handler. Invalid calls get structured error responses, not crashes.
 
-### CLI Scaffolding
-Scaffold a complete project in one command: `npx mcpcraft-sdk init`
-
 ### Tools & Resources
 Register executable tools (for LLM actions) and read-only resources (for context) with the same `.add()` API.
 
 ### Production Ready
 Built on top of the official `@modelcontextprotocol/sdk`. Fully spec-compliant, works with Claude Desktop, VS Code Copilot, Cursor, and all MCP hosts.
 
-## Quick Comparison
-
-| Task | Raw SDK | mcpcraft-sdk |
-|------|---------|-------------|
-| Server boilerplate | 30+ lines | 3 lines |
-| Tool registration | Manual schema + handlers | `server.add(tool({...}))` |
-| Input validation | Manual type checks | Automatic Zod |
-| Transport setup | Manual stdio config | Built-in `.start()` |
+### Deploy Anywhere
+Works with stdio (local), SSE (server-sent events), and can be deployed as Vercel serverless functions, Docker containers, or Node processes.
 
 ## Next Steps
 
 - [Installation](/docs/installation) — Add mcpcraft-sdk to your project
 - [Quick Start](/docs/quick-start) — Build your first server in 5 minutes
+- [Deployment](/docs/deployment) — Deploy to Vercel, Docker, or production
 - [API Reference](/docs/api/create-server) — Full API documentation
 - [Examples](/docs/examples/basic-server) — Real-world use cases

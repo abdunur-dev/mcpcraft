@@ -7,20 +7,18 @@ description: Build your first MCP server with mcpcraft-sdk in under 5 minutes.
 
 Create your first MCP server in under 5 minutes.
 
-<Steps>
-<Step>
+## 1. Install
 
-### Install
+Create a new project and install mcpcraft-sdk:
 
 ```bash
+mkdir my-mcp-server
+cd my-mcp-server
+npm init -y
 npm install mcpcraft-sdk zod
 ```
 
-</Step>
-
-<Step>
-
-### Write your server
+## 2. Write your server
 
 Create `server.ts`:
 
@@ -43,39 +41,66 @@ server.add(tool({
 server.start()
 ```
 
-</Step>
+<Callout type="info">
+  `input: { name: { type: "string" } }` looks like a simple object, but behind the scenes mcpcraft-sdk generates a JSON Schema for the MCP protocol and a Zod validator for runtime checks — both automatically.
+</Callout>
 
-<Step>
-
-### Run it
+## 3. Run it
 
 ```bash
 npx ts-node server.ts
 ```
 
-Your server is now listening on stdio.
+The server starts and listens on stdio. It won't print anything — it's waiting for an MCP client to connect.
 
-<Callout type="info">
-  Because the server communicates via standard input/output, running it in the terminal will start a blocking process. To test it, connect it to an MCP host like Claude Desktop.
-</Callout>
+## 4. Test it
 
-</Step>
-</Steps>
+Install the MCP Inspector to test your server locally:
+
+```bash
+npx @modelcontextprotocol/inspector node -- dist/server.js
+```
+
+Or, if you're using **Claude Desktop**, add this to your `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "my-first-server": {
+      "command": "node",
+      "args": ["dist/server.js"]
+    }
+  }
+}
+```
 
 ## What just happened?
 
-- `createServer({ name: "my-first-server" })` — initialized an MCP server
-- `tool({ ... })` — defined a callable function the LLM can invoke
-- `input: { name: { type: "string", ... } }` — declared a parameter (mcpcraft-sdk builds the JSON Schema + Zod validator automatically)
-- `run: async ({ name }) => ...` — the handler that executes when the LLM calls the tool
-- `server.start()` — launched the server on stdio transport
+Let's walk through the code line by line:
 
-<Callout type="success">
-  That's everything you need. Any MCP-compatible client — Claude Desktop, VS Code Copilot, Cursor — can now discover and call your `greet` tool.
-</Callout>
+| Code | What it does |
+|------|-------------|
+| `createServer({ name })` | Initializes an MCP server instance with stdio transport |
+| `tool({ name, description, input, run })` | Defines a callable function — name tells the LLM what it does, description helps the LLM decide when to use it |
+| `input: { name: { type: "string" } }` | Declares parameters → mcpcraft-sdk auto-generates JSON Schema + Zod validator |
+| `run: async ({ name }) => { ... }` | The handler that executes when the LLM calls this tool — receives typed, validated arguments |
+| `server.add(tool(...))` | Registers the tool with the MCP protocol so the client can discover it via `tools/list` |
+| `server.start()` | Launches the stdio transport and begins listening for JSON-RPC messages |
+
+## What the LLM sees
+
+When a user asks "Greet me as Alice", this is what happens behind the scenes:
+
+1. Claude sees your `greet` tool in the MCP tool list
+2. It reads the description: "Greets a user by name"
+3. It sees it needs a `name` parameter (string)
+4. It calls `greet({ name: "Alice" })`
+5. Your handler runs and returns `{ message: "Hello, Alice!" }`
+6. Claude reads the result and responds: "Hello, Alice! How can I help you today?"
 
 ## Next Steps
 
+- [Deployment](/docs/deployment) — Deploy to Vercel or Docker
 - [API Reference: createServer](/docs/api/create-server)
 - [Defining Tools](/docs/api/tool)
-- [Real-world Examples](/docs/examples/basic-server)
+- [Examples: API Fetch](/docs/examples/api-fetch)

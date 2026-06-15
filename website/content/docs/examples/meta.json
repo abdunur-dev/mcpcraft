@@ -4,6 +4,7 @@
     "basic-server",
     "gmail-server",
     "api-fetch",
-    "ai-agent"
+    "ai-agent",
+    "file-system"
   ]
 }
