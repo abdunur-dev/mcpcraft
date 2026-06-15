@@ -187,6 +187,7 @@ function Boo({ children }: { children: React.ReactNode }) {
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("npm");
+  const [heroTab, setHeroTab] = useState<"server.ts" | "terminal">("server.ts");
   const [copied, setCopied] = useState("");
 
   const handleCopy = (text: string, id: string) => {
@@ -299,35 +300,69 @@ export default function Home() {
               <div className="-mx-4 sm:mx-0 animate-fadeIn [animation-delay:500ms]">
                 <div className="rounded-lg border border-white/10 bg-[#050505] shadow-2xl overflow-hidden">
                   <div className="bg-[#0b0b0b] border-b border-white/10 px-4 py-2.5 flex items-center justify-between">
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
-                      <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
-                      <span className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
-                      <span className="text-xs text-white/40 font-mono ml-2">server.ts</span>
+                    <div className="flex items-center min-w-0">
+                      <span className="w-2.5 h-2.5 rounded-full bg-red-500/60 shrink-0" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/60 shrink-0 ml-1.5" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-green-500/60 shrink-0 ml-1.5" />
+                      <div className="flex ml-3 gap-0.5">
+                        {(["server.ts", "terminal"] as const).map((tab) => (
+                          <button
+                            key={tab}
+                            onClick={() => setHeroTab(tab)}
+                            className={`px-2.5 py-1 text-[11px] font-mono rounded transition-all duration-150 ${
+                              heroTab === tab
+                                ? "bg-white/[0.08] text-white"
+                                : "text-white/40 hover:text-white/70"
+                            }`}
+                          >
+                            {tab}
+                          </button>
+                        ))}
+                      </div>
                     </div>
-                    <button onClick={() => handleCopy(heroCodeText, "hero-code")} className="text-xs font-mono text-white/40 hover:text-white transition-colors">{copied === "hero-code" ? "Copied!" : "Copy"}</button>
+                    <button onClick={() => handleCopy(heroCodeText, "hero-code")} className="text-xs font-mono text-white/40 hover:text-white transition-colors shrink-0 ml-2">{copied === "hero-code" ? "Copied!" : "Copy"}</button>
                   </div>
-                  <pre className="p-4 sm:p-5 overflow-x-auto text-[11px] sm:text-sm font-mono leading-relaxed bg-black">
-                    <code>
-                      <div><span className="text-purple-400">import</span> {'{'} createServer, tool {'}'} <span className="text-purple-400">from</span> <span className="text-emerald-300">"mcpcraft"</span></div>
-                      <div>&nbsp;</div>
-                      <div><span className="text-purple-400">const</span> server = <span className="text-blue-400">createServer</span>({'{}'} name: <span className="text-emerald-300">"my-server"</span> {'}'})</div>
-                      <div>&nbsp;</div>
-                      <div>server.<span className="text-blue-400">add</span>(<span className="text-blue-400">tool</span>({'{}'}</div>
-                      <div>  name: <span className="text-emerald-300">"send_email"</span>,</div>
-                      <div>  description: <span className="text-emerald-300">"Sends an email"</span>,</div>
-                      <div>  input: {'{}'}</div>
-                      <div>    to: {'{}'} type: <span className="text-emerald-300">"string"</span>, description: <span className="text-emerald-300">"Recipient"</span> {'}'},</div>
-                      <div>    body: {'{}'} type: <span className="text-emerald-300">"string"</span>, description: <span className="text-emerald-300">"Content"</span> {'}'}</div>
-                      <div>  {'}'},</div>
-                      <div>  run: <span className="text-purple-400">async</span> ({'{'} to, body {'}'}) <span className="text-purple-400">=&gt;</span> {'{}'}</div>
-                      <div>    <span className="text-purple-400">return</span> {'{}'} success: <span className="text-amber-300">true</span> {'}'}</div>
-                      <div>  {'}'}</div>
-                      <div>{'}'}))</div>
-                      <div>&nbsp;</div>
-                      <div>server.<span className="text-blue-400">start</span>()</div>
-                    </code>
-                  </pre>
+                  {heroTab === "server.ts" ? (
+                    <pre className="p-4 sm:p-5 overflow-x-auto text-[11px] sm:text-sm font-mono leading-relaxed bg-black">
+                      <code>
+                        <div><span className="text-purple-400">import</span> {'{'} createServer, tool {'}'} <span className="text-purple-400">from</span> <span className="text-emerald-300">"mcpcraft"</span></div>
+                        <div>&nbsp;</div>
+                        <div><span className="text-purple-400">const</span> server = <span className="text-blue-400">createServer</span>({'{}'} name: <span className="text-emerald-300">"my-server"</span> {'}'})</div>
+                        <div>&nbsp;</div>
+                        <div>server.<span className="text-blue-400">add</span>(<span className="text-blue-400">tool</span>({'{}'}</div>
+                        <div>  name: <span className="text-emerald-300">"send_email"</span>,</div>
+                        <div>  description: <span className="text-emerald-300">"Sends an email"</span>,</div>
+                        <div>  input: {'{}'}</div>
+                        <div>    to: {'{}'} type: <span className="text-emerald-300">"string"</span>, description: <span className="text-emerald-300">"Recipient"</span> {'}'},</div>
+                        <div>    body: {'{}'} type: <span className="text-emerald-300">"string"</span>, description: <span className="text-emerald-300">"Content"</span> {'}'}</div>
+                        <div>  {'}'},</div>
+                        <div>  run: <span className="text-purple-400">async</span> ({'{'} to, body {'}'}) <span className="text-purple-400">=&gt;</span> {'{}'}</div>
+                        <div>    <span className="text-purple-400">return</span> {'{}'} success: <span className="text-amber-300">true</span> {'}'}</div>
+                        <div>  {'}'}</div>
+                        <div>{'}'}))</div>
+                        <div>&nbsp;</div>
+                        <div>server.<span className="text-blue-400">start</span>()</div>
+                      </code>
+                    </pre>
+                  ) : (
+                    <pre className="p-4 sm:p-5 overflow-x-auto text-[11px] sm:text-sm font-mono leading-relaxed bg-[#0a0a0a]">
+                      <code>
+                        <div><span className="text-emerald-400/70">$</span> <span className="text-white/90">npx ts-node server.ts</span></div>
+                        <div>&nbsp;</div>
+                        <div><span className="text-emerald-400/50">&gt;</span> <span className="text-white/60">mcpcraft v0.1.0</span></div>
+                        <div><span className="text-emerald-400/50">&gt;</span> <span className="text-white/60">server</span> <span className="text-emerald-300">"my-server"</span> <span className="text-white/60">initialized</span></div>
+                        <div><span className="text-emerald-400/50">&gt;</span> <span className="text-white/60">transport:</span> <span className="text-amber-300">stdio</span></div>
+                        <div><span className="text-emerald-400/50">&gt;</span> <span className="text-white/60">tools:</span> <span className="text-blue-400">send_email</span></div>
+                        <div>&nbsp;</div>
+                        <div><span className="text-emerald-400/50">&gt;</span> <span className="text-emerald-300">ready</span> <span className="text-white/40">listening for messages</span></div>
+                        <div>&nbsp;</div>
+                        <div><span className="text-white/30">[12:00:01]</span> <span className="text-emerald-400/50">&larr;</span> <span className="text-white/70">tools/list</span> <span className="text-white/40">(Claude Desktop)</span></div>
+                        <div><span className="text-white/30">[12:00:01]</span> <span className="text-emerald-400/50">&rarr;</span> <span className="text-white/70">1 tool</span> <span className="text-white/40">sent</span></div>
+                        <div><span className="text-white/30">[12:00:03]</span> <span className="text-emerald-400/50">&larr;</span> <span className="text-white/70">tools/call</span> <span className="text-white/40">(send_email)</span></div>
+                        <div><span className="text-white/30">[12:00:03]</span> <span className="text-emerald-400/50">&rarr;</span> <span className="text-white/70">success:</span> <span className="text-amber-300">true</span></div>
+                      </code>
+                    </pre>
+                  )}
                 </div>
               </div>
             </div>
