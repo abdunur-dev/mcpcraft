@@ -4,6 +4,9 @@
   "description": "The lightweight SDK for building MCP servers fast",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "bin": {
+    "mcpcraft-sdk": "dist/cli.js"
+  },
   "files": [
     "dist"
   ],
