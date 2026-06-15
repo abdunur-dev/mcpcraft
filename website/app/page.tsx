@@ -8,6 +8,8 @@ import {
 } from "framer-motion";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import { Snippet } from "@/components/ui/Snippet";
+import { Skeleton } from "@/components/ui/Skeleton";
 
 function AnimateInView({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -659,31 +661,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                       exit={{ opacity: 0, y: -8 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <div className="rounded-md border border-white/10 bg-black overflow-hidden">
-                        <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/10 bg-[#050505]">
-                          <div className="flex items-center gap-2">
-                            <span className="w-3 h-3 rounded-full bg-red-500/60" />
-                            <span className="w-3 h-3 rounded-full bg-yellow-500/60" />
-                            <span className="w-3 h-3 rounded-full bg-green-500/60" />
-                            <span className="text-xs text-white/40 font-mono ml-2">terminal</span>
-                          </div>
-                          <button
-                            onClick={() => handleCopy(tabOptions.find((t) => t.id === activeTab)!.cmd, "install")}
-                            className="text-xs font-mono text-white/40 hover:text-white transition-colors"
-                          >
-                            {copied === "install" ? (
-                              <svg className="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
-                            ) : (
-                              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" /></svg>
-                            )}
-                          </button>
-                        </div>
-                        <pre className="p-5 text-sm font-mono leading-relaxed text-white/90 overflow-x-auto">
-                          <code>
-                            <span className="text-emerald-400">$</span> {tabOptions.find((t) => t.id === activeTab)!.cmd}
-                          </code>
-                        </pre>
-                      </div>
+                      <Snippet text={tabOptions.find((t) => t.id === activeTab)!.cmd} width="100%" />
                     </motion.div>
                   </AnimatePresence>
                   <div className="grid grid-cols-2 gap-4">
@@ -759,8 +737,8 @@ function CountUp({ target, suffix }: { target: number; suffix: string }) {
   }, [isInView, target]);
 
   return (
-    <div ref={ref} className="text-2xl font-bold text-white">
-      {count}{suffix}
+    <div ref={ref} className="text-2xl font-bold text-white flex items-center justify-center min-h-[2rem]">
+      {isInView ? <>{count}{suffix}</> : <Skeleton width={60} height={28} />}
     </div>
   );
 }
