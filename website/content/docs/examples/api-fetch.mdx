@@ -1,11 +1,11 @@
 ---
 title: API Fetch Tool
-description: Build an MCP tool that fetches live data from external APIs.
+description: Build a production-ready MCP tool that fetches live data from external APIs with error handling and input validation.
 ---
 
 # API Fetch Tool
 
-This example shows how to build a tool that fetches real-time data from external APIs — giving an LLM access to live information like GitHub stats, weather, or news.
+This example shows how to build robust tools that fetch real-time data from external APIs — with proper error handling, input validation, and safe response parsing.
 
 ```typescript
 import { createServer, tool } from "mcpcraft-sdk"
@@ -20,15 +20,28 @@ server.add(tool({
     username: { type: "string", description: "GitHub username" }
   },
   run: async ({ username }) => {
-    const res = await fetch(`https://api.github.com/users/${username}`)
-    if (!res.ok) return { error: `User not found: ${res.status}` }
-    const data = await res.json()
-    return {
-      login: data.login,
-      name: data.name,
-      public_repos: data.public_repos,
-      followers: data.followers,
-      bio: data.bio
+    try {
+      const user = (username ?? "").trim()
+      if (!user) return { error: "Username is required" }
+
+      const res = await fetch(`https://api.github.com/users/${encodeURIComponent(user)}`, {
+        headers: { "User-Agent": "mcpcraft-sdk/1.0" }
+      })
+
+      if (res.status === 403) return { error: "API rate limited. Try again later." }
+      if (res.status === 404) return { error: `User "${user}" not found` }
+      if (!res.ok) return { error: `GitHub API error: ${res.status}` }
+
+      const data = await res.json()
+      return {
+        login: data.login ?? null,
+        name: data.name ?? null,
+        public_repos: data.public_repos ?? 0,
+        followers: data.followers ?? 0,
+        bio: data.bio ?? null
+      }
+    } catch (err) {
+      return { error: `Failed to fetch GitHub user: ${err instanceof Error ? err.message : "Unknown error"}` }
     }
   }
 }))
@@ -41,23 +54,37 @@ server.add(tool({
     city: { type: "string", description: "City name" }
   },
   run: async ({ city }) => {
-    const geo = await fetch(
-      `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1`
-    )
-    const geoData = await geo.json()
-    if (!geoData.results?.length) return { error: "City not found" }
+    try {
+      const c = (city ?? "").trim()
+      if (!c) return { error: "City name is required" }
 
-    const { latitude, longitude, name, country } = geoData.results[0]
-    const weather = await fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`
-    )
-    const w = (await weather.json()).current_weather
+      const geoRes = await fetch(
+        `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(c)}&count=1&format=json`
+      )
+      if (!geoRes.ok) return { error: `Geocoding API error: ${geoRes.status}` }
 
-    return {
-      location: `${name}, ${country}`,
-      temperature: `${w.temperature}°C`,
-      windspeed: `${w.windspeed} km/h`,
-      condition_code: w.weathercode
+      const geoData = await geoRes.json()
+      const result = geoData.results?.[0]
+      if (!result) return { error: `City "${c}" not found` }
+
+      const { latitude, longitude, name, country } = result
+      const weatherRes = await fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`
+      )
+      if (!weatherRes.ok) return { error: `Weather API error: ${weatherRes.status}` }
+
+      const weatherData = await weatherRes.json()
+      const w = weatherData.current_weather
+      if (!w) return { error: "Weather data unavailable" }
+
+      return {
+        location: `${name ?? c}${country ? `, ${country}` : ""}`,
+        temperature: w.temperature != null ? `${w.temperature}°C` : null,
+        windspeed: w.windspeed != null ? `${w.windspeed} km/h` : null,
+        condition_code: w.weathercode ?? null
+      }
+    } catch (err) {
+      return { error: `Failed to fetch weather: ${err instanceof Error ? err.message : "Unknown error"}` }
     }
   }
 }))
@@ -65,13 +92,17 @@ server.add(tool({
 server.start()
 ```
 
-## How It Works
+## Key improvements
 
-Each tool uses `fetch()` to call a public REST API, transforms the response into a clean object, and returns it to the LLM. The LLM sees structured data and can decide what to do with it — no parsing required.
-
-<Callout type="info">
-  mcpcraft-sdk automatically serializes the returned object as JSON. The LLM receives it as structured content it can reason about.
-</Callout>
+| Pattern | Why |
+|---------|-----|
+| `try/catch` | Prevents unhandled rejections from crashing the server |
+| Input trimming + empty check | Rejects blank input before making network calls |
+| `encodeURIComponent` | Sanitizes user input in URL paths |
+| `User-Agent` header | Required by GitHub API; prevents 403 blocks |
+| Status-specific messages | Distinguishes rate limits, not-found, and generic errors |
+| Optional chaining (`?.`) | Safely accesses nested fields without crashing on `undefined` |
+| `err instanceof Error` | Avoids exposing raw exception internals to the LLM |
 
 ## Running It
 
@@ -79,4 +110,4 @@ Each tool uses `fetch()` to call a public REST API, transforms the response into
 npx ts-node api-fetch.ts
 ```
 
-Then connect to any MCP client. Ask the LLM "What's the weather in Tokyo?" or "Show me the GitHub profile for vercel" — it will call the appropriate tool and return live data.
+Connect to any MCP client. Ask "What's the weather in Tokyo?" or "Show me vercel's GitHub profile" — the LLM calls the tool and returns live, structured data.

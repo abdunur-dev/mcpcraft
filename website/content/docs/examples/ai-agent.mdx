@@ -1,15 +1,24 @@
 ---
 title: AI Agent Tool
-description: Build a tool that lets an LLM orchestrate multi-step tasks.
+description: Build a secure multi-step agent tool with path validation and error handling.
 ---
 
 # AI Agent Tool
 
-This example demonstrates how to give an LLM the ability to research, plan, and execute multi-step tasks — like a scraper that fetches content, processes it, and saves results.
+This example demonstrates how to give an LLM the ability to research, plan, and execute multi-step tasks — with input validation, error recovery, and path traversal protection.
 
 ```typescript
 import { createServer, tool } from "mcpcraft-sdk"
 import fs from "fs/promises"
+import path from "path"
+
+const ALLOWED_DIR = path.resolve(process.cwd(), "output")
+const MAX_FILE_SIZE = 1_024 * 1_024 // 1MB limit
+
+function isSafePath(filepath: string): boolean {
+  const resolved = path.resolve(ALLOWED_DIR, filepath)
+  return resolved.startsWith(ALLOWED_DIR)
+}
 
 const server = createServer({ name: "research-agent" })
 
@@ -21,33 +30,66 @@ server.add(tool({
     url: { type: "string", description: "The page URL to fetch" }
   },
   run: async ({ url }) => {
-    const res = await fetch(url)
-    const text = await res.text()
-    return {
-      url,
-      status: res.status,
-      contentLength: text.length,
-      snippet: text.slice(0, 2000) // first 2000 chars for LLM analysis
+    try {
+      const u = (url ?? "").trim()
+      if (!u) return { error: "URL is required" }
+
+      let parsed: URL
+      try { parsed = new URL(u) } catch {
+        return { error: `Invalid URL: "${u}". Must start with http:// or https://` }
+      }
+      if (!["http:", "https:"].includes(parsed.protocol)) {
+        return { error: "Only http and https URLs are allowed" }
+      }
+
+      const res = await fetch(parsed, {
+        headers: { "User-Agent": "mcpcraft-research-agent/1.0" },
+        signal: AbortSignal.timeout(10_000)
+      })
+      if (!res.ok) return { error: `HTTP ${res.status}: ${res.statusText}` }
+
+      const text = await res.text()
+      const maxLen = 2000
+      return {
+        url: parsed.toString(),
+        status: res.status,
+        content_length: text.length,
+        snippet: text.length > maxLen ? text.slice(0, maxLen) + "..." : text
+      }
+    } catch (err) {
+      if (err instanceof DOMException && err.name === "TimeoutError") {
+        return { error: "Request timed out after 10 seconds" }
+      }
+      return { error: `Failed to fetch page: ${err instanceof Error ? err.message : "Unknown error"}` }
     }
   }
 }))
 
-// ── Step 2: Summarize ──
+// ── Step 2: Analyze text ──
 server.add(tool({
-  name: "summarize_text",
+  name: "analyze_text",
   description: "Counts words, sentences, and extracts key stats from text",
   input: {
     text: { type: "string", description: "Raw text content" }
   },
   run: async ({ text }) => {
-    const words = text.split(/\s+/).length
-    const sentences = text.split(/[.!?]+/).length - 1
-    const chars = text.length
-    return {
-      word_count: words,
-      sentence_count: sentences,
-      character_count: chars,
-      estimated_reading_time_seconds: Math.round(words / 3)
+    try {
+      const t = (text ?? "").trim()
+      if (!t) return { error: "Text content is empty" }
+      if (t.length > MAX_FILE_SIZE) return { error: `Text exceeds ${MAX_FILE_SIZE / 1_024 / 1_024}MB limit` }
+
+      const words = t.split(/\s+/).filter(Boolean).length
+      const sentences = t.split(/[.!?]+/).filter(Boolean).length
+      const chars = t.length
+
+      return {
+        word_count: words,
+        sentence_count: sentences,
+        character_count: chars,
+        estimated_reading_time_seconds: Math.round(words / 3)
+      }
+    } catch (err) {
+      return { error: `Failed to analyze text: ${err instanceof Error ? err.message : "Unknown error"}` }
     }
   }
 }))
@@ -55,41 +97,64 @@ server.add(tool({
 // ── Step 3: Save results ──
 server.add(tool({
   name: "save_file",
-  description: "Saves text content to a file on disk",
+  description: "Saves text content to a file inside the output directory",
   input: {
     filename: { type: "string", description: "Output filename (e.g. report.md)" },
     content: { type: "string", description: "Content to write" }
   },
   run: async ({ filename, content }) => {
-    await fs.writeFile(filename, content, "utf-8")
-    return { saved: true, filename, size_bytes: content.length }
+    try {
+      const name = (filename ?? "").trim()
+      if (!name) return { error: "Filename is required" }
+      if (name.includes("..")) return { error: "Filename must not contain '..'" }
+
+      if (!isSafePath(name)) return { error: `Access denied: path must resolve under ${ALLOWED_DIR}` }
+
+      const c = (content ?? "").trim()
+      if (!c) return { error: "Content is empty" }
+
+      await fs.mkdir(ALLOWED_DIR, { recursive: true })
+      const fullPath = path.resolve(ALLOWED_DIR, name)
+      await fs.writeFile(fullPath, content, "utf-8")
+
+      return { saved: true, path: fullPath, size_bytes: content.length }
+    } catch (err) {
+      return { error: `Failed to save file: ${err instanceof Error ? err.message : "Unknown error"}` }
+    }
   }
 }))
 
 server.start()
 ```
 
+## Security & Reliability
+
+| Pattern | Why |
+|---------|-----|
+| `try/catch` on every tool | Prevents one failing tool from crashing the entire server |
+| URL validation via `URL` constructor | Rejects junk input before making network calls |
+| Protocol whitelist | Blocks `file://`, `data://`, and other local-access schemes |
+| `AbortSignal.timeout(10_000)` | Prevents hanging on slow or unresponsive servers |
+| Path traversal protection | `isSafePath()` ensures saved files stay under the `output/` directory |
+| `MAX_FILE_SIZE` limit | Prevents memory exhaustion from extremely large text inputs |
+| `.filter(Boolean)` | Filters empty strings from word/sentence counts |
+
 ## Orchestration Pattern
 
-This is a **tool composition** pattern. The LLM uses the tools in sequence:
+The LLM chains these tools together:
 
-1. Call `fetch_page` to grab content
-2. Call `summarize_text` to analyze it
-3. Call `save_file` to persist the result
-
-The LLM handles the orchestration — you just define the primitives.
+1. Call `fetch_page` to grab content from a URL
+2. Call `analyze_text` to extract stats from the content
+3. Call `save_file` to persist the result to disk
 
 ## Example Prompt
 
-Once connected to an MCP client, you can say:
-
-> "Go to https://example.com, analyze the content, and save a summary to summary.txt"
+> "Go to https://example.com, analyze the page, and save the summary to output/summary.txt"
 
 The LLM will:
-1. Call `fetch_page("https://example.com")`
-2. Pass the snippet to `summarize_text`
-3. Save the result via `save_file("summary.txt", ...)`
-
+1. `fetch_page("https://example.com")` → returns snippet + stats
+2. `analyze_text(snippet)` → returns word/sentence counts
+3. `save_file("output/summary.txt", ...)` → persists to disk
 
 ## Running It
 
@@ -97,6 +162,4 @@ The LLM will:
 npx ts-node research-agent.ts
 ```
 
-<Callout type="warn">
-  The `save_file` tool writes to disk. In production, restrict the working directory or add path validation.
-</Callout>
+All saved files land in the `output/` directory relative to your project root.
