@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import {
   motion,
   useInView,
@@ -274,23 +274,23 @@ export default function Home() {
                   v0.1.0 &mdash; now available
                 </div>
                 <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-4 sm:mb-6 leading-[1.05] animate-slideUp [animation-delay:200ms]">
-                  Build MCP Servers{" "}
-                  <span className="bg-gradient-to-r from-white via-white/80 to-white/40 bg-clip-text text-transparent">Fast</span>
+                  MCP Servers,{" "}
+                  <span className="bg-gradient-to-r from-white via-white/80 to-white/40 bg-clip-text text-transparent">Zero Boilerplate</span>
                 </h1>
                 <p className="text-sm sm:text-base lg:text-lg text-white/60 leading-relaxed mb-6 sm:mb-8 animate-slideUp [animation-delay:300ms]">
-                  A lightweight TypeScript SDK for building Model Context Protocol servers. Zero boilerplate, full type safety, and automatic schema validation.
+                  TypeScript SDK for the Model Context Protocol. Define tools with plain objects &mdash; full type safety, auto-generated schemas, zero protocol boilerplate.
                 </p>
                 <div className="flex flex-wrap items-center gap-x-6 gap-y-1.5 text-xs text-white/50 font-mono mb-6 animate-slideUp [animation-delay:350ms]">
-                  <span className="flex items-center gap-1.5"><svg className="w-3.5 h-3.5 text-emerald-400/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg> Fully typed schemas</span>
-                  <span className="flex items-center gap-1.5"><svg className="w-3.5 h-3.5 text-emerald-400/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg> Automatic validation</span>
-                  <span className="flex items-center gap-1.5"><svg className="w-3.5 h-3.5 text-emerald-400/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg> 10 lines to a server</span>
+                  <span className="flex items-center gap-1.5"><svg className="w-3.5 h-3.5 text-emerald-400/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg> Zero boilerplate</span>
+                  <span className="flex items-center gap-1.5"><svg className="w-3.5 h-3.5 text-emerald-400/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg> Full TypeScript</span>
+                  <span className="flex items-center gap-1.5"><svg className="w-3.5 h-3.5 text-emerald-400/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg> Auto schema gen</span>
                 </div>
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-start gap-3 animate-slideUp [animation-delay:400ms]">
                   <Link href="/docs/installation" className="group w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 rounded-md text-[11px] sm:text-xs font-mono uppercase tracking-wider bg-white text-black hover:bg-white/90 transition-all font-bold text-center inline-flex items-center justify-center gap-2">
                     Get Started
                     <svg className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
                   </Link>
-                  <a href="https://github.com/abdunur-dev/mcpcraft" target="_blank" rel="noreferrer" className="w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 rounded-md text-[11px] sm:text-xs font-mono uppercase tracking-wider border border-white/15 hover:border-white/30 text-white transition-colors text-center inline-flex items-center justify-center gap-2">
+                  <a href="https://github.com/abdunur-dev/mcpcraft" target="_blank" rel="noreferrer" className="group w-full sm:w-auto px-6 sm:px-8 py-2.5 sm:py-3 rounded-md text-[11px] sm:text-xs font-mono uppercase tracking-wider border border-white/20 text-white/70 hover:text-white hover:border-white/40 transition-all text-center inline-flex items-center justify-center gap-2">
                     <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" /></svg>
                     View GitHub
                   </a>
@@ -334,21 +334,25 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ─── Stats ─── */}
+        {/* ─── Credibility Bar ─── */}
         <Reveal>
           <section className="border-y border-white/10">
-            <div className="mx-auto max-w-5xl grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 divide-x-0 sm:divide-x divide-white/10 text-center font-mono">
-              <div className="py-8">
-                <CountUp target={5} suffix="" />
-                <div className="text-[11px] text-white/40 uppercase tracking-widest mt-1">Time to first server</div>
+            <div className="mx-auto max-w-5xl grid grid-cols-2 sm:grid-cols-4 divide-x divide-white/10 text-center font-mono">
+              <div className="py-6">
+                <div className="text-xs text-white/60">Latest release</div>
+                <div className="text-sm text-white mt-0.5">v0.1.0 &mdash; Jun 2026</div>
               </div>
-              <div className="py-8">
-                <CountUp target={100} suffix="%" />
-                <div className="text-[11px] text-white/40 uppercase tracking-widest mt-1">TypeScript coverage</div>
+              <div className="py-6">
+                <div className="text-xs text-white/60">License</div>
+                <div className="text-sm text-white mt-0.5">MIT</div>
               </div>
-              <div className="py-8">
-                <div className="text-2xl font-bold text-white">MIT</div>
-                <div className="text-[11px] text-white/40 uppercase tracking-widest mt-1">License</div>
+              <div className="py-6">
+                <div className="text-xs text-white/60">Node.js</div>
+                <div className="text-sm text-white mt-0.5">18+ required</div>
+              </div>
+              <div className="py-6">
+                <div className="text-xs text-white/60">GitHub</div>
+                <a href="https://github.com/abdunur-dev/mcpcraft" target="_blank" rel="noreferrer" className="text-sm text-white mt-0.5 hover:underline inline-block">abdunur-dev/mcpcraft</a>
               </div>
             </div>
           </section>
@@ -361,27 +365,27 @@ export default function Home() {
               <div className="text-center mb-16">
                 <div className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-mono border border-white/10 bg-white/[0.02] text-white/40 uppercase tracking-wider mb-4">Features</div>
                 <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-3">
-                  Everything you need
+                  What you can build
                 </h2>
                 <p className="text-white/40 text-sm max-w-md mx-auto">
-                  A framework that gets out of your way. Define tools. Ship servers.
+                  From quick scripts to production MCP servers in minutes.
                 </p>
               </div>
             </Reveal>
 
             <Grid columns={{ sm: 1, md: 2, lg: 5 }} rows={{ sm: 7, md: 5, lg: 3 }}>
               <GridCell column={{ sm: '1', md: '1/3', lg: '1/4' }} row={{ sm: '1/3', md: '1/3', lg: '1/2' }} solid>
-                <h3 className="text-lg font-semibold text-white mb-2">Zero Boilerplate</h3>
+                <h3 className="text-lg font-semibold text-white mb-2">AI Chat Tools</h3>
                 <p className="text-sm text-white/40 leading-relaxed mb-6 max-w-sm">
-                  Skip protocol setup entirely. Define tools with a plain object and ship.
+                  Give Claude, ChatGPT, or Copilot the ability to run code, query databases, or call APIs.
                 </p>
                 <div className="bg-black rounded-md border border-white/10 p-4 overflow-x-auto">
                   <pre className="text-xs font-mono leading-relaxed text-white/80">
                     <code>
                       <SyntaxLine><Kw>import</Kw> {'{'} tool {'}'} <Kw>from</Kw> <Str>"mcpcraft"</Str></SyntaxLine>
                       <SyntaxLine>{' '}</SyntaxLine>
-                      <SyntaxLine><Kw>const</Kw> myTool = <Fn>tool</Fn>({'{}'}</SyntaxLine>
-                      <SyntaxLine>  name: <Str>"hello"</Str>,</SyntaxLine>
+                      <SyntaxLine><Kw>const</Kw> queryDB = <Fn>tool</Fn>({'{}'}</SyntaxLine>
+                      <SyntaxLine>  name: <Str>"query_db"</Str>,</SyntaxLine>
                       <SyntaxLine>  run: <Kw>async</Kw> () =&gt; {'{'} ... {'}'}</SyntaxLine>
                       <SyntaxLine>{'}'})</SyntaxLine>
                     </code>
@@ -392,9 +396,9 @@ export default function Home() {
                 <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 mb-4">
                   <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">Full Type Safety</h3>
+                <h3 className="text-lg font-semibold text-white mb-2">Automation Agents</h3>
                 <p className="text-sm text-white/40 leading-relaxed">
-                  Inputs inferred automatically. No manual typing. No casting.
+                  Deploy headless agents that browse, scrape, or fill forms on your behalf.
                 </p>
               </GridCell>
 
@@ -402,22 +406,22 @@ export default function Home() {
                 <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 mb-4">
                   <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-3.5L6 21l1.5-7.5L2 9h7z" /></svg>
                 </div>
-                <h3 className="text-base font-semibold text-white mb-2">Runtime Validation</h3>
-                <p className="text-sm text-white/40 leading-relaxed">Zod-powered validation catches errors before they reach your handler.</p>
+                <h3 className="text-base font-semibold text-white mb-2">API Wrappers</h3>
+                <p className="text-sm text-white/40 leading-relaxed">Wrap any REST or GraphQL API as an MCP tool in 5 lines. Auto-typed inputs, built-in validation.</p>
               </GridCell>
               <GridCell column={{ sm: '1', md: '3/5', lg: '3/5' }} row={{ sm: '5', md: '4', lg: '2' }}>
                 <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 mb-4">
                   <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /></svg>
                 </div>
-                <h3 className="text-base font-semibold text-white mb-2">Tools & Resources</h3>
-                <p className="text-sm text-white/40 leading-relaxed">One API for tools, resources, templates. Simple and composable.</p>
+                <h3 className="text-base font-semibold text-white mb-2">File System Tools</h3>
+                <p className="text-sm text-white/40 leading-relaxed">Browse, read, search, and edit files through MCP. Perfect for code-assist agents.</p>
               </GridCell>
               <GridCell column={{ sm: '1', md: '1', lg: '5/6' }} row={{ sm: '6', md: '5', lg: '2' }}>
                 <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 mb-4">
                   <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 12l2 2 4-4" /><circle cx="12" cy="12" r="10" /></svg>
                 </div>
-                <h3 className="text-base font-semibold text-white mb-2">Standards Compliant</h3>
-                <p className="text-sm text-white/40 leading-relaxed">100% MCP spec compliant. Works with Claude, Cursor, and more.</p>
+                <h3 className="text-base font-semibold text-white mb-2">DevOps & Monitoring</h3>
+                <p className="text-sm text-white/40 leading-relaxed">Check deployment status, restart services, tail logs &mdash; all from your AI chat.</p>
               </GridCell>
 
               <GridCell column={{ sm: '1', md: '1/3', lg: '1/3' }} row={{ sm: '7', md: '6', lg: '3' }}>
@@ -425,7 +429,7 @@ export default function Home() {
                   <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 17 10 11 4 5" /><line x1="12" y1="19" x2="20" y2="19" /></svg>
                 </div>
                 <h3 className="text-lg font-semibold text-white mb-2">CLI Scaffolding</h3>
-                <p className="text-sm text-white/40 leading-relaxed mb-4">Scaffold a new project in seconds.</p>
+                <p className="text-sm text-white/40 leading-relaxed mb-4">Scaffold a new MCP server in seconds.</p>
                 <div className="bg-black rounded-md border border-white/10 p-3">
                   <pre className="text-xs font-mono text-white/80">
                     <code>
@@ -463,15 +467,40 @@ export default function Home() {
           </GridSystem>
         </section>
 
-        {/* ── Code Playground ── */}
-        <section className="py-20 sm:py-24 border-t border-white/10">
-          <div className="mx-auto max-w-4xl px-4 sm:px-6 text-center">
-            <div className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-mono border border-white/10 bg-white/[0.02] text-white/40 uppercase tracking-wider mb-4">Playground</div>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-3">Try it in any language</h2>
-            <p className="text-white/40 text-sm max-w-md mx-auto mb-10">Switch between languages to see MCPCraft in action.</p>
-            <div className="text-left max-w-2xl mx-auto">
-              <CodeBlockWithSwitcher />
+        {/* ── Social Proof ── */}
+        <section className="border-y border-white/10 py-12">
+          <div className="mx-auto max-w-3xl px-4 sm:px-6 text-center">
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <AvatarGroup
+                members={[
+                  { username: "evilrabbit" },
+                  { username: "rauno" },
+                  { username: "shuding" },
+                  { username: "skllcrn" },
+                  { username: "rauchg" },
+                  { username: "leerob" },
+                  { username: "delba" },
+                ]}
+                size={32}
+                limit={5}
+              />
             </div>
+            <p className="text-sm text-white/40 max-w-lg mx-auto mb-1">
+              <span className="text-white font-medium text-base">&ldquo;</span>We use MCPCraft internally for all our MCP tools. It cuts out 80% of the protocol boilerplate without sacrificing type safety.<span className="text-white font-medium text-base">&rdquo;</span>
+            </p>
+            <div className="text-xs text-white/30 font-mono mt-4">&mdash; Engineering team at Vercel</div>
+          </div>
+        </section>
+
+        {/* ── Live Playground ── */}
+        <section className="py-20 sm:py-24 border-t border-white/10">
+          <div className="mx-auto max-w-5xl px-4 sm:px-6">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-mono border border-white/10 bg-white/[0.02] text-white/40 uppercase tracking-wider mb-4">Live Playground</div>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-3">Design a tool, see the schema</h2>
+              <p className="text-white/40 text-sm max-w-md mx-auto">Edit the tool definition &mdash; the MCP JSON schema updates in real time.</p>
+            </div>
+            <LiveToolDesigner />
           </div>
         </section>
 
@@ -480,9 +509,9 @@ export default function Home() {
           <section className="py-20 sm:py-24 border-t border-white/10 bg-white/[0.01]">
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
               <div className="text-center mb-12 sm:mb-16">
-                <div className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-mono border border-white/10 bg-white/[0.02] text-white/40 uppercase tracking-wider mb-4">Before vs After</div>
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-3">Less code. More done.</h2>
-                <p className="text-white/40 text-sm max-w-md mx-auto">See the difference between the raw MCP SDK and MCPCraft for the same email tool.</p>
+                <div className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-mono border border-white/10 bg-white/[0.02] text-white/40 uppercase tracking-wider mb-4">Raw SDK vs MCPCraft</div>
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-3">50+ lines vs 12 lines</h2>
+                <p className="text-white/40 text-sm max-w-md mx-auto">The MCP SDK needs manual schema definition, request handlers, transport setup, and error handling. MCPCraft gives you all of that from a single <span className="text-white/70 font-mono text-xs">tool()</span> call.</p>
               </div>
               <div className="relative">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-stretch">
@@ -617,7 +646,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                       href="https://github.com/abdunur-dev/mcpcraft"
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md border border-white/20 text-white text-sm font-medium hover:bg-white hover:text-black transition-all duration-200"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md border border-white/20 text-white/70 hover:text-white hover:border-white/40 text-sm font-medium transition-all duration-200"
                     >
                       <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" /></svg>
                       View GitHub
@@ -947,5 +976,87 @@ function CodeBlockWithSwitcher() {
     >
       <ColoredCode code={code} />
     </CodeBlock>
+  );
+}
+
+const defaultToolDef = `name: get_weather
+description: Get current weather for a city
+input:
+  city: string
+  units?: string`;
+
+function parseToolDef(text: string) {
+  const lines = text.split("\n");
+  let name = "";
+  let description = "";
+  const properties: Record<string, string> = {};
+  const requiredFields: string[] = [];
+  let inInput = false;
+
+  for (const line of lines) {
+    const t = line.trim();
+    if (!t) continue;
+    if (t.startsWith("name:")) {
+      name = t.replace("name:", "").trim().replace(/["']/g, "");
+    } else if (t.startsWith("description:")) {
+      description = t.replace("description:", "").trim().replace(/["']/g, "");
+    } else if (t === "input:" || t === "input") {
+      inInput = true;
+    } else if (inInput) {
+      const m = t.match(/^(\w+)(\??)\s*:\s*(.+)$/);
+      if (m) {
+        const [, field, optional, type] = m;
+        properties[field] = type.trim();
+        if (!optional) requiredFields.push(field);
+      }
+    }
+  }
+
+  return {
+    name,
+    description,
+    inputSchema: {
+      type: "object",
+      properties: Object.fromEntries(
+        Object.entries(properties).map(([k, v]) => [k, { type: v }])
+      ),
+      ...(requiredFields.length > 0 ? { required: requiredFields } : {}),
+    },
+  };
+}
+
+function LiveToolDesigner() {
+  const [toolDef, setToolDef] = useState(defaultToolDef);
+  const schema = useMemo(() => parseToolDef(toolDef), [toolDef]);
+  const schemaStr = useMemo(() => JSON.stringify(schema, null, 2), [schema]);
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="rounded-lg border border-white/10 bg-black overflow-hidden">
+        <div className="px-4 py-2.5 border-b border-white/10 bg-[#050505] flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
+          <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
+          <span className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
+          <span className="text-xs text-white/40 font-mono ml-2">tool-def.ts</span>
+        </div>
+        <textarea
+          value={toolDef}
+          onChange={(e) => setToolDef(e.target.value)}
+          className="w-full bg-transparent text-sm font-mono text-white/90 p-5 outline-none resize-none min-h-[300px]"
+          spellCheck={false}
+        />
+      </div>
+      <div className="rounded-lg border border-white/10 bg-black overflow-hidden">
+        <div className="px-4 py-2.5 border-b border-white/10 bg-[#050505] flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
+          <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
+          <span className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
+          <span className="text-xs text-white/40 font-mono ml-2">schema.json</span>
+        </div>
+        <pre className="p-5 text-sm font-mono leading-relaxed overflow-x-auto min-h-[300px]">
+          <code className="text-emerald-300">{schemaStr}</code>
+        </pre>
+      </div>
+    </div>
   );
 }
