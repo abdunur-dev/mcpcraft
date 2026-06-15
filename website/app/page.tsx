@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import {
   motion,
   useInView,
@@ -23,6 +23,29 @@ function AnimateInView({ children, className = "", delay = 0 }: { children: Reac
     <div ref={ref} className={`transition-all duration-700 ease-out ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"} ${className}`} style={{ transitionDelay: `${delay}ms` }}>
       {children}
     </div>
+  );
+}
+
+function ScrollToTop() {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 400);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  const scrollToTop = useCallback(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+  return (
+    <button
+      onClick={scrollToTop}
+      aria-label="Scroll to top"
+      className={`fixed bottom-6 right-6 z-50 w-10 h-10 rounded-full border border-white/10 bg-[var(--surface-primary)] flex items-center justify-center transition-all duration-300 hover:border-white/30 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"}`}
+    >
+      <svg className="w-4 h-4 text-[var(--text-secondary)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="18 15 12 9 6 15" />
+      </svg>
+    </button>
   );
 }
 
@@ -284,7 +307,7 @@ export default function Home() {
                     </div>
                     <button onClick={() => handleCopy(heroCodeText, "hero-code")} className="text-xs font-mono text-white/40 hover:text-white transition-colors">{copied === "hero-code" ? "Copied!" : "Copy"}</button>
                   </div>
-                  <pre className="p-5 overflow-x-auto text-sm font-mono leading-relaxed bg-black">
+                  <pre className="p-5 pb-8 overflow-x-auto text-sm font-mono leading-relaxed bg-black relative">
                     <code>
                       <div><span className="text-purple-400">import</span> {'{'} createServer, tool {'}'} <span className="text-purple-400">from</span> <span className="text-emerald-300">"mcpcraft"</span></div>
                       <div>&nbsp;</div>
@@ -297,12 +320,7 @@ export default function Home() {
                       <div>    to: {'{}'} type: <span className="text-emerald-300">"string"</span>, description: <span className="text-emerald-300">"Recipient"</span> {'}'},</div>
                       <div>    body: {'{}'} type: <span className="text-emerald-300">"string"</span>, description: <span className="text-emerald-300">"Content"</span> {'}'}</div>
                       <div>  {'}'},</div>
-                      <div>  run: <span className="text-purple-400">async</span> ({'{'} to, body {'}'}) <span className="text-purple-400">=&gt;</span> {'{}'}</div>
-                      <div>    <span className="text-purple-400">return</span> {'{}'} success: <span className="text-amber-300">true</span> {'}'}</div>
-                      <div>  {'}'}</div>
-                      <div>{'}'}))</div>
-                      <div>&nbsp;</div>
-                      <div>server.<span className="text-blue-400">start</span>()</div>
+                      <div className="text-white/30">// ...</div>
                     </code>
                   </pre>
                 </div>
@@ -510,7 +528,9 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   // business logic...
 });`}</code>
                       </pre>
-                      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black to-transparent pointer-events-none" />
+                      <div className="absolute inset-x-0 bottom-0 flex items-end justify-center pb-4 pointer-events-none">
+                        <span className="text-xs font-mono text-white/30">...</span>
+                      </div>
                     </div>
                   </div>
                   <div className="flex flex-col">
@@ -663,6 +683,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       </main>
 
       <Footer />
+      <ScrollToTop />
     </div>
   );
 }
