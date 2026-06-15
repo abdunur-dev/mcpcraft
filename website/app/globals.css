@@ -777,6 +777,37 @@ body {
   border-color: var(--border-strong);
 }
 
+/* ─── Hero Grid ─── */
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+
+.hero-grid::after {
+  content: "";
+  position: absolute;
+  inset: -100%;
+  width: 300%;
+  height: 300%;
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px),
+    radial-gradient(circle at 30% 40%, rgba(168,85,247,0.04) 0%, transparent 50%),
+    radial-gradient(circle at 70% 60%, rgba(96,165,250,0.04) 0%, transparent 50%);
+  background-size: 32px 32px, 32px 32px, 100% 100%, 100% 100%;
+  animation: gridDrift 30s linear infinite;
+}
+
+@keyframes gridDrift {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(16px, 8px); }
+  100% { transform: translate(0, 0); }
+}
+
 /* ─── Hero Glow ─── */
 .hero-glow {
   position: absolute;
@@ -790,30 +821,16 @@ body {
 
 .hero-glow::before {
   content: "";
-  width: 800px;
-  height: 800px;
-  background: radial-gradient(circle, var(--surface-overlay-06) 0%, transparent 70%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
   border-radius: 50%;
+  animation: glowPulse 4s ease-in-out infinite alternate;
 }
 
-/* ─── Hero Grid ─── */
-.hero-grid {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-  mask-image: radial-gradient(ellipse at center, black 25%, transparent 75%);
-  -webkit-mask-image: radial-gradient(ellipse at center, black 25%, transparent 75%);
-}
-
-.hero-grid::after {
-  content: "";
-  position: absolute;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
-  background-image: linear-gradient(var(--surface-overlay-06) 1px, transparent 1px), linear-gradient(90deg, var(--surface-overlay-06) 1px, transparent 1px);
-  background-size: 40px 40px;
+@keyframes glowPulse {
+  0% { opacity: 0.6; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.1); }
 }
 
 /* ─── Scrollbar Styling ─── */
