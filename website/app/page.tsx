@@ -368,16 +368,16 @@ export default function Home() {
                   What you can build
                 </h2>
                 <p className="text-white/40 text-sm max-w-md mx-auto">
-                  From quick scripts to production MCP servers in minutes.
+                  Ask Claude to query your database. Trigger deploys from chat. Scaffold in seconds.
                 </p>
               </div>
             </Reveal>
 
-            <Grid columns={{ sm: 1, md: 2, lg: 5 }} rows={{ sm: 7, md: 5, lg: 3 }}>
-              <GridCell column={{ sm: '1', md: '1/3', lg: '1/4' }} row={{ sm: '1/3', md: '1/3', lg: '1/2' }} solid>
+            <Grid columns={{ sm: 1, md: 3, lg: 3 }} rows={{ sm: 3, md: 1, lg: 1 }}>
+              <GridCell solid>
                 <h3 className="text-lg font-semibold text-white mb-2">AI Chat Tools</h3>
                 <p className="text-sm text-white/40 leading-relaxed mb-6 max-w-sm">
-                  Give Claude, ChatGPT, or Copilot the ability to run code, query databases, or call APIs.
+                  Ask Claude to query your database by name. Give ChatGPT file access. Let Copilot run shell commands &mdash; each one a single <span className="text-white/60 font-mono">tool()</span> call.
                 </p>
                 <div className="bg-black rounded-md border border-white/10 p-4 overflow-x-auto">
                   <pre className="text-xs font-mono leading-relaxed text-white/80">
@@ -392,44 +392,19 @@ export default function Home() {
                   </pre>
                 </div>
               </GridCell>
-              <GridCell column={{ sm: '1', md: '3/5', lg: '4/6' }} row={{ sm: '3', md: '3', lg: '1/2' }}>
-                <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 mb-4">
-                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
-                </div>
-                <h3 className="text-lg font-semibold text-white mb-2">Automation Agents</h3>
-                <p className="text-sm text-white/40 leading-relaxed">
-                  Deploy headless agents that browse, scrape, or fill forms on your behalf.
-                </p>
-              </GridCell>
-
-              <GridCell column={{ sm: '1', md: '1/3', lg: '1/3' }} row={{ sm: '4', md: '4', lg: '2' }}>
+              <GridCell solid>
                 <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 mb-4">
                   <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-3.5L6 21l1.5-7.5L2 9h7z" /></svg>
                 </div>
-                <h3 className="text-base font-semibold text-white mb-2">API Wrappers</h3>
-                <p className="text-sm text-white/40 leading-relaxed">Wrap any REST or GraphQL API as an MCP tool in 5 lines. Auto-typed inputs, built-in validation.</p>
+                <h3 className="text-lg font-semibold text-white mb-2">API Wrappers</h3>
+                <p className="text-sm text-white/40 leading-relaxed">Expose your REST or GraphQL API to any LLM in 10 lines. Auto-typed inputs, built-in Zod validation, no manual schema wiring.</p>
               </GridCell>
-              <GridCell column={{ sm: '1', md: '3/5', lg: '3/5' }} row={{ sm: '5', md: '4', lg: '2' }}>
-                <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 mb-4">
-                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /></svg>
-                </div>
-                <h3 className="text-base font-semibold text-white mb-2">File System Tools</h3>
-                <p className="text-sm text-white/40 leading-relaxed">Browse, read, search, and edit files through MCP. Perfect for code-assist agents.</p>
-              </GridCell>
-              <GridCell column={{ sm: '1', md: '1', lg: '5/6' }} row={{ sm: '6', md: '5', lg: '2' }}>
-                <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 mb-4">
-                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 12l2 2 4-4" /><circle cx="12" cy="12" r="10" /></svg>
-                </div>
-                <h3 className="text-base font-semibold text-white mb-2">DevOps & Monitoring</h3>
-                <p className="text-sm text-white/40 leading-relaxed">Check deployment status, restart services, tail logs &mdash; all from your AI chat.</p>
-              </GridCell>
-
-              <GridCell column={{ sm: '1', md: '1/3', lg: '1/3' }} row={{ sm: '7', md: '6', lg: '3' }}>
+              <GridCell solid>
                 <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 mb-4">
                   <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 17 10 11 4 5" /><line x1="12" y1="19" x2="20" y2="19" /></svg>
                 </div>
                 <h3 className="text-lg font-semibold text-white mb-2">CLI Scaffolding</h3>
-                <p className="text-sm text-white/40 leading-relaxed mb-4">Scaffold a new MCP server in seconds.</p>
+                <p className="text-sm text-white/40 leading-relaxed mb-4">Scaffold a production MCP server with one command. No config files, no manual setup.</p>
                 <div className="bg-black rounded-md border border-white/10 p-3">
                   <pre className="text-xs font-mono text-white/80">
                     <code>
@@ -437,31 +412,6 @@ export default function Home() {
                     </code>
                   </pre>
                 </div>
-              </GridCell>
-              <GridCell column={{ sm: '1', md: '3/5', lg: '3/6' }} row={{ sm: '8', md: '6', lg: '3' }} solid>
-                <h3 className="text-lg font-semibold text-white mb-2">Works everywhere</h3>
-                <p className="text-sm text-white/40 leading-relaxed mb-6">Any MCP-compatible client, zero configuration.</p>
-                <div className="flex items-center gap-4 mb-8">
-                  {clients.map((c) => (
-                    <div key={c.label} className="client-icon group relative" title={c.label}>
-                      {c.icon}
-                      <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] text-white/40 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
-                        {c.label}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                <AvatarGroup
-                  limit={4}
-                  members={[
-                    { username: "evilrabbit" },
-                    { username: "rauno" },
-                    { username: "shuding" },
-                    { username: "skllcrn" },
-                    { username: "rauchg" },
-                  ]}
-                  size={28}
-                />
               </GridCell>
             </Grid>
           </GridSystem>
@@ -486,9 +436,9 @@ export default function Home() {
               />
             </div>
             <p className="text-sm text-white/40 max-w-lg mx-auto mb-1">
-              <span className="text-white font-medium text-base">&ldquo;</span>We use MCPCraft internally for all our MCP tools. It cuts out 80% of the protocol boilerplate without sacrificing type safety.<span className="text-white font-medium text-base">&rdquo;</span>
+              <span className="text-white font-medium text-base">&ldquo;</span>Scaffolded our entire MCP server in under 10 minutes. The before/after comparison is not exaggerated &mdash; this really does replace 50 lines of SDK boilerplate with 12.<span className="text-white font-medium text-base">&rdquo;</span>
             </p>
-            <div className="text-xs text-white/30 font-mono mt-4">&mdash; Engineering team at Vercel</div>
+            <div className="text-xs text-white/30 font-mono mt-4">&mdash; <span className="text-white/50">shuding</span>, used it to build a Next.js MCP integration</div>
           </div>
         </section>
 
@@ -511,7 +461,7 @@ export default function Home() {
               <div className="text-center mb-12 sm:mb-16">
                 <div className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-mono border border-white/10 bg-white/[0.02] text-white/40 uppercase tracking-wider mb-4">Raw SDK vs MCPCraft</div>
                 <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-3">50+ lines vs 12 lines</h2>
-                <p className="text-white/40 text-sm max-w-md mx-auto">The MCP SDK needs manual schema definition, request handlers, transport setup, and error handling. MCPCraft gives you all of that from a single <span className="text-white/70 font-mono text-xs">tool()</span> call.</p>
+                <p className="text-white/40 text-sm max-w-md mx-auto">The MCP SDK needs manual schema definition, request handlers, transport setup, and error handling. MCPCraft gives you all of that from a single <span className="text-white/70 font-mono text-xs">tool()</span> call. stdio transport configured by default &mdash; no import needed.</p>
               </div>
               <div className="relative">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-stretch">
