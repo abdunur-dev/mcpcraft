@@ -1,28 +1,63 @@
-# mcpcraft
+# mcpcraft-sdk
 
-[![npm version](https://img.shields.io/npm/v/mcpcraft.svg?style=flat-square)](https://www.npmjs.com/package/mcpcraft)
+[![npm version](https://img.shields.io/npm/v/mcpcraft-sdk.svg?style=flat-square)](https://www.npmjs.com/package/mcpcraft-sdk)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 
-A lightweight and elegant SDK for building Model Context Protocol (MCP) servers fast.
+A lightweight TypeScript SDK for building Model Context Protocol (MCP) servers — zero boilerplate, full type safety, automatic schema generation.
 
 ---
 
-## Why mcpcraft?
+## What is MCP?
 
-The official MCP SDK is powerful but requires significant JSON-RPC boilerplate and manual schema definitions. `mcpcraft` wraps it to provide a streamlined, zero-config API with automatic TypeScript type inference and Zod runtime schema validation.
+The **Model Context Protocol (MCP)** is an open standard that lets AI apps (Claude, Cursor, VS Code Copilot) call functions and read data from your server — the same way HTTP lets browsers talk to APIs. MCP is to AI what HTTP is to the web.
+
+## Why mcpcraft-sdk?
+
+The official `@modelcontextprotocol/sdk` requires ~100 lines of boilerplate per server. mcpcraft-sdk distills that down to ~10 lines — with automatic schema generation, type inference, and input validation.
+
+```typescript
+import { createServer, tool } from "mcpcraft-sdk"
+
+const server = createServer({ name: "hello-world" })
+
+server.add(tool({
+  name: "greet",
+  description: "Greets a user by name",
+  input: {
+    name: { type: "string", description: "The user's name" }
+  },
+  run: async ({ name }) => {
+    return { message: `Hello, ${name}!` }
+  }
+}))
+
+server.start()
+```
 
 ## Install
 
 ```bash
-npm install mcpcraft zod
+npm install mcpcraft-sdk zod
 ```
+
+```bash
+pnpm add mcpcraft-sdk zod
+```
+
+```bash
+yarn add mcpcraft-sdk zod
+```
+
+---
 
 ## Quick Start
 
-```typescript
-import { createServer, tool } from "mcpcraft";
+### 1. Create your server
 
-const server = createServer({ name: "my-mcp-server" });
+```typescript
+import { createServer, tool } from "mcpcraft-sdk"
+
+const server = createServer({ name: "my-first-server" })
 
 server.add(tool({
   name: "get_weather",
@@ -31,11 +66,49 @@ server.add(tool({
     location: { type: "string", description: "City name" }
   },
   run: async ({ location }) => {
-    return { temp: 22, condition: "Sunny", city: location };
+    return { temp: 22, condition: "Sunny", city: location }
   }
-}));
+}))
 
-server.start();
+server.start()
+```
+
+### 2. Run it
+
+```bash
+npx ts-node server.ts
+```
+
+### 3. Connect it
+
+Add to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "my-first-server": {
+      "command": "node",
+      "args": ["dist/server.js"]
+    }
+  }
+}
+```
+
+---
+
+## Architecture
+
+```
+AI Agent (Claude, Cursor)
+  │
+  ▼  JSON-RPC over stdio/SSE
+MCP Client
+  │
+  ▼
+Your MCP Server (mcpcraft-sdk)
+  │
+  ├── Tools (executable functions)
+  └── Resources (read-only data)
 ```
 
 ---
@@ -43,48 +116,66 @@ server.start();
 ## API Reference
 
 ### `createServer(options)`
-Creates a new server instance.
 
-- **`options`**:
-  - `name: string` (required) - Name of the server.
-  - `version?: string` (optional) - Version of the server (default: `0.1.0`).
-  - `description?: string` (optional) - Description of the server.
+Creates a new MCP server instance with automatic transport setup.
 
-**Returns:** A server instance with:
-- `add(item: Tool | Resource)`: Register a tool or a resource (chainable).
-- `start()`: Starts the server listening on the standard input/output (stdio) transport.
-- `server`: Access the underlying official `Server` instance if low-level control is needed.
+| Param | Type | Required | Default | Description |
+|-------|------|----------|---------|-------------|
+| `name` | `string` | Yes | — | Server name (shown to MCP clients) |
+| `version` | `string` | No | `"0.1.0"` | SemVer version |
+| `description` | `string` | No | — | Human-readable description |
 
----
+**Methods:**
+- `server.add(item)` — Register a tool or resource (chainable)
+- `server.start()` — Launch the server on stdio transport
+- `server.server` — Access the underlying raw SDK `Server` instance
 
 ### `tool(options)`
-Defines an MCP tool with schema validation.
 
-- **`options`**:
-  - `name: string` - The name of the tool (alphanumeric and underscores).
-  - `description: string` - A description explaining what the tool does (used by the LLM).
-  - `input?: Record<string, { type: "string" | "number" | "boolean"; description?: string; required?: boolean }>` - Parameter schemas.
-  - `run: (args) => Promise<any> | any` - The execution logic. The `args` parameter is fully typed and inferred automatically based on `input`.
+Defines an executable function that LLMs can invoke.
 
----
+| Param | Type | Required | Description |
+|-------|------|----------|-------------|
+| `name` | `string` | Yes | Alphanumeric identifier |
+| `description` | `string` | Yes | Explains the tool to the LLM |
+| `input` | `InputSchema` | No | Parameter definitions |
+| `run` | `(args) => any` | Yes | Execution handler (typed args) |
+
+**Input Schema:**
+```typescript
+input: {
+  query:   { type: "string",  description: "Search query" },
+  limit:   { type: "number",  description: "Max results", required: false },
+  verbose: { type: "boolean", description: "Detailed output", required: false }
+}
+```
 
 ### `resource(options)`
-Defines an MCP resource or resource template.
 
-- **`options`**:
-  - `name: string` - The name of the resource.
-  - `description: string` - Description of the resource.
-  - `uri: string` - The URI (e.g. `info://system`) or URI Template (e.g. `users://{userId}/profile`).
-  - `mimeType?: string` - The MIME type (e.g., `application/json`, `text/plain`).
-  - `fetch: (params) => Promise<any> | any` - Handler that returns the resource content. If the URI is a template, `params` is populated with parsed dynamic variables.
+Defines a read-only data source identified by URI.
+
+| Param | Type | Required | Description |
+|-------|------|----------|-------------|
+| `name` | `string` | Yes | Resource identifier |
+| `description` | `string` | Yes | Describes the data to the LLM |
+| `uri` | `string` | Yes | URI or URI template (`users://{id}/profile`) |
+| `mimeType` | `string` | No | MIME type (default: `application/json`) |
+| `fetch` | `(params) => any` | Yes | Returns the resource data |
 
 ---
 
-## Built on top of the official MCP SDK
+## Documentation
 
-`mcpcraft` is designed to play nicely with the official ecosystem. It runs directly on top of `@modelcontextprotocol/sdk` and uses the standard stdio transport, meaning it works out-of-the-box with Cursor, Claude Desktop, and all other MCP hosts.
+Full documentation is available at **[mcpcraft.org](https://mcpcraft.org)**:
+
+- [Getting Started](https://mcpcraft.org/docs/installation)
+- [Quick Start](https://mcpcraft.org/docs/quick-start)
+- [Deployment](https://mcpcraft.org/docs/deployment)
+- [API Reference](https://mcpcraft.org/docs/api/create-server)
+- [Examples](https://mcpcraft.org/docs/examples/basic-server)
+
+---
 
 ## License
 
 MIT
-
