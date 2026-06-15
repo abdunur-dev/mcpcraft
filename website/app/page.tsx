@@ -7,6 +7,7 @@ import {
   AnimatePresence,
 } from "framer-motion";
 import Link from "next/link";
+import Footer from "@/components/Footer";
 
 function AnimateInView({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -729,35 +730,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
       </main>
 
-      {/* ─── Footer ─── */}
-      <footer className="border-t border-white/10 py-8">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="font-mono text-sm text-white">mcpcraft</div>
-          <div className="flex items-center gap-4 text-xs font-mono text-[#555555]">
-            <Link href="/docs" className="hover:text-white transition-colors duration-150">
-              Docs
-            </Link>
-            <a
-              href="https://github.com/abdunur-dev/mcpcraft"
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-white transition-colors duration-150"
-            >
-              GitHub
-            </a>
-            <a
-              href="https://npmjs.com/package/mcpcraft"
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-white transition-colors duration-150"
-            >
-              npm
-            </a>
-            <span className="text-[#333333] hidden sm:inline">MIT</span>
-          </div>
-          <div className="text-xs font-mono text-[#333333]">&copy; 2026 mcpcraft</div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
