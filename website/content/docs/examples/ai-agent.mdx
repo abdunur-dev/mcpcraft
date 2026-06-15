@@ -1,0 +1,102 @@
+---
+title: AI Agent Tool
+description: Build a tool that lets an LLM orchestrate multi-step tasks.
+---
+
+# AI Agent Tool
+
+This example demonstrates how to give an LLM the ability to research, plan, and execute multi-step tasks — like a scraper that fetches content, processes it, and saves results.
+
+```typescript
+import { createServer, tool } from "mcpcraft-sdk"
+import fs from "fs/promises"
+
+const server = createServer({ name: "research-agent" })
+
+// ── Step 1: Fetch page content ──
+server.add(tool({
+  name: "fetch_page",
+  description: "Downloads the HTML content of a URL",
+  input: {
+    url: { type: "string", description: "The page URL to fetch" }
+  },
+  run: async ({ url }) => {
+    const res = await fetch(url)
+    const text = await res.text()
+    return {
+      url,
+      status: res.status,
+      contentLength: text.length,
+      snippet: text.slice(0, 2000) // first 2000 chars for LLM analysis
+    }
+  }
+}))
+
+// ── Step 2: Summarize ──
+server.add(tool({
+  name: "summarize_text",
+  description: "Counts words, sentences, and extracts key stats from text",
+  input: {
+    text: { type: "string", description: "Raw text content" }
+  },
+  run: async ({ text }) => {
+    const words = text.split(/\s+/).length
+    const sentences = text.split(/[.!?]+/).length - 1
+    const chars = text.length
+    return {
+      word_count: words,
+      sentence_count: sentences,
+      character_count: chars,
+      estimated_reading_time_seconds: Math.round(words / 3)
+    }
+  }
+}))
+
+// ── Step 3: Save results ──
+server.add(tool({
+  name: "save_file",
+  description: "Saves text content to a file on disk",
+  input: {
+    filename: { type: "string", description: "Output filename (e.g. report.md)" },
+    content: { type: "string", description: "Content to write" }
+  },
+  run: async ({ filename, content }) => {
+    await fs.writeFile(filename, content, "utf-8")
+    return { saved: true, filename, size_bytes: content.length }
+  }
+}))
+
+server.start()
+```
+
+## Orchestration Pattern
+
+This is a **tool composition** pattern. The LLM uses the tools in sequence:
+
+1. Call `fetch_page` to grab content
+2. Call `summarize_text` to analyze it
+3. Call `save_file` to persist the result
+
+The LLM handles the orchestration — you just define the primitives.
+
+## Example Prompt
+
+Once connected to an MCP client, you can say:
+
+> "Go to https://example.com, analyze the content, and save a summary to summary.txt"
+
+The LLM will:
+1. Call `fetch_page("https://example.com")`
+2. Pass the snippet to `summarize_text`
+3. Save the result via `save_file("summary.txt", ...)`
+
+
+## Running It
+
+```bash
+npx ts-node research-agent.ts
+```
+
+<Callout type="warn">
+  The `save_file` tool writes to disk. In production, restrict the working directory or add path validation.
+</Callout>

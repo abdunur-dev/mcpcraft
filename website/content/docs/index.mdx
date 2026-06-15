@@ -1,62 +1,77 @@
 ---
-title: Overview
-description: Everything you need to build MCP servers with mcpcraft.
+title: Introduction
+description: Build MCP servers in minutes with mcpcraft-sdk — the lightweight TypeScript SDK for the Model Context Protocol.
 ---
 
-# Overview
+## What is MCP?
 
-mcpcraft is a lightweight TypeScript SDK for building Model Context Protocol (MCP) servers. Zero boilerplate, full type safety, and automatic schema validation — designed for developers who want to ship fast.
+The **Model Context Protocol (MCP)** is an open standard that lets AI apps (Claude, Cursor, VS Code Copilot) call functions and read data from your server — the same way HTTP lets browsers talk to APIs.
 
----
+An MCP server exposes **tools** (functions an LLM can execute) and **resources** (data an LLM can read). Without MCP, you'd need to build custom integrations for every AI app. With MCP, you write it once and any compatible client can use it.
+
+<Callout type="info">
+  MCP is to AI what HTTP is to the web — a universal protocol that decouples clients from servers. mcpcraft-sdk is to MCP what Express is to HTTP.
+</Callout>
+
+## Why mcpcraft-sdk?
+
+The official `@modelcontextprotocol/sdk` requires ~100 lines of boilerplate for a simple server. mcpcraft-sdk distills that down to ~10 lines — with automatic schema generation, type inference, and input validation.
+
+```typescript
+import { createServer, tool } from "mcpcraft-sdk"
+
+const server = createServer({ name: "hello-world" })
+
+server.add(tool({
+  name: "greet",
+  description: "Greets a user by name",
+  input: {
+    name: { type: "string", description: "The user's name" }
+  },
+  run: async ({ name }) => {
+    return { message: `Hello, ${name}!` }
+  }
+}))
+
+server.start()
+```
+
+<Callout type="success">
+  That's it. 12 lines and your MCP server is ready to connect to any MCP-compatible client.
+</Callout>
 
 ## Features
 
 ### Zero Boilerplate
-Create a running MCP server in just 10 lines of code. No protocol plumbing, transport configuration, or manual JSON-RPC message handlers required.
+Define tools with plain objects. No JSON-RPC handlers, no transport setup, no manual schema definitions.
 
 ### Full Type Safety
-Handler input types are inferred automatically from your tool parameters. Zero type casting, complete autocomplete in your editor.
+Handler parameters are typed automatically from your input schema — full autocomplete, zero casts.
 
 ### Built-in Validation
-Dynamic Zod validation checks all inputs before they reach your handler. Invalid parameters receive clear, structured error messages back to the LLM — no crashes, no protocol exceptions.
-
-### Tools & Resources
-Clean APIs to register both executable tools (for LLM actions) and resources (for context loading). Static files and dynamic URI templates both use the same simple `add()` API.
-
-### Official SDK Foundation
-mcpcraft wraps the official `@modelcontextprotocol/sdk`. It remains fully spec-compliant and compatible with all MCP hosts including Claude Desktop, VS Code Copilot, and custom clients.
+Every tool input is validated with Zod before reaching your handler. Invalid calls get structured error responses, not crashes.
 
 ### CLI Scaffolding
-Instantly scaffold a new ready-to-run MCP server project configured with TypeScript and mcpcraft in a single command.
+Scaffold a complete project in one command: `npx mcpcraft-sdk init`
 
----
+### Tools & Resources
+Register executable tools (for LLM actions) and read-only resources (for context) with the same `.add()` API.
 
-## Architecture
-
-mcpcraft sits on top of the official `@modelcontextprotocol/sdk`. When you build with mcpcraft, you get:
-
-- **Automatic transport setup** — stdio transport configured and launched with a single `.start()` call
-- **Schema-driven type inference** — your `input` object automatically generates TypeScript types and Zod validators
-- **Chainable API** — register multiple tools and resources fluently with `.add()`
-- **Full protocol compatibility** — all MCP features (tools, resources, notifications, capabilities) are accessible
-
----
+### Production Ready
+Built on top of the official `@modelcontextprotocol/sdk`. Fully spec-compliant, works with Claude Desktop, VS Code Copilot, Cursor, and all MCP hosts.
 
 ## Quick Comparison
 
-| Feature | Raw SDK | mcpcraft |
-|---------|---------|----------|
-| Lines for a basic server | 100+ | ~12 |
-| Type-safe handlers | Manual | Automatic |
-| Input validation | Manual checks | Zod-powered |
-| Transport config | Manual | Automatic |
-| Boilerplate | Extensive | Minimal |
-
----
+| Task | Raw SDK | mcpcraft-sdk |
+|------|---------|-------------|
+| Server boilerplate | 30+ lines | 3 lines |
+| Tool registration | Manual schema + handlers | `server.add(tool({...}))` |
+| Input validation | Manual type checks | Automatic Zod |
+| Transport setup | Manual stdio config | Built-in `.start()` |
 
 ## Next Steps
 
-- [Installation](/docs/installation) — Get started in your project
+- [Installation](/docs/installation) — Add mcpcraft-sdk to your project
 - [Quick Start](/docs/quick-start) — Build your first server in 5 minutes
-- [API Reference](/docs/api/create-server) — Explore the full API
-- [Examples](/docs/examples/basic-server) — See real-world usage
+- [API Reference](/docs/api/create-server) — Full API documentation
+- [Examples](/docs/examples/basic-server) — Real-world use cases

@@ -1,18 +1,16 @@
 ---
 title: Quick Start
-description: Build your first MCP server with mcpcraft in less than 5 minutes.
+description: Build your first MCP server with mcpcraft-sdk in under 5 minutes.
 ---
 
 # Quick Start
 
-Create your first Model Context Protocol (MCP) server in under 5 minutes.
+Create your first MCP server in under 5 minutes.
 
 <Steps>
 <Step>
 
-### Install Dependency
-
-Install `mcpcraft` and `zod` in your project folder:
+### Install
 
 ```bash
 npm install mcpcraft-sdk zod
@@ -22,50 +20,40 @@ npm install mcpcraft-sdk zod
 
 <Step>
 
-### Create Your Server
+### Write your server
 
-Create a file named `server.ts` and define your first tool:
+Create `server.ts`:
 
 ```typescript
-import { createServer, tool } from "mcpcraft-sdk";
+import { createServer, tool } from "mcpcraft-sdk"
 
-// 1. Initialize the server
-const server = createServer({
-  name: "my-first-server",
-  version: "1.0.0"
-});
+const server = createServer({ name: "my-first-server" })
 
-// 2. Register a tool with type-safe schema validation
-server.add(
-  tool({
-    name: "greet",
-    description: "Greets a user by name",
-    input: {
-      name: { type: "string", description: "The name of the user to greet" }
-    },
-    run: async ({ name }) => {
-      return { message: `Hello, ${name}!` };
-    }
-  })
-);
+server.add(tool({
+  name: "greet",
+  description: "Greets a user by name",
+  input: {
+    name: { type: "string", description: "The user's name" }
+  },
+  run: async ({ name }) => {
+    return { message: `Hello, ${name}!` }
+  }
+}))
 
-// 3. Start the server on stdio transport
-server.start();
+server.start()
 ```
 
 </Step>
 
 <Step>
 
-### Run the Server
-
-You can execute your server using `ts-node` or compile it with `tsc`:
+### Run it
 
 ```bash
 npx ts-node server.ts
 ```
 
-Your server is now listening on standard input/output (stdio) streams.
+Your server is now listening on stdio.
 
 <Callout type="info">
   Because the server communicates via standard input/output, running it in the terminal will start a blocking process. To test it, connect it to an MCP host like Claude Desktop.
@@ -74,10 +62,20 @@ Your server is now listening on standard input/output (stdio) streams.
 </Step>
 </Steps>
 
-## Next Steps
+## What just happened?
 
-Now that you have your first server running, check out the documentation on how to define dynamic resources, configure environments, and create complex integrations:
+- `createServer({ name: "my-first-server" })` — initialized an MCP server
+- `tool({ ... })` — defined a callable function the LLM can invoke
+- `input: { name: { type: "string", ... } }` — declared a parameter (mcpcraft-sdk builds the JSON Schema + Zod validator automatically)
+- `run: async ({ name }) => ...` — the handler that executes when the LLM calls the tool
+- `server.start()` — launched the server on stdio transport
+
+<Callout type="success">
+  That's everything you need. Any MCP-compatible client — Claude Desktop, VS Code Copilot, Cursor — can now discover and call your `greet` tool.
+</Callout>
+
+## Next Steps
 
 - [API Reference: createServer](/docs/api/create-server)
 - [Defining Tools](/docs/api/tool)
-- [Defining Resources](/docs/api/resource)
+- [Real-world Examples](/docs/examples/basic-server)

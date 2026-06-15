@@ -1,0 +1,82 @@
+---
+title: API Fetch Tool
+description: Build an MCP tool that fetches live data from external APIs.
+---
+
+# API Fetch Tool
+
+This example shows how to build a tool that fetches real-time data from external APIs — giving an LLM access to live information like GitHub stats, weather, or news.
+
+```typescript
+import { createServer, tool } from "mcpcraft-sdk"
+
+const server = createServer({ name: "api-fetch-server" })
+
+// ── GitHub user fetch ──
+server.add(tool({
+  name: "get_github_user",
+  description: "Fetches public GitHub profile data for a user",
+  input: {
+    username: { type: "string", description: "GitHub username" }
+  },
+  run: async ({ username }) => {
+    const res = await fetch(`https://api.github.com/users/${username}`)
+    if (!res.ok) return { error: `User not found: ${res.status}` }
+    const data = await res.json()
+    return {
+      login: data.login,
+      name: data.name,
+      public_repos: data.public_repos,
+      followers: data.followers,
+      bio: data.bio
+    }
+  }
+}))
+
+// ── Weather fetch ──
+server.add(tool({
+  name: "get_weather",
+  description: "Fetches current weather for a city",
+  input: {
+    city: { type: "string", description: "City name" }
+  },
+  run: async ({ city }) => {
+    const geo = await fetch(
+      `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1`
+    )
+    const geoData = await geo.json()
+    if (!geoData.results?.length) return { error: "City not found" }
+
+    const { latitude, longitude, name, country } = geoData.results[0]
+    const weather = await fetch(
+      `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`
+    )
+    const w = (await weather.json()).current_weather
+
+    return {
+      location: `${name}, ${country}`,
+      temperature: `${w.temperature}°C`,
+      windspeed: `${w.windspeed} km/h`,
+      condition_code: w.weathercode
+    }
+  }
+}))
+
+server.start()
+```
+
+## How It Works
+
+Each tool uses `fetch()` to call a public REST API, transforms the response into a clean object, and returns it to the LLM. The LLM sees structured data and can decide what to do with it — no parsing required.
+
+<Callout type="info">
+  mcpcraft-sdk automatically serializes the returned object as JSON. The LLM receives it as structured content it can reason about.
+</Callout>
+
+## Running It
+
+```bash
+npx ts-node api-fetch.ts
+```
+
+Then connect to any MCP client. Ask the LLM "What's the weather in Tokyo?" or "Show me the GitHub profile for vercel" — it will call the appropriate tool and return live data.

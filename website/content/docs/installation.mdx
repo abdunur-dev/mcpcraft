@@ -1,18 +1,18 @@
 ---
 title: Installation
-description: Learn how to configure mcpcraft in your project.
+description: Learn how to configure mcpcraft-sdk in your project.
 ---
 
 # Installation
 
-Set up and configure `mcpcraft` in your project folder.
+Set up and configure `mcpcraft-sdk` in your project folder.
 
 <Steps>
 <Step>
 
 ### Install the Package
 
-First, add `mcpcraft` and `zod` to your project using your preferred package manager:
+First, add `mcpcraft-sdk` and `zod` to your project:
 
 <Tabs items={['npm', 'pnpm', 'yarn', 'bun']}>
   <Tab value="npm">
@@ -43,7 +43,7 @@ First, add `mcpcraft` and `zod` to your project using your preferred package man
 
 ### Configure TSConfig
 
-`mcpcraft` requires modern TypeScript settings. Ensure your `tsconfig.json` contains at least the following configuration:
+`mcpcraft-sdk` requires modern TypeScript settings. Ensure your `tsconfig.json` contains at least the following configuration:
 
 ```json
 {
@@ -86,6 +86,6 @@ server.start();
 
 ## Under the Hood
 
-`mcpcraft` sits on top of the official `@modelcontextprotocol/sdk`. When you install `mcpcraft`, the official SDK is installed automatically as a dependency.
+`mcpcraft-sdk` wraps the official `@modelcontextprotocol/sdk`. When you install it, the official SDK is installed automatically as a dependency.
 
-You do not need to write low-level JSON-RPC message handlers or manually manage standard input/output streams; `mcpcraft` abstracts this into a clean, event-driven interface.
+You do not need to write low-level JSON-RPC message handlers or manually manage standard input/output streams; `mcpcraft-sdk` abstracts this into a clean, event-driven interface.

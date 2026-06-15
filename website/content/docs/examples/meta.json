@@ -2,6 +2,8 @@
   "title": "Examples",
   "pages": [
     "basic-server",
-    "gmail-server"
+    "gmail-server",
+    "api-fetch",
+    "ai-agent"
   ]
 }
