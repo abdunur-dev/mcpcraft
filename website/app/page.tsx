@@ -221,10 +221,6 @@ export default function Home() {
           <Link href="/" className="hover:opacity-85 transition-opacity">{logo}</Link>
         </div>
         <div className="hidden sm:flex flex-1 items-stretch">
-          <Link href="/" className="group relative flex items-center px-6 border-r border-white/10 bg-white/[0.02] text-white hover:bg-white/[0.04] transition-colors duration-150">
-            <span className="font-mono text-xs uppercase tracking-wider">readme</span>
-            <div className="absolute bottom-0 inset-x-0 h-[2px] bg-white" />
-          </Link>
         </div>
         <div className="hidden sm:flex items-center gap-0 shrink-0">
           <Link href="/docs" className="group relative flex items-center px-5 text-white/50 hover:text-white hover:bg-white/[0.02] transition-colors duration-150 h-full">
@@ -255,7 +251,7 @@ export default function Home() {
       {menuOpen && (
         <div className="fixed top-14 left-0 right-0 z-40 bg-black/95 backdrop-blur-md border-b border-white/10 sm:hidden">
           <div className="flex flex-col py-2">
-            <Link href="/" onClick={() => setMenuOpen(false)} className="px-6 py-3 font-mono text-xs uppercase tracking-wider text-white hover:bg-white/[0.02] transition-colors border-b border-white/5">readme</Link>
+            <Link href="/" onClick={() => setMenuOpen(false)} className="px-6 py-3 font-mono text-xs uppercase tracking-wider text-white hover:bg-white/[0.02] transition-colors border-b border-white/5">home</Link>
             <Link href="/docs" onClick={() => setMenuOpen(false)} className="px-6 py-3 font-mono text-xs uppercase tracking-wider text-white/50 hover:text-white hover:bg-white/[0.02] transition-colors border-b border-white/5">docs</Link>
             <a href="https://github.com/abdunur-dev/mcpcraft" target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)} className="px-6 py-3 font-mono text-xs uppercase tracking-wider text-white/50 hover:text-white hover:bg-white/[0.02] transition-colors">github</a>
           </div>

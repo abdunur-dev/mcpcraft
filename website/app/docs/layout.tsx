@@ -25,10 +25,6 @@ export default function Layout({ children }: { children: ReactNode }) {
         }}
         links={[
           {
-            text: "README",
-            url: "/",
-          },
-          {
             text: "DOCS",
             url: "/docs",
             active: "nested-url",
