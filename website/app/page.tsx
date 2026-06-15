@@ -9,6 +9,7 @@ import {
 import Link from "next/link";
 import Footer from "@/components/Footer";
 import { Snippet } from "@/components/ui/Snippet";
+import { VERSION } from "@/lib/version";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { GridSystem, Grid, GridCell } from "@/components/ui/Grid";
 
@@ -232,7 +233,7 @@ export default function Home() {
           </a>
         </div>
         <div className="hidden sm:flex items-center gap-3 px-4 border-l border-white/10 shrink-0">
-          <a href="https://npmjs.com/package/mcpcraft-sdk" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-mono border border-white/15 text-white/70 hover:text-white hover:border-white/30 transition-all bg-white/[0.02]">v0.1.0</a>
+          <a href="https://npmjs.com/package/mcpcraft-sdk" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-mono border border-white/15 text-white/70 hover:text-white hover:border-white/30 transition-all bg-white/[0.02]">{VERSION}</a>
           <ThemeSwitcher />
         </div>
         <div className="flex sm:hidden items-center gap-3 px-4 border-l border-white/10 ml-auto">
@@ -272,7 +273,7 @@ export default function Home() {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                   </span>
-                  v0.1.0 &mdash; now available
+                  {VERSION} &mdash; now available
                 </div>
                 <h1 className="text-[clamp(1.75rem,7vw,4.5rem)] sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-3 sm:mb-6 leading-[1.05] animate-slideUp [animation-delay:200ms]">
                   MCP Servers,{" "}
@@ -349,7 +350,7 @@ export default function Home() {
                       <code>
                         <div><span className="text-emerald-400/70">$</span> <span className="text-white/90">npx ts-node server.ts</span></div>
                         <div>&nbsp;</div>
-                        <div><span className="text-emerald-400/50">&gt;</span> <span className="text-white/60">mcpcraft-sdk v0.1.0</span></div>
+                        <div><span className="text-emerald-400/50">&gt;</span> <span className="text-white/60">mcpcraft-sdk {VERSION}</span></div>
                         <div><span className="text-emerald-400/50">&gt;</span> <span className="text-white/60">server</span> <span className="text-emerald-300">"my-server"</span> <span className="text-white/60">initialized</span></div>
                         <div><span className="text-emerald-400/50">&gt;</span> <span className="text-white/60">transport:</span> <span className="text-amber-300">stdio</span></div>
                         <div><span className="text-emerald-400/50">&gt;</span> <span className="text-white/60">tools:</span> <span className="text-blue-400">send_email</span></div>
@@ -375,7 +376,7 @@ export default function Home() {
             <div className="mx-auto max-w-5xl grid grid-cols-2 sm:grid-cols-3 divide-x divide-white/10 text-center font-mono">
               <div className="py-6">
                 <div className="text-xs text-white/60">Latest release</div>
-                <div className="text-sm text-white mt-0.5">v0.1.0 &mdash; Jun 2026</div>
+                <div className="text-sm text-white mt-0.5">{VERSION} &mdash; Jun 2026</div>
               </div>
 
               <div className="py-6">

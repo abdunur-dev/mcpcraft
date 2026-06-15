@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { Feedback } from "@/components/ui/Feedback";
+import { VERSION } from "@/lib/version";
 
 interface LinkItem {
   label: string;
@@ -24,7 +25,7 @@ const footerLinks: Record<string, LinkItem[]> = {
   Company: [
     { label: "MIT License", href: "https://github.com/abdunur-dev/mcpcraft/blob/main/LICENSE", external: true },
     { label: "GitHub Profile", href: "https://github.com/abdunur-dev", external: true },
-    { label: "v0.1.0", href: "https://npmjs.com/package/mcpcraft-sdk", external: true },
+    { label: VERSION, href: "https://npmjs.com/package/mcpcraft-sdk", external: true },
   ],
 };
 
