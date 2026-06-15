@@ -17,7 +17,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                 <path d="M16 16 L28 9 L28 23 L16 30 Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/>
                 <path d="M4 9 L16 16 L16 30 L4 23 Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/>
               </svg>
-              <span className="font-mono text-xs uppercase tracking-wider font-bold text-white">mcpcraft</span>
+              <span className="font-mono text-xs uppercase tracking-wider font-bold text-white">mcpcraft-sdk</span>
             </div>
           ),
           url: "/",

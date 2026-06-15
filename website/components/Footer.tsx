@@ -18,13 +18,13 @@ const footerLinks: Record<string, LinkItem[]> = {
   ],
   Resources: [
     { label: "GitHub", href: "https://github.com/abdunur-dev/mcpcraft", external: true },
-    { label: "npm", href: "https://npmjs.com/package/mcpcraft", external: true },
+    { label: "npm", href: "https://npmjs.com/package/mcpcraft-sdk", external: true },
     { label: "Examples", href: "/docs/examples" },
   ],
   Company: [
     { label: "MIT License", href: "https://github.com/abdunur-dev/mcpcraft/blob/main/LICENSE", external: true },
     { label: "GitHub Profile", href: "https://github.com/abdunur-dev", external: true },
-    { label: "v0.1.0", href: "https://npmjs.com/package/mcpcraft", external: true },
+    { label: "v0.1.0", href: "https://npmjs.com/package/mcpcraft-sdk", external: true },
   ],
 };
 
@@ -119,7 +119,7 @@ export default function Footer() {
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/30 font-mono">
           <span>&copy; 2026 MCPCRAFT</span>
-          <Feedback dryRun label="mcpcraft" />
+          <Feedback dryRun label="mcpcraft-sdk" />
           <div className="flex items-center gap-6">
             <Link href="/" className="hover:text-white transition-colors duration-200">
               Home

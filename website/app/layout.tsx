@@ -5,19 +5,19 @@ import { RootProvider } from "fumadocs-ui/provider/next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "mcpcraft — MCP Server SDK for TypeScript",
-  description: "Build MCP servers fast with mcpcraft — the lightweight TypeScript SDK for the Model Context Protocol. Zero boilerplate, full type safety, auto-generated schemas.",
+  title: "mcpcraft-sdk — MCP Server SDK for TypeScript",
+  description: "Build MCP servers fast with mcpcraft-sdk — the lightweight TypeScript SDK for the Model Context Protocol. Zero boilerplate, full type safety, auto-generated schemas.",
   openGraph: {
-    title: "mcpcraft — MCP Server SDK for TypeScript",
-    description: "Build MCP servers fast with mcpcraft — the lightweight TypeScript SDK for the Model Context Protocol. Zero boilerplate, full type safety, auto-generated schemas.",
+    title: "mcpcraft-sdk — MCP Server SDK for TypeScript",
+    description: "Build MCP servers fast with mcpcraft-sdk — the lightweight TypeScript SDK for the Model Context Protocol. Zero boilerplate, full type safety, auto-generated schemas.",
     url: "https://mcpcraft.org",
-    siteName: "mcpcraft",
+    siteName: "mcpcraft-sdk",
     images: [
       {
         url: "https://mcpcraft.org/og-image.png",
         width: 1200,
         height: 630,
-        alt: "mcpcraft — MCP Server SDK for TypeScript"
+        alt: "mcpcraft-sdk — MCP Server SDK for TypeScript"
       }
     ],
     locale: "en_US",
@@ -25,8 +25,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "mcpcraft — MCP Server SDK for TypeScript",
-    description: "Build MCP servers fast with mcpcraft — the lightweight TypeScript SDK for the Model Context Protocol. Zero boilerplate, full type safety, auto-generated schemas.",
+    title: "mcpcraft-sdk — MCP Server SDK for TypeScript",
+    description: "Build MCP servers fast with mcpcraft-sdk — the lightweight TypeScript SDK for the Model Context Protocol. Zero boilerplate, full type safety, auto-generated schemas.",
     images: ["https://mcpcraft.org/og-image.png"],
   },
 };

@@ -99,7 +99,7 @@ function useCountUp(target: number, suffix = "") {
   return { ref, count: target <= 100 ? count : count > 0 ? `${count}+` : "0", suffix };
 }
 
-const mcpcraftCode = `import { createServer, tool } from "mcpcraft"
+const mcpcraftCode = `import { createServer, tool } from "mcpcraft-sdk"
 
 const server = createServer({ name: "my-server" })
 
@@ -160,9 +160,9 @@ const clients = [
 ];
 
 const tabOptions = [
-  { id: "npm", label: "npm", cmd: "npm install mcpcraft" },
-  { id: "pnpm", label: "pnpm", cmd: "pnpm add mcpcraft" },
-  { id: "yarn", label: "yarn", cmd: "yarn add mcpcraft" },
+  { id: "npm", label: "npm", cmd: "npm install mcpcraft-sdk" },
+  { id: "pnpm", label: "pnpm", cmd: "pnpm add mcpcraft-sdk" },
+  { id: "yarn", label: "yarn", cmd: "yarn add mcpcraft-sdk" },
 ];
 
 function SyntaxLine({ children }: { children: React.ReactNode }) {
@@ -198,7 +198,7 @@ export default function Home() {
 
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const heroCodeText = `import { createServer, tool } from "mcpcraft"\n\nconst server = createServer({ name: "my-server" })\n\nserver.add(tool({\n  name: "send_email",\n  description: "Sends an email",\n  input: {\n    to: { type: "string", description: "Recipient" },\n    body: { type: "string", description: "Content" }\n  },\n  run: async ({ to, body }) => {\n    return { success: true }\n  }\n}))\n\nserver.start()`;
+  const heroCodeText = `import { createServer, tool } from "mcpcraft-sdk"\n\nconst server = createServer({ name: "my-server" })\n\nserver.add(tool({\n  name: "send_email",\n  description: "Sends an email",\n  input: {\n    to: { type: "string", description: "Recipient" },\n    body: { type: "string", description: "Content" }\n  },\n  run: async ({ to, body }) => {\n    return { success: true }\n  }\n}))\n\nserver.start()`;
 
   const logo = (
     <div className="flex items-center gap-2">
@@ -208,7 +208,7 @@ export default function Home() {
         <path d="M16 16 L28 9 L28 23 L16 30 Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/>
         <path d="M4 9 L16 16 L16 30 L4 23 Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/>
       </svg>
-      <span className="font-mono text-sm uppercase tracking-wider font-bold text-white">mcpcraft</span>
+      <span className="font-mono text-sm uppercase tracking-wider font-bold text-white">mcpcraft-sdk</span>
     </div>
   );
 
@@ -232,7 +232,7 @@ export default function Home() {
           </a>
         </div>
         <div className="hidden sm:flex items-center gap-3 px-4 border-l border-white/10 shrink-0">
-          <a href="https://npmjs.com/package/mcpcraft" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-mono border border-white/15 text-white/70 hover:text-white hover:border-white/30 transition-all bg-white/[0.02]">v0.1.0</a>
+          <a href="https://npmjs.com/package/mcpcraft-sdk" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-mono border border-white/15 text-white/70 hover:text-white hover:border-white/30 transition-all bg-white/[0.02]">v0.1.0</a>
           <ThemeSwitcher />
         </div>
         <div className="flex sm:hidden items-center gap-3 px-4 border-l border-white/10 ml-auto">
@@ -325,7 +325,7 @@ export default function Home() {
                   {heroTab === "server.ts" ? (
                     <pre className="p-4 sm:p-5 overflow-x-auto text-[11px] sm:text-sm font-mono leading-relaxed bg-black">
                       <code>
-                        <div><span className="text-purple-400">import</span> {'{'} createServer, tool {'}'} <span className="text-purple-400">from</span> <span className="text-emerald-300">"mcpcraft"</span></div>
+                        <div><span className="text-purple-400">import</span> {'{'} createServer, tool {'}'} <span className="text-purple-400">from</span> <span className="text-emerald-300">"mcpcraft-sdk"</span></div>
                         <div>&nbsp;</div>
                         <div><span className="text-purple-400">const</span> server = <span className="text-blue-400">createServer</span>({'{}'} name: <span className="text-emerald-300">"my-server"</span> {'}'})</div>
                         <div>&nbsp;</div>
@@ -349,7 +349,7 @@ export default function Home() {
                       <code>
                         <div><span className="text-emerald-400/70">$</span> <span className="text-white/90">npx ts-node server.ts</span></div>
                         <div>&nbsp;</div>
-                        <div><span className="text-emerald-400/50">&gt;</span> <span className="text-white/60">mcpcraft v0.1.0</span></div>
+                        <div><span className="text-emerald-400/50">&gt;</span> <span className="text-white/60">mcpcraft-sdk v0.1.0</span></div>
                         <div><span className="text-emerald-400/50">&gt;</span> <span className="text-white/60">server</span> <span className="text-emerald-300">"my-server"</span> <span className="text-white/60">initialized</span></div>
                         <div><span className="text-emerald-400/50">&gt;</span> <span className="text-white/60">transport:</span> <span className="text-amber-300">stdio</span></div>
                         <div><span className="text-emerald-400/50">&gt;</span> <span className="text-white/60">tools:</span> <span className="text-blue-400">send_email</span></div>
@@ -414,7 +414,7 @@ export default function Home() {
                 <div className="bg-black rounded-md border border-white/10 p-4 overflow-x-auto">
                   <pre className="text-xs font-mono leading-relaxed text-white/80">
                     <code>
-                      <SyntaxLine><Kw>import</Kw> {'{'} tool {'}'} <Kw>from</Kw> <Str>"mcpcraft"</Str></SyntaxLine>
+                      <SyntaxLine><Kw>import</Kw> {'{'} tool {'}'} <Kw>from</Kw> <Str>"mcpcraft-sdk"</Str></SyntaxLine>
                       <SyntaxLine>{' '}</SyntaxLine>
                       <SyntaxLine><Kw>const</Kw> queryDB = <Fn>tool</Fn>({'{}'}</SyntaxLine>
                       <SyntaxLine>  name: <Str>"query_db"</Str>,</SyntaxLine>
@@ -440,7 +440,7 @@ export default function Home() {
                 <div className="bg-black rounded-md border border-white/10 p-3">
                   <pre className="text-xs font-mono text-white/80">
                     <code>
-                      <span className="text-emerald-400">$</span> npx mcpcraft init
+                      <span className="text-emerald-400">$</span> npx mcpcraft-sdk init
                     </code>
                   </pre>
                 </div>
@@ -549,7 +549,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                     <div className="flex-1 border border-white/10 bg-[#050505] rounded-b-md p-5 font-mono text-xs overflow-y-auto leading-relaxed">
                       <pre className="text-white/90">
                         <code>
-                          <div><span className="text-purple-400">import</span> {"{"} createServer, tool {"}"} <span className="text-purple-400">from</span> <span className="text-emerald-300">"mcpcraft"</span></div>
+                          <div><span className="text-purple-400">import</span> {"{"} createServer, tool {"}"} <span className="text-purple-400">from</span> <span className="text-emerald-300">"mcpcraft-sdk"</span></div>
                           <div />
                           <div><span className="text-purple-400">const</span> server = <span className="text-blue-400">createServer</span>({"{"} name: <span className="text-emerald-300">"my-server"</span> {"}"})</div>
                           <div />
@@ -791,7 +791,7 @@ function ColoredCode({ code }: { code: string }) {
 }
 
 const playgroundCode = {
-  js: `const { createServer, tool } = require("mcpcraft");
+  js: `const { createServer, tool } = require("mcpcraft-sdk");
 
 const server = createServer({ name: "my-server" });
 
@@ -804,7 +804,7 @@ server.add(tool({
 }));
 
 server.start();`,
-  ts: `import { createServer, tool } from "mcpcraft";
+  ts: `import { createServer, tool } from "mcpcraft-sdk";
 
 const server = createServer({ name: "my-server" });
 
@@ -817,7 +817,7 @@ server.add(tool({
 }));
 
 server.start();`,
-  py: `from mcpcraft import create_server, tool
+  py: `from mcpcraft_sdk import create_server, tool
 
 server = create_server({"name": "my-server"})
 
@@ -830,7 +830,7 @@ async def greet(name: str):
     return {"message": f"Hello {name}"}
 
 server.start()`,
-  rs: `use mcpcraft::{create_server, tool};
+  rs: `use mcpcraft_sdk::{create_server, tool};
 
 #[tokio::main]
 async fn main() {
