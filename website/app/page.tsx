@@ -701,13 +701,13 @@ function HowItWorks() {
       num: "01",
       title: "Define",
       desc: "Describe your tool inputs and handler in one object.",
-      code: `const greet = tool({
-  name: "greet",
+      code: `<span class="text-purple-400">const</span> greet = <span class="text-blue-400">tool</span>({
+  name: <span class="text-emerald-300">"greet"</span>,
   input: {
-    name: { type: "string" }
+    name: { type: <span class="text-emerald-300">"string"</span> }
   },
-  run: async ({ name }) => {
-    return { message: "Hello " + name }
+  run: <span class="text-purple-400">async</span> ({ name }) => {
+    <span class="text-purple-400">return</span> { message: <span class="text-emerald-300">"Hello "</span> + name }
   }
 })`,
     },
@@ -715,31 +715,29 @@ function HowItWorks() {
       num: "02",
       title: "Add",
       desc: "Register tools on the server with a single call.",
-      code: `const server = createServer({
-  name: "my-server"
+      code: `<span class="text-purple-400">const</span> server = <span class="text-blue-400">createServer</span>({
+  name: <span class="text-emerald-300">"my-server"</span>
 })
 
-server.add(greet)
-server.add(weatherTool)
-server.add(emailTool)`,
+server.<span class="text-blue-400">add</span>(greet)
+server.<span class="text-blue-400">add</span>(weatherTool)
+server.<span class="text-blue-400">add</span>(emailTool)`,
     },
     {
       num: "03",
       title: "Ship",
       desc: "Start your server. Any MCP client connects instantly.",
-      code: `$ npx ts-node server.ts
-> MCP server running on stdio
-> Tools: greet, weather, email
-> Ready for connections...`,
+      code: `<span class="text-emerald-400">$</span> npx ts-node server.ts
+<span class="text-emerald-400/60">&gt;</span> MCP server running on stdio
+<span class="text-emerald-400/60">&gt;</span> Tools: greet, weather, email
+<span class="text-emerald-400/60">&gt;</span> Ready for connections...`,
     },
   ];
-
-  const [activeStep, setActiveStep] = useState(1);
 
   return (
     <Reveal>
       <section className="py-24 sm:py-32 border-y border-white/10">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="text-center mb-16">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-mono border border-white/10 bg-white/[0.02] text-white/40 uppercase tracking-wider mb-4">Workflow</div>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-3">
@@ -749,64 +747,22 @@ server.add(emailTool)`,
               Three steps to your first MCP server.
             </p>
           </div>
-          <div className="flex flex-wrap justify-center gap-2 mb-10">
-            {steps.map((s, i) => (
-              <button
-                key={s.num}
-                onClick={() => setActiveStep(i + 1)}
-                className={`px-4 py-1.5 text-sm font-mono rounded transition-all duration-200 ${
-                  activeStep === i + 1
-                    ? "bg-white text-black"
-                    : "text-white/40 hover:text-white border border-white/10"
-                }`}
-              >
-                {s.title}
-              </button>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+            {steps.map((s) => (
+              <div key={s.num} className="rounded-xl border border-white/10 bg-[#0a0a0a] overflow-hidden flex flex-col">
+                <div className="px-5 py-4 border-b border-white/10 flex items-center justify-between">
+                  <span className="text-2xl font-bold text-white/15 font-mono">{s.num}</span>
+                  <span className="text-xs font-mono text-white/40 uppercase tracking-wider">{s.title}</span>
+                </div>
+                <div className="p-5 flex-1 flex flex-col">
+                  <p className="text-sm text-white/40 leading-relaxed mb-4 flex-1">{s.desc}</p>
+                  <pre className="bg-black rounded-md border border-white/10 p-4 text-xs font-mono leading-relaxed overflow-x-auto">
+                    <code dangerouslySetInnerHTML={{ __html: s.code }} />
+                  </pre>
+                </div>
+              </div>
             ))}
           </div>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeStep}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.2 }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center"
-            >
-              <div>
-                <div className="text-6xl font-bold text-white/10 mb-4 font-mono">0{activeStep}</div>
-                <h3 className="text-2xl font-semibold tracking-tight text-white mb-3">{steps[activeStep - 1].title}</h3>
-                <p className="text-white/40 text-sm leading-relaxed mb-6">{steps[activeStep - 1].desc}</p>
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => setActiveStep(Math.max(1, activeStep - 1))}
-                    disabled={activeStep === 1}
-                    className="px-4 py-2 rounded-md border border-white/10 text-white/60 hover:text-white hover:border-white/30 transition-all text-xs font-mono disabled:opacity-30 disabled:cursor-not-allowed"
-                  >
-                    Prev
-                  </button>
-                  <button
-                    onClick={() => setActiveStep(Math.min(3, activeStep + 1))}
-                    disabled={activeStep === 3}
-                    className="px-4 py-2 rounded-md bg-white text-black text-xs font-medium hover:bg-white/90 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
-                  >
-                    Next
-                  </button>
-                </div>
-              </div>
-              <div className="rounded-md border border-white/10 bg-black overflow-hidden">
-                <div className="px-4 py-2.5 border-b border-white/10 bg-[#050505] flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-red-500/60" />
-                  <span className="w-3 h-3 rounded-full bg-yellow-500/60" />
-                  <span className="w-3 h-3 rounded-full bg-green-500/60" />
-                  <span className="text-xs text-white/40 font-mono ml-2">step-{activeStep}.ts</span>
-                </div>
-                <pre className="p-5 text-xs font-mono leading-relaxed text-white/90 overflow-x-auto">
-                  <code>{steps[activeStep - 1].code}</code>
-                </pre>
-              </div>
-            </motion.div>
-          </AnimatePresence>
         </div>
       </section>
     </Reveal>
