@@ -8,6 +8,16 @@ import {
 } from "framer-motion";
 import Link from "next/link";
 
+function AnimateInView({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  return (
+    <div ref={ref} className={`transition-all duration-700 ease-out ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"} ${className}`} style={{ transitionDelay: `${delay}ms` }}>
+      {children}
+    </div>
+  );
+}
+
 function Reveal({
   children,
   delay = 0,
@@ -492,86 +502,105 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ─── Code Comparison ─── */}
-        <Reveal>
-          <section className="py-24 sm:py-32 bg-[#0a0a0a]">
-            <div className="mx-auto max-w-6xl px-4 sm:px-6">
-              <div className="text-center mb-16">
-                <h2 className="text-3xl sm:text-4xl font-semibold tracking-[-0.03em] text-white mb-3">
-                  Less code. More done.
-                </h2>
-                <p className="text-[#888888] text-sm max-w-md mx-auto">
-                  See the difference for the same email tool.
-                </p>
+        {/* ── Code Comparison ── */}
+        <AnimateInView delay={300}>
+          <section className="py-20 sm:py-24 border-t border-white/10 bg-white/[0.01]">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6">
+              <div className="text-center mb-12 sm:mb-16">
+                <div className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-mono border border-white/10 bg-white/[0.02] text-white/40 uppercase tracking-wider mb-4">Before vs After</div>
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-3">Less code. More done.</h2>
+                <p className="text-white/40 text-sm max-w-md mx-auto">See the difference between the raw MCP SDK and MCPCraft for the same email tool.</p>
               </div>
-              <div className="relative flex flex-col lg:flex-row items-stretch gap-6 lg:gap-8">
-                <div className="flex-1 code-comparison-left">
-                  <div className="px-4 py-2.5 border border-red-500/20 border-b-0 bg-red-500/[0.03] rounded-t-xl text-xs font-mono text-red-400 flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-red-500/40" />
-                    Raw MCP SDK &middot; 50+ lines
-                  </div>
-                  <div className="bg-[#111111] border border-[rgba(255,255,255,0.08)] rounded-b-xl p-5 font-mono text-xs leading-relaxed text-white/30 overflow-hidden max-h-[320px]">
-                    <pre className="text-[#666666]">
-                      <code>{rawSdkCode}</code>
-                    </pre>
-                  </div>
-                </div>
-
-                <div className="hidden lg:flex items-center justify-center flex-shrink-0">
-                  <div className="vs-badge">vs</div>
-                </div>
-
-                <div className="flex-1">
-                  <div className="code-block-card">
-                    <div className="px-4 py-2.5 border border-emerald-500/20 border-b-0 bg-emerald-500/[0.03] rounded-t-xl text-xs font-mono text-emerald-400 flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/40" />
-                        mcpcraft &middot; 12 lines
-                      </div>
-                      <button
-                        onClick={() => handleCopy(mcpcraftCode, "compare")}
-                        className="text-[#555555] hover:text-white transition-colors"
-                      >
-                        {copied === "compare" ? (
-                          <svg className="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
-                        ) : (
-                          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" /></svg>
-                        )}
-                      </button>
+              <div className="relative">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-stretch">
+                  <div className="flex flex-col">
+                    <div className="px-4 py-2 border border-red-500/20 border-b-0 bg-red-500/[0.03] rounded-t-md text-xs font-mono text-red-400 flex items-center justify-between">
+                      <span>Raw SDK (50+ lines)</span>
                     </div>
-                    <pre className="p-5 text-sm font-mono leading-relaxed text-white/90 overflow-x-auto">
-                      <code>
-                        <SyntaxLine><Kw>import</Kw> {'{'} createServer, tool {'}'} <Kw>from</Kw> <Str>"mcpcraft"</Str></SyntaxLine>
-                        <SyntaxLine>{' '}</SyntaxLine>
-                        <SyntaxLine><Kw>const</Kw> server = <Fn>createServer</Fn>({'{}'} name: <Str>"my-server"</Str> {'}'})</SyntaxLine>
-                        <SyntaxLine>{' '}</SyntaxLine>
-                        <SyntaxLine>server.<Fn>add</Fn>(<Fn>tool</Fn>({'{}'}</SyntaxLine>
-                        <SyntaxLine>  name: <Str>"send_email"</Str>,</SyntaxLine>
-                        <SyntaxLine>  description: <Str>"Sends an email"</Str>,</SyntaxLine>
-                        <SyntaxLine>  input: {'{}'}</SyntaxLine>
-                        <SyntaxLine>    to: {'{}'} type: <Str>"string"</Str>, description: <Str>"Recipient"</Str> {'}'},</SyntaxLine>
-                        <SyntaxLine>    body: {'{}'} type: <Str>"string"</Str>, description: <Str>"Content"</Str> {'}'}</SyntaxLine>
-                        <SyntaxLine>  {'}'},</SyntaxLine>
-                        <SyntaxLine>  run: <Kw>async</Kw> ({'{'} to, body {'}'}) <Kw>=&gt;</Kw> {'{}'}</SyntaxLine>
-                        <SyntaxLine>    <Kw>return</Kw> {'{}'} success: <Boo>true</Boo> {'}'}</SyntaxLine>
-                        <SyntaxLine>  {'}'}</SyntaxLine>
-                        <SyntaxLine>{'}'}))</SyntaxLine>
-                        <SyntaxLine>{' '}</SyntaxLine>
-                        <SyntaxLine>server.<Fn>start</Fn>()</SyntaxLine>
-                      </code>
-                    </pre>
+                    <div className="flex-1 border border-white/10 bg-black rounded-b-md p-5 font-mono text-xs overflow-hidden relative leading-relaxed">
+                      <pre className="text-white/30">
+                        <code>{`import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { CallToolRequestSchema, ListToolsRequestSchema } from "@modelcontextprotocol/sdk/types.js";
+
+const server = new Server({ name: "my-server", version: "1.0.0" }, { capabilities: { tools: {} } });
+
+server.setRequestHandler(ListToolsRequestSchema, async () => {
+  return {
+    tools: [{
+      name: "send_email",
+      description: "Sends an email",
+      inputSchema: {
+        type: "object",
+        properties: {
+          to: { type: "string", description: "Recipient" },
+          body: { type: "string", description: "Content" }
+        },
+        required: ["to", "body"]
+      }
+    }]
+  };
+});
+
+server.setRequestHandler(CallToolRequestSchema, async (request) => {
+  if (request.params.name !== "send_email") {
+    throw new Error("Tool not found");
+  }
+  const { to, body } = request.params.arguments;
+  if (typeof to !== "string" || typeof body !== "string") {
+    throw new Error("Invalid schema");
+  }
+  // business logic...
+});`}</code>
+                      </pre>
+                      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black to-transparent pointer-events-none" />
+                    </div>
+                  </div>
+                  <div className="flex flex-col">
+                    <div className="px-4 py-2 border border-emerald-500/20 border-b-0 bg-emerald-500/[0.03] rounded-t-md text-xs font-mono text-emerald-400 flex items-center justify-between">
+                      <span>MCPCraft (12 lines)</span>
+                    </div>
+                    <div className="flex-1 border border-white/10 bg-[#050505] rounded-b-md p-5 font-mono text-xs overflow-y-auto leading-relaxed">
+                      <pre className="text-white/90">
+                        <code>
+                          <div><span className="text-purple-400">import</span> {"{"} createServer, tool {"}"} <span className="text-purple-400">from</span> <span className="text-emerald-300">"mcpcraft"</span></div>
+                          <div />
+                          <div><span className="text-purple-400">const</span> server = <span className="text-blue-400">createServer</span>({"{"} name: <span className="text-emerald-300">"my-server"</span> {"}"})</div>
+                          <div />
+                          <div>server.<span className="text-blue-400">add</span>(<span className="text-blue-400">tool</span>({"{"}</div>
+                          <div>  name: <span className="text-emerald-300">"send_email"</span>,</div>
+                          <div>  description: <span className="text-emerald-300">"Sends an email"</span>,</div>
+                          <div>  input: {"{"}</div>
+                          <div>    to: {"{"} type: <span className="text-emerald-300">"string"</span>, description: <span className="text-emerald-300">"Recipient"</span> {"}"},</div>
+                          <div>    body: {"{"} type: <span className="text-emerald-300">"string"</span>, description: <span className="text-emerald-300">"Content"</span> {"}"}</div>
+                          <div>  {"}"},</div>
+                          <div>  run: <span className="text-purple-400">async</span> ({`{ to, body }`}) <span className="text-purple-400">=&gt;</span> {"{"}</div>
+                          <div>    <span className="text-purple-400">return</span> {"{"} success: <span className="text-amber-300">true</span> {"}"}</div>
+                          <div>  {"}"}</div>
+                          <div>{"}"}))</div>
+                          <div />
+                          <div>server.<span className="text-blue-400">start</span>()</div>
+                        </code>
+                      </pre>
+                    </div>
                   </div>
                 </div>
-
-                <div className="lg:hidden flex justify-center my-2">
-                  <div className="vs-badge">vs</div>
+                <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="h-8 w-px bg-white/10" />
+                    <div className="px-4 py-2 rounded-full bg-white text-black text-[11px] font-bold font-mono uppercase tracking-wider shadow-2xl whitespace-nowrap">10x less code</div>
+                    <div className="h-8 w-px bg-white/10" />
+                  </div>
+                </div>
+                <div className="lg:hidden flex justify-center my-4">
+                  <div className="px-4 py-2 rounded-full bg-white text-black text-xs font-bold font-mono uppercase tracking-wider shadow-xl">10x less code</div>
                 </div>
               </div>
             </div>
           </section>
-        </Reveal>
+        </AnimateInView>
 
-        {/* ─── How It Works ─── */}
+        {/* ── How It Works ── */}
         <HowItWorks />
 
         {/* ─── Install ─── */}
