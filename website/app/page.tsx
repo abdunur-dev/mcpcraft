@@ -167,10 +167,10 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 })`;
 
 const clients = [
-  { label: "Claude", icon: "C" },
-  { label: "Cursor", icon: "Cu" },
-  { label: "VS Code", icon: "V" },
-  { label: "Windsurf", icon: "W" },
+  { label: "Claude", icon: <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M8 14s1.5 2 4 2 4-2 4-2" /><line x1="9" y1="9" x2="9.01" y2="9" /><line x1="15" y1="9" x2="15.01" y2="9" /></svg> },
+  { label: "Cursor", icon: <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z" /><path d="M13 13l6 6" /></svg> },
+  { label: "VS Code", icon: <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M16 3l-6 7.5L4 3l-2 2l6 7l-6 7l2 2l6-7.5l6 7.5l2-2l-6-7l6-7z" /></svg> },
+  { label: "Windsurf", icon: <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg> },
 ];
 
 const tabOptions = [
@@ -348,8 +348,8 @@ export default function Home() {
 
         {/* ─── Stats ─── */}
         <Reveal>
-          <section className="border-t border-b border-[rgba(255,255,255,0.08)]">
-            <div className="mx-auto max-w-5xl grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 divide-x-0 sm:divide-x divide-[rgba(255,255,255,0.08)] text-center font-mono">
+          <section className="border-y border-white/10">
+            <div className="mx-auto max-w-5xl grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 divide-x-0 sm:divide-x divide-white/10 text-center font-mono">
               <div className="py-8">
                 <CountUp target={5} suffix="" />
                 <div className="text-[11px] text-[#555555] uppercase tracking-widest mt-1">Time to first server</div>
@@ -390,7 +390,7 @@ export default function Home() {
                     <p className="text-sm text-[#888888] leading-relaxed mb-6 max-w-sm">
                       Skip protocol setup entirely. Define tools with a plain object and ship.
                     </p>
-                    <div className="bg-[#111111] rounded-xl border border-[rgba(255,255,255,0.06)] p-4 overflow-x-auto">
+                    <div className="bg-[#111111] rounded-md border border-white/10 p-4 overflow-x-auto">
                       <pre className="text-xs font-mono leading-relaxed text-white/80">
                         <code>
                           <SyntaxLine><Kw>import</Kw> {'{'} tool {'}'} <Kw>from</Kw> <Str>"mcpcraft"</Str></SyntaxLine>
@@ -409,8 +409,8 @@ export default function Home() {
                 <div className="bento-card h-full flex flex-col items-start justify-center relative overflow-hidden">
                   <div className="absolute -top-12 -right-12 w-32 h-32 bg-white/[0.03] rounded-full blur-2xl pointer-events-none" />
                   <div className="relative z-10">
-                    <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 mb-4 text-sm font-mono font-bold">
-                      TS
+                    <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 mb-4">
+                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
                     </div>
                     <h3 className="text-lg font-semibold text-white mb-2">Full Type Safety</h3>
                     <p className="text-sm text-[#888888] leading-relaxed max-w-xs">
@@ -468,12 +468,12 @@ export default function Home() {
             <StaggerReveal className="grid grid-cols-1 lg:grid-cols-5 gap-4">
               <FadeUpChild className="lg:col-span-2">
                 <div className="bento-card h-full flex flex-col">
-                  <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 mb-4 text-lg">
-                    {'>_'}
+                  <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 mb-4">
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 17 10 11 4 5" /><line x1="12" y1="19" x2="20" y2="19" /></svg>
                   </div>
                   <h3 className="text-lg font-semibold text-white mb-2">CLI Scaffolding</h3>
                   <p className="text-sm text-[#888888] leading-relaxed mb-4">Scaffold a new project in seconds.</p>
-                  <div className="bg-[#111111] rounded-xl border border-[rgba(255,255,255,0.06)] p-3">
+                  <div className="bg-black rounded-md border border-white/10 p-3">
                     <pre className="text-xs font-mono text-white/80">
                       <code>
                         <span className="text-emerald-400">$</span> npx mcpcraft init
@@ -603,161 +603,134 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         {/* ── How It Works ── */}
         <HowItWorks />
 
-        {/* ─── Install ─── */}
+        {/* ── Install ── */}
         <Reveal>
-          <section className="py-24 sm:py-32">
-            <div className="mx-auto max-w-4xl px-4 sm:px-6 text-center">
-              <h2 className="text-3xl sm:text-4xl font-semibold tracking-[-0.03em] text-white mb-3">
-                Start building now
-              </h2>
-              <p className="text-[#888888] text-sm mb-10">
-                One command. Zero config.
-              </p>
-
-              <div className="max-w-xs mx-auto mb-8">
-                <div className="flex bg-[#0a0a0a] rounded-xl border border-[rgba(255,255,255,0.08)] p-1">
-                  {tabOptions.map((tab) => (
-                    <button
-                      key={tab.id}
-                      onClick={() => setActiveTab(tab.id)}
-                      className={`flex-1 px-4 py-2 text-sm font-mono rounded-lg transition-all duration-200 ${
-                        activeTab === tab.id
-                          ? "bg-white text-black"
-                          : "text-[#555555] hover:text-white"
-                      }`}
-                    >
-                      {tab.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeTab}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <div className="code-block-card text-left max-w-md mx-auto mb-12">
-                    <div className="flex items-center justify-between px-4 py-3 border-b border-[rgba(255,255,255,0.06)]">
-                      <div className="flex items-center gap-2">
-                        <span className="w-3 h-3 rounded-full bg-red-500/60" />
-                        <span className="w-3 h-3 rounded-full bg-yellow-500/60" />
-                        <span className="w-3 h-3 rounded-full bg-green-500/60" />
-                        <span className="text-xs text-[#555555] font-mono ml-2">terminal</span>
-                      </div>
+          <section className="py-24 sm:py-32 overflow-hidden">
+            <div className="mx-auto max-w-6xl px-4 sm:px-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                <div>
+                  <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-3">
+                    Start building now
+                  </h2>
+                  <p className="text-white/40 text-sm mb-8">
+                    One command. Zero config.
+                  </p>
+                  <div className="flex bg-[#0a0a0a] rounded-md border border-white/10 p-1 w-fit mb-6">
+                    {tabOptions.map((tab) => (
                       <button
-                        onClick={() => handleCopy(tabOptions.find((t) => t.id === activeTab)!.cmd, "install")}
-                        className="text-xs font-mono text-[#555555] hover:text-white transition-colors"
+                        key={tab.id}
+                        onClick={() => setActiveTab(tab.id)}
+                        className={`px-4 py-1.5 text-sm font-mono rounded transition-all duration-200 ${
+                          activeTab === tab.id
+                            ? "bg-white text-black"
+                            : "text-white/40 hover:text-white"
+                        }`}
                       >
-                        {copied === "install" ? (
-                          <svg className="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
-                        ) : (
-                          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" /></svg>
-                        )}
+                        {tab.label}
                       </button>
+                    ))}
+                  </div>
+                  <div className="flex flex-col sm:flex-row items-start gap-3">
+                    <Link
+                      href="/docs/installation"
+                      className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-white text-black text-sm font-medium hover:bg-white/90 transition-all"
+                    >
+                      Get Started
+                      <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+                    </Link>
+                    <a
+                      href="https://github.com/abdunur-dev/mcpcraft"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md border border-white/20 text-white text-sm font-medium hover:bg-white hover:text-black transition-all duration-200"
+                    >
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" /></svg>
+                      View GitHub
+                    </a>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-4">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeTab}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <div className="rounded-md border border-white/10 bg-black overflow-hidden">
+                        <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/10 bg-[#050505]">
+                          <div className="flex items-center gap-2">
+                            <span className="w-3 h-3 rounded-full bg-red-500/60" />
+                            <span className="w-3 h-3 rounded-full bg-yellow-500/60" />
+                            <span className="w-3 h-3 rounded-full bg-green-500/60" />
+                            <span className="text-xs text-white/40 font-mono ml-2">terminal</span>
+                          </div>
+                          <button
+                            onClick={() => handleCopy(tabOptions.find((t) => t.id === activeTab)!.cmd, "install")}
+                            className="text-xs font-mono text-white/40 hover:text-white transition-colors"
+                          >
+                            {copied === "install" ? (
+                              <svg className="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                            ) : (
+                              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" /></svg>
+                            )}
+                          </button>
+                        </div>
+                        <pre className="p-5 text-sm font-mono leading-relaxed text-white/90 overflow-x-auto">
+                          <code>
+                            <span className="text-emerald-400">$</span> {tabOptions.find((t) => t.id === activeTab)!.cmd}
+                          </code>
+                        </pre>
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="rounded-md border border-white/10 bg-black overflow-hidden">
+                      <div className="px-3 py-2 border-b border-white/10 bg-[#050505] flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-red-500/60" />
+                        <span className="w-2 h-2 rounded-full bg-yellow-500/60" />
+                        <span className="w-2 h-2 rounded-full bg-green-500/60" />
+                        <span className="text-[11px] font-mono text-white/40 ml-1.5">server.ts</span>
+                      </div>
+                      <pre className="p-3 text-[11px] font-mono leading-relaxed text-white/80 overflow-x-auto">
+                        <code>
+                          <SyntaxLine><Kw>import</Kw> {'{'} tool {'}'} <Kw>from</Kw> <Str>"mcpcraft"</Str></SyntaxLine>
+                          <SyntaxLine>{' '}</SyntaxLine>
+                          <SyntaxLine><Kw>const</Kw> greet = <Fn>tool</Fn>({'{}'}</SyntaxLine>
+                          <SyntaxLine>  name: <Str>"greet"</Str>,</SyntaxLine>
+                          <SyntaxLine>  run: <Kw>async</Kw> () =&gt; <Str>"hi"</Str></SyntaxLine>
+                          <SyntaxLine>{'}'})</SyntaxLine>
+                        </code>
+                      </pre>
                     </div>
-                    <pre className="p-5 text-sm font-mono leading-relaxed text-white/90 overflow-x-auto">
-                      <code>
-                        <span className="text-emerald-400">$</span> {tabOptions.find((t) => t.id === activeTab)!.cmd}
-                      </code>
-                    </pre>
+                    <div className="rounded-md border border-white/10 bg-black overflow-hidden">
+                      <div className="px-3 py-2 border-b border-white/10 bg-[#050505] flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-red-500/60" />
+                        <span className="w-2 h-2 rounded-full bg-yellow-500/60" />
+                        <span className="w-2 h-2 rounded-full bg-green-500/60" />
+                        <span className="text-[11px] font-mono text-white/40 ml-1.5">run</span>
+                      </div>
+                      <pre className="p-3 text-[11px] font-mono leading-relaxed text-white/80 overflow-x-auto">
+                        <code>
+                          <SyntaxLine><span className="text-emerald-400">$</span> npx ts-node s.ts</SyntaxLine>
+                          <SyntaxLine><span className="text-emerald-400/60">&gt;</span> running on stdio</SyntaxLine>
+                          <SyntaxLine><span className="text-emerald-400/60">&gt;</span> ready</SyntaxLine>
+                        </code>
+                      </pre>
+                    </div>
                   </div>
-                </motion.div>
-              </AnimatePresence>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-left max-w-4xl mx-auto">
-                <div className="code-block-card">
-                  <div className="px-4 py-2.5 border-b border-[rgba(255,255,255,0.06)] text-xs font-mono text-[#555555]">
-                    server.ts
-                  </div>
-                  <pre className="p-4 text-xs font-mono leading-relaxed text-white/80 overflow-x-auto">
-                    <code>
-                      <SyntaxLine><Kw>import</Kw> {'{'} createServer, tool {'}'} <Kw>from</Kw> <Str>"mcpcraft"</Str></SyntaxLine>
-                      <SyntaxLine>{' '}</SyntaxLine>
-                      <SyntaxLine><Kw>const</Kw> server = <Fn>createServer</Fn>({'{}'} name: <Str>"my-server"</Str> {'}'})</SyntaxLine>
-                      <SyntaxLine>{' '}</SyntaxLine>
-                      <SyntaxLine>server.<Fn>add</Fn>(</SyntaxLine>
-                      <SyntaxLine>  <Fn>tool</Fn>({'{}'}</SyntaxLine>
-                      <SyntaxLine>    name: <Str>"greet"</Str>,</SyntaxLine>
-                      <SyntaxLine>    input: {'{}'}</SyntaxLine>
-                      <SyntaxLine>      name: {'{}'} type: <Str>"string"</Str> {'}'}</SyntaxLine>
-                      <SyntaxLine>    {'}'},</SyntaxLine>
-                      <SyntaxLine>    run: <Kw>async</Kw> ({'{'} name {'}'}) =&gt; {'{}'}</SyntaxLine>
-                      <SyntaxLine>      <Kw>return</Kw> {'{'} message: <Str>`Hello </Str>{'{'}name{'}'}<Str>`</Str> {'}'}</SyntaxLine>
-                      <SyntaxLine>    {'}'}</SyntaxLine>
-                      <SyntaxLine>  {'}'})</SyntaxLine>
-                      <SyntaxLine>)</SyntaxLine>
-                      <SyntaxLine>{' '}</SyntaxLine>
-                      <SyntaxLine>server.<Fn>start</Fn>()</SyntaxLine>
-                    </code>
-                  </pre>
-                </div>
-                <div className="code-block-card">
-                  <div className="px-4 py-2.5 border-b border-[rgba(255,255,255,0.06)] text-xs font-mono text-[#555555]">
-                    terminal
-                  </div>
-                  <pre className="p-4 text-xs font-mono leading-relaxed text-white/80 overflow-x-auto">
-                    <code>
-                      <SyntaxLine><span className="text-emerald-400">$</span> npx ts-node server.ts</SyntaxLine>
-                      <SyntaxLine>{' '}</SyntaxLine>
-                      <SyntaxLine><span className="text-emerald-400/60">&gt;</span> MCP server running on stdio</SyntaxLine>
-                      <SyntaxLine><span className="text-emerald-400/60">&gt;</span> Tools: greet</SyntaxLine>
-                      <SyntaxLine><span className="text-emerald-400/60">&gt;</span> Ready for connections...</SyntaxLine>
-                    </code>
-                  </pre>
                 </div>
               </div>
             </div>
           </section>
         </Reveal>
 
-        {/* ─── CTA ─── */}
-        <Reveal>
-          <section className="py-24 sm:py-32 bg-[#0a0a0a] border-t border-[rgba(255,255,255,0.08)] text-center relative overflow-hidden">
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background:
-                  "radial-gradient(ellipse at center, rgba(255,255,255,0.03) 0%, transparent 70%)",
-              }}
-            />
-            <div className="relative z-10 max-w-xl mx-auto px-4 sm:px-6">
-              <div className="text-xs font-mono text-white/40 mb-4 tracking-wider uppercase">
-                Open Source
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-semibold tracking-[-0.03em] text-white mb-3">
-                Ready to build?
-              </h2>
-              <p className="text-[#888888] text-sm mb-8 max-w-md mx-auto">
-                Join developers building the agentic web.
-              </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-                  <Link
-                    href="/docs/installation"
-                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-black text-sm font-medium"
-                  >
-                    Get Started
-                    <span className="text-black/60">&rarr;</span>
-                  </Link>
-                  <a
-                    href="https://github.com/abdunur-dev/mcpcraft"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-white/20 text-white text-sm font-medium hover:bg-white hover:text-black transition-all duration-200"
-                  >
-                    View GitHub
-                  </a>
-              </div>
-            </div>
-          </section>
-        </Reveal>
+
       </main>
 
       {/* ─── Footer ─── */}
-      <footer className="border-t border-[rgba(255,255,255,0.08)] py-8">
+      <footer className="border-t border-white/10 py-8">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="font-mono text-sm text-white">mcpcraft</div>
           <div className="flex items-center gap-4 text-xs font-mono text-[#555555]">
@@ -820,91 +793,117 @@ function CountUp({ target, suffix }: { target: number; suffix: string }) {
 }
 
 function HowItWorks() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [activeStep, setActiveStep] = useState(0);
-
-  useEffect(() => {
-    if (isInView) {
-      const t1 = setTimeout(() => setActiveStep(1), 400);
-      const t2 = setTimeout(() => setActiveStep(2), 800);
-      const t3 = setTimeout(() => setActiveStep(3), 1200);
-      return () => {
-        clearTimeout(t1);
-        clearTimeout(t2);
-        clearTimeout(t3);
-      };
-    }
-  }, [isInView]);
-
   const steps = [
     {
       num: "01",
-      title: "Define your tools",
-      code: `tool({
-  name: "send_email",
+      title: "Define",
+      desc: "Describe your tool inputs and handler in one object.",
+      code: `const greet = tool({
+  name: "greet",
   input: {
-    to: { type: "string" }
+    name: { type: "string" }
   },
-  run: async ({ to }) => {
-    // your logic
+  run: async ({ name }) => {
+    return { message: "Hello " + name }
   }
 })`,
     },
     {
       num: "02",
-      title: "Add to server",
+      title: "Add",
+      desc: "Register tools on the server with a single call.",
       code: `const server = createServer({
   name: "my-server"
 })
 
-server.add(myTool)`,
+server.add(greet)
+server.add(weatherTool)
+server.add(emailTool)`,
     },
     {
       num: "03",
-      title: "Ship it",
+      title: "Ship",
+      desc: "Start your server. Any MCP client connects instantly.",
       code: `$ npx ts-node server.ts
-> MCP server running
+> MCP server running on stdio
+> Tools: greet, weather, email
 > Ready for connections...`,
     },
   ];
 
+  const [activeStep, setActiveStep] = useState(1);
+
   return (
     <Reveal>
-      <section ref={ref} className="py-24 sm:py-32 border-y border-[rgba(255,255,255,0.08)]">
+      <section className="py-24 sm:py-32 border-y border-white/10">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-semibold tracking-[-0.03em] text-white mb-3">
+            <div className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-mono border border-white/10 bg-white/[0.02] text-white/40 uppercase tracking-wider mb-4">Workflow</div>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-3">
               How it works
             </h2>
-            <p className="text-[#888888] text-sm max-w-md mx-auto">
+            <p className="text-white/40 text-sm max-w-md mx-auto">
               Three steps to your first MCP server.
             </p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 relative">
-            <div className="hidden md:block steps-line" />
-            <div
-              className="hidden md:block steps-line-active"
-              style={{
-                width: isInView ? `${(activeStep / 3) * 100}%` : "0%",
-              }}
-            />
-            {steps.map((step, i) => (
-              <div key={step.num} className="flex flex-col items-center text-center relative">
-                <div
-                  className={`step-dot mb-6 ${activeStep > i || (activeStep === 3 && i === 2) ? "active" : ""}`}
-                />
-                <div className="text-xs font-mono text-white/40 mb-2">{step.num}</div>
-                <h3 className="text-base font-semibold text-white mb-3">{step.title}</h3>
-                <div className="bg-[#111111] rounded-xl border border-[rgba(255,255,255,0.06)] p-3 w-full text-left overflow-x-auto">
-                  <pre className="text-[11px] font-mono leading-relaxed text-white/70">
-                    <code>{step.code}</code>
-                  </pre>
-                </div>
-              </div>
+          <div className="flex flex-wrap justify-center gap-2 mb-10">
+            {steps.map((s, i) => (
+              <button
+                key={s.num}
+                onClick={() => setActiveStep(i + 1)}
+                className={`px-4 py-1.5 text-sm font-mono rounded transition-all duration-200 ${
+                  activeStep === i + 1
+                    ? "bg-white text-black"
+                    : "text-white/40 hover:text-white border border-white/10"
+                }`}
+              >
+                {s.title}
+              </button>
             ))}
           </div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeStep}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2 }}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center"
+            >
+              <div>
+                <div className="text-6xl font-bold text-white/10 mb-4 font-mono">0{activeStep}</div>
+                <h3 className="text-2xl font-semibold tracking-tight text-white mb-3">{steps[activeStep - 1].title}</h3>
+                <p className="text-white/40 text-sm leading-relaxed mb-6">{steps[activeStep - 1].desc}</p>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setActiveStep(Math.max(1, activeStep - 1))}
+                    disabled={activeStep === 1}
+                    className="px-4 py-2 rounded-md border border-white/10 text-white/60 hover:text-white hover:border-white/30 transition-all text-xs font-mono disabled:opacity-30 disabled:cursor-not-allowed"
+                  >
+                    Prev
+                  </button>
+                  <button
+                    onClick={() => setActiveStep(Math.min(3, activeStep + 1))}
+                    disabled={activeStep === 3}
+                    className="px-4 py-2 rounded-md bg-white text-black text-xs font-medium hover:bg-white/90 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+              <div className="rounded-md border border-white/10 bg-black overflow-hidden">
+                <div className="px-4 py-2.5 border-b border-white/10 bg-[#050505] flex items-center gap-2">
+                  <span className="w-3 h-3 rounded-full bg-red-500/60" />
+                  <span className="w-3 h-3 rounded-full bg-yellow-500/60" />
+                  <span className="w-3 h-3 rounded-full bg-green-500/60" />
+                  <span className="text-xs text-white/40 font-mono ml-2">step-{activeStep}.ts</span>
+                </div>
+                <pre className="p-5 text-xs font-mono leading-relaxed text-white/90 overflow-x-auto">
+                  <code>{steps[activeStep - 1].code}</code>
+                </pre>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </section>
     </Reveal>

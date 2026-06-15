@@ -547,10 +547,9 @@ body {
 /* ─── Terminal Component ─── */
 .terminal-window {
   background-color: #050505;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
 }
 
 .terminal-body {
@@ -660,21 +659,14 @@ body {
 
 .bento-card-lg {
   background: #0a0a0a;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   padding: 40px;
   transition: border-color 0.3s ease;
 }
 
 .bento-card-lg:hover {
-  border-color: rgba(255, 255, 255, 0.15);
-}
-
-.code-block-card {
-  background: #111111;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  overflow: hidden;
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 /* Scroll progress indicator */
@@ -862,10 +854,9 @@ body {
 /* ─── Terminal Component ─── */
 .terminal-window {
   background-color: #050505;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
 }
 
 .terminal-body {
