@@ -37,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} h-full`} data-theme="dark" suppressHydrationWarning>
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} dark h-full`} data-theme="dark" suppressHydrationWarning>
       <body className="min-h-full flex flex-col antialiased" style={{ backgroundColor: "var(--page-bg)", color: "var(--page-text)" }}>
         <RootProvider
           search={{

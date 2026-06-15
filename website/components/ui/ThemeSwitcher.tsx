@@ -16,6 +16,7 @@ export function ThemeSwitcher({ className = "" }: { className?: string }) {
   function applyTheme(t: "dark" | "light") {
     document.documentElement.setAttribute("data-theme", t);
     document.documentElement.style.colorScheme = t;
+    document.documentElement.classList.toggle("dark", t === "dark");
     localStorage.setItem("theme", t);
   }
 
