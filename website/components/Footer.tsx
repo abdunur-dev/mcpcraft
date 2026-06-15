@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRef, useState } from "react";
+import { Feedback } from "@/components/ui/Feedback";
 
 interface LinkItem {
   label: string;
@@ -118,6 +119,7 @@ export default function Footer() {
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/30 font-mono">
           <span>&copy; 2026 MCPCRAFT</span>
+          <Feedback dryRun label="mcpcraft" />
           <div className="flex items-center gap-6">
             <Link href="/" className="hover:text-white transition-colors duration-200">
               Home

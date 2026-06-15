@@ -8,10 +8,11 @@ interface SwitcherOption {
 }
 
 interface CodeBlockProps {
-  children: string;
+  children: React.ReactNode;
   "aria-label"?: string;
   filename?: string;
   language?: string;
+  copyText?: string;
   switcher?: {
     options: SwitcherOption[];
     value: string;
@@ -19,11 +20,11 @@ interface CodeBlockProps {
   };
 }
 
-export function CodeBlock({ children, filename, switcher }: CodeBlockProps) {
+export function CodeBlock({ children, filename, switcher, copyText }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(children);
+    await navigator.clipboard.writeText(copyText || "");
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
   };
@@ -68,8 +69,8 @@ export function CodeBlock({ children, filename, switcher }: CodeBlockProps) {
           </button>
         </div>
       </div>
-      <pre className="p-5 text-sm font-mono leading-relaxed text-white/90 overflow-x-auto">
-        <code>{children}</code>
+      <pre className="p-5 text-sm font-mono leading-relaxed overflow-x-auto">
+        <code className="text-white/90">{children}</code>
       </pre>
     </div>
   );

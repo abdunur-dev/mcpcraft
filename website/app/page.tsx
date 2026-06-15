@@ -11,7 +11,7 @@ import Footer from "@/components/Footer";
 import { Snippet } from "@/components/ui/Snippet";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { GridSystem, Grid, GridCell } from "@/components/ui/Grid";
-import { Feedback } from "@/components/ui/Feedback";
+
 import { CodeBlock } from "@/components/ui/CodeBlock";
 import { AvatarGroup } from "@/components/ui/AvatarGroup";
 import { ThemeSwitcher } from "@/components/ui/ThemeSwitcher";
@@ -299,10 +299,10 @@ export default function Home() {
               <div className="-mx-4 sm:mx-0 animate-fadeIn [animation-delay:500ms]">
                 <div className="rounded-lg border border-white/10 bg-[#050505] shadow-2xl overflow-hidden">
                   <div className="bg-[#0b0b0b] border-b border-white/10 px-4 py-2.5 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                      <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                      <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
                       <span className="text-xs text-white/40 font-mono ml-2">server.ts</span>
                     </div>
                     <button onClick={() => handleCopy(heroCodeText, "hero-code")} className="text-xs font-mono text-white/40 hover:text-white transition-colors">{copied === "hero-code" ? "Copied!" : "Copy"}</button>
@@ -456,13 +456,6 @@ export default function Home() {
               </GridCell>
             </Grid>
           </GridSystem>
-        </section>
-
-        {/* ── Feedback ── */}
-        <section className="border-y border-white/10 py-8">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 flex items-center justify-center sm:justify-start">
-            <Feedback dryRun label="mcpcraft" />
-          </div>
         </section>
 
         {/* ── Code Playground ── */}
@@ -836,6 +829,42 @@ server.add(emailTool)`,
   );
 }
 
+const KEYWORDS = new Set([
+  "import", "from", "const", "let", "var", "async", "await", "return",
+  "function", "def", "use", "fn", "pub", "enum", "struct", "impl",
+  "for", "in", "if", "else", "match", "class", "extends", "new",
+  "this", "super", "export", "default", "type", "interface",
+  "require", "module", "null", "undefined", "nil", "mod", "mut",
+  "where", "as", "ref", "static", "move", "try", "catch", "throw",
+  "while", "switch", "case", "with", "yield", "of", "break", "continue",
+  "finally", "do",
+]);
+
+function ColoredCode({ code }: { code: string }) {
+  const parts = code.split(/(\/\/[^\n]*|#[^\n]*|"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\]|\\.)*`)/g);
+  return parts.map((part, i) => {
+    if (/^["'`]/.test(part) && /["'`]$/.test(part)) {
+      return <span key={i} className="text-emerald-300">{part}</span>;
+    }
+    if (part.startsWith("//") || part.startsWith("#")) {
+      return <span key={i} className="text-white/30">{part}</span>;
+    }
+    const words = part.split(/(\b\w+\b)/g);
+    return words.map((word, j) => {
+      if (word === "true" || word === "false") {
+        return <span key={`${i}-${j}`} className="text-amber-300">{word}</span>;
+      }
+      if (KEYWORDS.has(word)) {
+        return <span key={`${i}-${j}`} className="text-purple-400">{word}</span>;
+      }
+      if (words[j + 1]?.startsWith("(") && /^[a-z_]\w*$/i.test(word)) {
+        return <span key={`${i}-${j}`} className="text-blue-400">{word}</span>;
+      }
+      return word;
+    });
+  });
+}
+
 const playgroundCode = {
   js: `const { createServer, tool } = require("mcpcraft");
 
@@ -899,18 +928,19 @@ const playgroundLangs = [
 
 function CodeBlockWithSwitcher() {
   const [lang, setLang] = useState("ts");
+  const code = playgroundCode[lang as keyof typeof playgroundCode];
 
   return (
     <CodeBlock
       filename={`server.${lang}`}
-      language={lang}
+      copyText={code}
       switcher={{
         options: playgroundLangs,
         value: lang,
         onChange: (l) => setLang(l),
       }}
     >
-      {playgroundCode[lang as keyof typeof playgroundCode]}
+      <ColoredCode code={code} />
     </CodeBlock>
   );
 }
