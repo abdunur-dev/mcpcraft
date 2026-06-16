@@ -118,16 +118,8 @@
 
 /* ─── Light theme: terminal / syntax ─── */
 [data-theme="light"] .terminal-prompt { color: var(--syntax-prompt); }
-[data-theme="light"] .hero-grid::after {
-  background-image: 
-    linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,0,0,0.08) 1px, transparent 1px);
-  background-size: 32px 32px, 32px 32px;
-}
-[data-theme="light"] .hero-glow::before {
-  background: radial-gradient(circle, rgba(0,0,0,0.03) 0%, transparent 70%);
-}
-[data-theme="light"] .hero-glow { opacity: 1; }
+[data-theme="light"] .hero-circle-tl circle { stroke: rgba(0,0,0,0.12); }
+[data-theme="light"] .hero-circle-br circle { stroke: rgba(0,0,0,0.12); }
 
 /* ─── Light theme: syntax highlighting colors ─── */
 [data-theme="light"] .text-purple-400 { color: var(--syntax-keyword); }
@@ -793,60 +785,62 @@ body {
   border-color: var(--border-strong);
 }
 
-/* ─── Hero Grid ─── */
-.hero-grid {
+/* ─── Hero Background Lines (Next.js style) ─── */
+.hero-lines {
   position: absolute;
   inset: 0;
   pointer-events: none;
   overflow: hidden;
-  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
-  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
 }
 
-.hero-grid::after {
+/* Top horizontal line */
+.hero-lines::before {
   content: "";
   position: absolute;
-  inset: -100%;
-  width: 300%;
-  height: 300%;
-  background-image: 
-    linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px),
-    radial-gradient(circle at 30% 40%, rgba(168,85,247,0.04) 0%, transparent 50%),
-    radial-gradient(circle at 70% 60%, rgba(96,165,250,0.04) 0%, transparent 50%);
-  background-size: 32px 32px, 32px 32px, 100% 100%, 100% 100%;
-  animation: gridDrift 30s linear infinite;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 15%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.08) 85%, transparent 100%);
 }
 
-@keyframes gridDrift {
-  0% { transform: translate(0, 0); }
-  50% { transform: translate(16px, 8px); }
-  100% { transform: translate(0, 0); }
-}
-
-/* ─── Hero Glow ─── */
-.hero-glow {
+/* Bottom horizontal line */ 
+.hero-lines::after {
+  content: "";
   position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 15%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.06) 85%, transparent 100%);
+}
+
+/* Dashed circle top-left */
+.hero-circle-tl {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 140px;
+  height: 140px;
   pointer-events: none;
-  overflow: hidden;
 }
 
-.hero-glow::before {
-  content: "";
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
-  border-radius: 50%;
-  animation: glowPulse 4s ease-in-out infinite alternate;
+/* Dashed circle bottom-right */
+.hero-circle-br {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  width: 140px;
+  height: 140px;
+  pointer-events: none;
 }
 
-@keyframes glowPulse {
-  0% { opacity: 0.6; transform: scale(1); }
-  100% { opacity: 1; transform: scale(1.1); }
+/* Light theme overrides */
+[data-theme="light"] .hero-lines::before {
+  background: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.06) 15%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.06) 85%, transparent 100%);
+}
+[data-theme="light"] .hero-lines::after {
+  background: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.04) 15%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.04) 85%, transparent 100%);
 }
 
 /* ─── Scrollbar Styling ─── */

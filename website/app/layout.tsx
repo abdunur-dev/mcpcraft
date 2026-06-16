@@ -41,7 +41,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col antialiased" style={{ backgroundColor: "var(--page-bg)", color: "var(--page-text)" }}>
         <RootProvider
           theme={{
-            attribute: "data-theme",
+            attribute: ["data-theme", "class"],
             defaultTheme: "dark",
           }}
           search={{
