@@ -793,24 +793,42 @@ body {
   overflow: hidden;
 }
 
-/* Top horizontal line */
-.hero-lines::before {
-  content: "";
+/* Vertical line left — fades at top */
+.hero-lines-left {
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 15%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.08) 85%, transparent 100%);
+  left: 20px;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.06) 70%, transparent 100%);
 }
 
-/* Bottom horizontal line */ 
-.hero-lines::after {
-  content: "";
+/* Vertical line right — fades at top */
+.hero-lines-right {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.06) 70%, transparent 100%);
+}
+
+/* Top horizontal line — fades on both sides */
+.hero-lines-top {
+  position: absolute;
+  top: 0;
+  left: 20px;
+  right: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 15%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.06) 85%, transparent 100%);
+}
+
+/* Bottom horizontal line — fades on both sides */
+.hero-lines-bottom {
   position: absolute;
   bottom: 0;
-  left: 0;
-  right: 0;
+  left: 20px;
+  right: 20px;
   height: 1px;
   background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 15%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.06) 85%, transparent 100%);
 }
@@ -818,8 +836,8 @@ body {
 /* Dashed circle top-left */
 .hero-circle-tl {
   position: absolute;
-  top: -20px;
-  left: -20px;
+  top: -16px;
+  left: -16px;
   width: 140px;
   height: 140px;
   pointer-events: none;
@@ -828,20 +846,28 @@ body {
 /* Dashed circle bottom-right */
 .hero-circle-br {
   position: absolute;
-  bottom: -20px;
-  right: -20px;
+  bottom: -16px;
+  right: -16px;
   width: 140px;
   height: 140px;
   pointer-events: none;
 }
 
 /* Light theme overrides */
-[data-theme="light"] .hero-lines::before {
+[data-theme="light"] .hero-lines-left {
+  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.06) 30%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.06) 70%, transparent 100%);
+}
+[data-theme="light"] .hero-lines-right {
+  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.06) 30%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.06) 70%, transparent 100%);
+}
+[data-theme="light"] .hero-lines-top {
   background: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.06) 15%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.06) 85%, transparent 100%);
 }
-[data-theme="light"] .hero-lines::after {
+[data-theme="light"] .hero-lines-bottom {
   background: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.04) 15%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.04) 85%, transparent 100%);
 }
+[data-theme="light"] .hero-circle-tl circle { stroke: rgba(0,0,0,0.12); }
+[data-theme="light"] .hero-circle-br circle { stroke: rgba(0,0,0,0.12); }
 
 /* ─── Scrollbar Styling ─── */
 ::-webkit-scrollbar {

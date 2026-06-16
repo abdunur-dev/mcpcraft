@@ -261,7 +261,12 @@ export default function Home() {
       <main className="flex-1 pt-14">
         {/* ── Hero ── */}
         <section className="relative min-h-dvh sm:min-h-[calc(100dvh-3.5rem)] flex items-center overflow-hidden border-b border-white/10">
-          <div className="hero-lines" aria-hidden="true" />
+          <div className="hero-lines" aria-hidden="true">
+            <div className="hero-lines-left" />
+            <div className="hero-lines-right" />
+            <div className="hero-lines-top" />
+            <div className="hero-lines-bottom" />
+          </div>
           <svg className="hero-circle-tl" aria-hidden="true" viewBox="0 0 140 140" fill="none">
             <circle cx="70" cy="70" r="65" stroke="rgba(255,255,255,0.08)" strokeWidth="1" strokeDasharray="3 3" />
           </svg>
