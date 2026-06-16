@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
+import { GeistPixelSquare, GeistPixelGrid } from "geist/font/pixel";
 import { RootProvider } from "fumadocs-ui/provider/next";
 import "./globals.css";
 
@@ -37,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} h-full`} suppressHydrationWarning>
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} ${GeistPixelSquare.variable} ${GeistPixelGrid.variable} h-full`} suppressHydrationWarning>
       <body className="min-h-full flex flex-col antialiased" style={{ backgroundColor: "var(--page-bg)", color: "var(--page-text)" }}>
         <RootProvider
           theme={{
