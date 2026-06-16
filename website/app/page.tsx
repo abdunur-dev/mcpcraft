@@ -278,9 +278,8 @@ export default function Home() {
                   </span>
                   {VERSION} &mdash; now available
                 </div>
-                <h1 className="text-[clamp(1.2rem,3.8vw,2.75rem)] sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white mb-2 sm:mb-6 leading-[1.1] sm:leading-[1.05] animate-slideUp [animation-delay:200ms]">
-                  MCP Servers,{" "}
-                  <span className="bg-gradient-to-r from-white via-white/80 to-white/40 bg-clip-text text-transparent">Zero Boilerplate</span>
+                <h1 className="text-[clamp(1.5rem,4.5vw,3.5rem)] font-bold tracking-tight text-white mb-2 sm:mb-6 leading-[1.1] animate-slideUp [animation-delay:200ms]">
+                  MCP Servers, Zero Boilerplate
                 </h1>
                 <p className="text-[13px] sm:text-base lg:text-lg text-white/60 leading-relaxed mb-3 sm:mb-8 animate-slideUp [animation-delay:300ms]">
                   TypeScript SDK for the Model Context Protocol. Define tools with plain objects &mdash; full type safety, auto-generated schemas, zero protocol boilerplate.
