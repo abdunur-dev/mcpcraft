@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <div className="dark">
+    <div className="dark" style={{ backgroundColor: "#000000", minHeight: "100vh" }}>
       <DocsLayout
         tree={source.pageTree}
         nav={{
