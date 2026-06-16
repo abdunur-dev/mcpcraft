@@ -274,7 +274,7 @@ export default function Home() {
                   {VERSION} &mdash; now available
                 </div>
                 <h1 className="text-[clamp(1.5rem,4.5vw,3.5rem)] font-bold tracking-tight text-white mb-2 sm:mb-6 leading-[1.1] animate-slideUp [animation-delay:200ms]">
-                  <span style={{ fontFamily: "var(--font-geist-pixel-grid)" }}>MCP Servers,</span>{" "}
+                  <span style={{ fontFamily: "var(--font-geist-pixel-grid)", fontSize: "clamp(2rem,5.5vw,4.5rem)" }}>MCP Servers,</span>{" "}
                   <span className="bg-gradient-to-r from-white via-white/80 to-white/40 bg-clip-text text-transparent" style={{ fontFamily: "var(--font-geist-mono)" }}>Zero Boilerplate</span>
                 </h1>
                 <p className="text-[13px] sm:text-base lg:text-lg text-white/60 leading-relaxed mb-3 sm:mb-8 animate-slideUp [animation-delay:300ms]">
