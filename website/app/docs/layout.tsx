@@ -49,6 +49,9 @@ export default function Layout({ children }: { children: ReactNode }) {
         searchToggle={{
           enabled: true,
         }}
+        themeSwitch={{
+          enabled: false,
+        }}
       >
         {children}
       </DocsLayout>
