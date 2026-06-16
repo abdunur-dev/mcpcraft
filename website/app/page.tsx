@@ -273,7 +273,7 @@ export default function Home() {
                   </span>
                   {VERSION} &mdash; now available
                 </div>
-                <h1 className="text-[clamp(1.4rem,5.5vw,4.5rem)] sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-2 sm:mb-6 leading-[1.1] sm:leading-[1.05] animate-slideUp [animation-delay:200ms]">
+                <h1 className="text-[clamp(1.2rem,3.8vw,2.75rem)] sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white mb-2 sm:mb-6 leading-[1.1] sm:leading-[1.05] animate-slideUp [animation-delay:200ms]">
                   MCP Servers,{" "}
                   <span className="bg-gradient-to-r from-white via-white/80 to-white/40 bg-clip-text text-transparent">Zero Boilerplate</span>
                 </h1>
