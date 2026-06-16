@@ -261,18 +261,16 @@ export default function Home() {
       <main className="flex-1 pt-14">
         {/* ── Hero ── */}
         <section className="relative min-h-dvh sm:min-h-[calc(100dvh-3.5rem)] flex items-center overflow-hidden border-b border-white/10">
-          <div className="hero-lines" aria-hidden="true">
-            <div className="hero-lines-left" />
-            <div className="hero-lines-right" />
-            <div className="hero-lines-top" />
-            <div className="hero-lines-bottom" />
+          <div className="hero-frame" aria-hidden="true">
+            <div className="hero-frame-top" />
+            <div className="hero-frame-bottom" />
+            <div className="hero-frame-left" />
+            <div className="hero-frame-right" />
+            <div className="hero-frame-corner-tl" />
+            <div className="hero-frame-corner-tr" />
+            <div className="hero-frame-corner-bl" />
+            <div className="hero-frame-corner-br" />
           </div>
-          <svg className="hero-circle-tl" aria-hidden="true" viewBox="0 0 140 140" fill="none">
-            <circle cx="70" cy="70" r="65" stroke="rgba(255,255,255,0.08)" strokeWidth="1" strokeDasharray="3 3" />
-          </svg>
-          <svg className="hero-circle-br" aria-hidden="true" viewBox="0 0 140 140" fill="none">
-            <circle cx="70" cy="70" r="65" stroke="rgba(255,255,255,0.08)" strokeWidth="1" strokeDasharray="3 3" />
-          </svg>
           <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 w-full py-12 sm:py-0">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-12 items-start sm:items-center">
               <div>
