@@ -514,8 +514,8 @@ body {
   max-width: 100%;
 }
 
-/* Shiki CSS variables theme - hero code colors */
-:root:not(.dark) {
+/* Shiki CSS variables theme - hero code colors (same in all modes) */
+:root {
   --shiki-foreground: #e4e4e7;
   --shiki-background: #050505;
   --shiki-token-keyword: #a855f7;
