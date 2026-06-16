@@ -774,87 +774,74 @@ body {
   border-color: var(--border-strong);
 }
 
-/* ─── Hero Frame (visible dashed rectangle) ─── */
-.hero-frame {
+/* ─── Hero Grid ─── */
+.hero-grid {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  overflow: hidden;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
 }
 
-.hero-frame-top,
-.hero-frame-bottom {
+.hero-grid::after {
+  content: "";
   position: absolute;
-  left: 48px;
-  right: 48px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 10%, rgba(255,255,255,0.35) 50%, rgba(255,255,255,0.15) 90%, transparent 100%);
+  inset: -100%;
+  width: 300%;
+  height: 300%;
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px),
+    radial-gradient(circle at 30% 40%, rgba(168,85,247,0.04) 0%, transparent 50%),
+    radial-gradient(circle at 70% 60%, rgba(96,165,250,0.04) 0%, transparent 50%);
+  background-size: 32px 32px, 32px 32px, 100% 100%, 100% 100%;
+  animation: gridDrift 30s linear infinite;
 }
 
-.hero-frame-top { top: 0; }
-.hero-frame-bottom { bottom: 0; }
+@keyframes gridDrift {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(16px, 8px); }
+  100% { transform: translate(0, 0); }
+}
 
-.hero-frame-left,
-.hero-frame-right {
+/* ─── Hero Glow ─── */
+.hero-glow {
   position: absolute;
-  top: 48px;
-  bottom: 48px;
-  width: 1px;
-  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.15) 10%, rgba(255,255,255,0.35) 50%, rgba(255,255,255,0.15) 90%, transparent 100%);
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  overflow: hidden;
 }
 
-.hero-frame-left { left: 0; }
-.hero-frame-right { right: 0; }
-
-/* Corner L-shapes */
-.hero-frame-corner-tl,
-.hero-frame-corner-tr,
-.hero-frame-corner-bl,
-.hero-frame-corner-br {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border-color: rgba(255,255,255,0.4);
-  border-style: solid;
+.hero-glow::before {
+  content: "";
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: glowPulse 4s ease-in-out infinite alternate;
 }
 
-.hero-frame-corner-tl {
-  top: -1px;
-  left: -1px;
-  border-width: 2px 0 0 2px;
+@keyframes glowPulse {
+  0% { opacity: 0.6; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.1); }
 }
 
-.hero-frame-corner-tr {
-  top: -1px;
-  right: -1px;
-  border-width: 2px 2px 0 0;
+/* Light theme: hero grid uses dark lines */
+:root .hero-grid::after {
+  background-image: 
+    linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.08) 1px, transparent 1px),
+    radial-gradient(circle at 30% 40%, rgba(168,85,247,0.04) 0%, transparent 50%),
+    radial-gradient(circle at 70% 60%, rgba(96,165,250,0.04) 0%, transparent 50%);
+  background-size: 32px 32px, 32px 32px, 100% 100%, 100% 100%;
 }
 
-.hero-frame-corner-bl {
-  bottom: -1px;
-  left: -1px;
-  border-width: 0 0 2px 2px;
-}
-
-.hero-frame-corner-br {
-  bottom: -1px;
-  right: -1px;
-  border-width: 0 2px 2px 0;
-}
-
-/* Light theme */
-:root .hero-frame-top,
-:root .hero-frame-bottom {
-  background: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.12) 10%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.12) 90%, transparent 100%);
-}
-:root .hero-frame-left,
-:root .hero-frame-right {
-  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.12) 10%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.12) 90%, transparent 100%);
-}
-:root .hero-frame-corner-tl,
-:root .hero-frame-corner-tr,
-:root .hero-frame-corner-bl,
-:root .hero-frame-corner-br {
-  border-color: rgba(0,0,0,0.4);
+:root .hero-glow::before {
+  background: radial-gradient(circle, rgba(0,0,0,0.03) 0%, transparent 70%);
 }
 
 /* ─── Scrollbar Styling ─── */

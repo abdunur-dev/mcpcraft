@@ -261,16 +261,8 @@ export default function Home() {
       <main className="flex-1 pt-14">
         {/* ── Hero ── */}
         <section className="relative min-h-dvh sm:min-h-[calc(100dvh-3.5rem)] flex items-center overflow-hidden border-b border-white/10">
-          <div className="hero-frame" aria-hidden="true">
-            <div className="hero-frame-top" />
-            <div className="hero-frame-bottom" />
-            <div className="hero-frame-left" />
-            <div className="hero-frame-right" />
-            <div className="hero-frame-corner-tl" />
-            <div className="hero-frame-corner-tr" />
-            <div className="hero-frame-corner-bl" />
-            <div className="hero-frame-corner-br" />
-          </div>
+          <div className="hero-glow" aria-hidden="true" />
+          <div className="hero-grid" aria-hidden="true" />
           <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 w-full py-12 sm:py-0">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-12 items-start sm:items-center">
               <div>
@@ -283,7 +275,7 @@ export default function Home() {
                 </div>
                 <h1 className="text-[clamp(1.5rem,4.5vw,3.5rem)] font-bold tracking-tight text-white mb-2 sm:mb-6 leading-[1.1] animate-slideUp [animation-delay:200ms]">
                   <span style={{ fontFamily: "var(--font-geist-pixel-grid)" }}>MCP Servers,</span>{" "}
-                  <span style={{ fontFamily: "var(--font-geist-mono)" }}>Zero Boilerplate</span>
+                  <span className="bg-gradient-to-r from-white via-white/80 to-white/40 bg-clip-text text-transparent" style={{ fontFamily: "var(--font-geist-mono)" }}>Zero Boilerplate</span>
                 </h1>
                 <p className="text-[13px] sm:text-base lg:text-lg text-white/60 leading-relaxed mb-3 sm:mb-8 animate-slideUp [animation-delay:300ms]">
                   TypeScript SDK for the Model Context Protocol. Define tools with plain objects &mdash; full type safety, auto-generated schemas, zero protocol boilerplate.
