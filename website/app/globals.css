@@ -820,11 +820,14 @@ body {
 }
 
 .animate-fadeIn {
-  animation: fadeIn 0.8s ease-out both;
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out forwards;
 }
 
 .animate-slideUp {
-  animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  opacity: 0;
+  transform: translateY(24px);
+  animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* ─── Terminal Component ─── */
