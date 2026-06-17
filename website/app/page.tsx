@@ -187,9 +187,12 @@ function Boo({ children }: { children: React.ReactNode }) {
 }
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState("npm");
   const [heroTab, setHeroTab] = useState<"server.ts" | "terminal">("server.ts");
   const [copied, setCopied] = useState("");
+
+  useEffect(() => { setMounted(true); }, []);
 
   const handleCopy = (text: string, id: string) => {
     navigator.clipboard.writeText(text);
@@ -265,27 +268,27 @@ export default function Home() {
           <div className="hero-grid" aria-hidden="true" />
           <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 w-full py-12 sm:py-0">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-12 items-start sm:items-center">
-              <div>
-                <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full text-[10px] sm:text-[11px] font-mono border border-white/10 bg-white/[0.02] text-white/60 mb-3 sm:mb-6 animate-fadeIn [animation-delay:100ms]">
+              <div style={{ opacity: mounted ? undefined : 0 }}>
+                <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full text-[10px] sm:text-[11px] font-mono border border-white/10 bg-white/[0.02] text-white/60 mb-3 sm:mb-6" style={{ transition: "opacity 0.8s ease-out", transitionDelay: "100ms", opacity: mounted ? undefined : 0 }}>
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                   </span>
                   {VERSION} &mdash; now available
                 </div>
-                <h1 className="text-[clamp(1.5rem,4.5vw,3.5rem)] font-bold tracking-tight text-white mb-2 sm:mb-6 leading-[1.1] animate-slideUp [animation-delay:200ms]">
+                <h1 className="text-[clamp(1.5rem,4.5vw,3.5rem)] font-bold tracking-tight text-white mb-2 sm:mb-6 leading-[1.1]" style={{ transition: "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)", transitionDelay: "200ms", opacity: mounted ? undefined : 0, transform: mounted ? "translateY(0)" : "translateY(24px)" }}>
                   <span style={{ fontFamily: "var(--font-geist-pixel-grid)", fontSize: "clamp(2rem,5.5vw,4.5rem)" }}>MCP Servers,</span>{" "}
                   <span className="bg-gradient-to-r from-white via-white/80 to-white/40 bg-clip-text text-transparent" style={{ fontFamily: "var(--font-geist-mono)" }}>Zero Boilerplate</span>
                 </h1>
-                <p className="text-[13px] sm:text-base lg:text-lg text-white/60 leading-relaxed mb-3 sm:mb-8 animate-slideUp [animation-delay:300ms]">
+                <p className="text-[13px] sm:text-base lg:text-lg text-white/60 leading-relaxed mb-3 sm:mb-8" style={{ transition: "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)", transitionDelay: "300ms", opacity: mounted ? undefined : 0, transform: mounted ? "translateY(0)" : "translateY(24px)" }}>
                   TypeScript SDK for the Model Context Protocol. Define tools with plain objects &mdash; full type safety, auto-generated schemas, zero protocol boilerplate.
                 </p>
-                <div className="flex flex-wrap items-center gap-x-4 sm:gap-x-6 gap-y-1 text-[10px] sm:text-xs text-white/50 font-mono mb-4 sm:mb-6 animate-slideUp [animation-delay:350ms]">
+                <div className="flex flex-wrap items-center gap-x-4 sm:gap-x-6 gap-y-1 text-[10px] sm:text-xs text-white/50 font-mono mb-4 sm:mb-6" style={{ transition: "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)", transitionDelay: "350ms", opacity: mounted ? undefined : 0, transform: mounted ? "translateY(0)" : "translateY(24px)" }}>
                   <span className="flex items-center gap-1"><svg className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-emerald-400/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg> Zero boilerplate</span>
                   <span className="flex items-center gap-1"><svg className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-emerald-400/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg> Full TypeScript</span>
                   <span className="flex items-center gap-1"><svg className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-emerald-400/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg> Auto schema gen</span>
                 </div>
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-start gap-2 sm:gap-3 animate-slideUp [animation-delay:400ms]">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-start gap-2 sm:gap-3" style={{ transition: "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)", transitionDelay: "400ms", opacity: mounted ? undefined : 0, transform: mounted ? "translateY(0)" : "translateY(24px)" }}>
                   <Link href="/docs/installation" className="group w-full sm:w-auto px-5 sm:px-8 py-2 sm:py-3 rounded-md text-[11px] sm:text-xs font-mono uppercase tracking-wider bg-white text-black hover:bg-white/90 transition-all font-bold text-center inline-flex items-center justify-center gap-2">
                     Get Started
                     <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
@@ -296,7 +299,7 @@ export default function Home() {
                   </a>
                 </div>
               </div>
-              <div className="-mx-4 sm:mx-0 w-[calc(100%+2rem)] sm:w-auto animate-fadeIn [animation-delay:500ms]">
+              <div className="-mx-4 sm:mx-0 w-[calc(100%+2rem)] sm:w-auto" style={{ transition: "opacity 0.8s ease-out", transitionDelay: "500ms", opacity: mounted ? undefined : 0 }}>
                 <div className="rounded-lg border border-white/10 bg-[#050505] shadow-2xl overflow-hidden">
                   <div className="bg-[#0b0b0b] border-b border-white/10 px-4 py-2.5 flex items-center justify-between">
                     <div className="flex items-center min-w-0">

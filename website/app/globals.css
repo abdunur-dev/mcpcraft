@@ -804,30 +804,9 @@ body {
 }
 
 /* ─── Animations ─── */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 @keyframes glow {
   0%, 100% { opacity: 0.3; }
   50% { opacity: 0.6; }
-}
-
-.animate-fadeIn {
-  opacity: 0;
-  animation: fadeIn 0.8s ease-out forwards;
-}
-
-.animate-slideUp {
-  opacity: 0;
-  transform: translateY(24px);
-  animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* ─── Terminal Component ─── */
