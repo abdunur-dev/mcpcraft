@@ -1,0 +1,114 @@
+---
+title: FAQ
+description: Frequently asked questions about mcpcraft-sdk, MCP, and building MCP servers.
+---
+
+# FAQ
+
+## General
+
+### What is MCP?
+
+The **Model Context Protocol (MCP)** is an open standard that lets AI applications discover and call functions on your server — like a universal plugin system for AI. It's developed by Anthropic and supported by Claude, Cursor, VS Code Copilot, and more.
+
+### How is this different from building a REST API?
+
+A REST API requires you to define endpoints, handle HTTP parsing, manage auth, and write client SDKs. MCP servers use a standard protocol (JSON-RPC) so any MCP client can discover and call your tools automatically — no per-client SDK needed.
+
+### Do I need to know JSON-RPC?
+
+No. MCPCraft handles all JSON-RPC serialization under the hood. You define plain TypeScript objects and functions.
+
+### Is this production ready?
+
+MCPCraft is in active development. The core API is stable, but treat it as you would any early-stage tool — test thoroughly before deploying to production.
+
+## Compatibility
+
+### Which clients work with MCPCraft servers?
+
+Any MCP-compatible client. This includes:
+
+- **Claude Desktop** (Anthropic)
+- **Claude Code** (Anthropic)
+- **Cursor** (via .cursor/rules)
+- **VS Code Copilot** (via GitHub Copilot MCP)
+- **Windsurf** (Codeium)
+- **Continue.dev** (open source)
+- Custom clients built with `@modelcontextprotocol/sdk`
+
+### Does this work with ChatGPT?
+
+ChatGPT supports the MCP protocol through its plugin system and can connect to MCP servers.
+
+### Can I use this with the OpenAI API directly?
+
+Yes. The OpenAI Assistants API and function calling can consume MCP tools by using the auto-generated JSON schema output — no SDK abstraction needed.
+
+## Technical
+
+### What transport protocols are supported?
+
+- **stdio** — local/desktop use (Claude Desktop, VS Code)
+- **SSE** — remote servers (Vercel, Docker, VPS)
+
+### What Node.js version is required?
+
+Node.js 18 or later. TypeScript 5+ recommended.
+
+### Can I use this with Deno or Bun?
+
+The SDK targets Node.js runtime. Deno and Bun compatibility via Node compat layer is experimental.
+
+### How do I handle errors?
+
+Throw from your `run` handler — MCPCraft catches it and returns a proper JSON-RPC error response to the client.
+
+```typescript
+run: async ({ userId }) => {
+  const user = await db.findUser(userId)
+  if (!user) throw new Error("User not found")
+  return user
+}
+```
+
+### Can I return binary data?
+
+MCP supports text and blob content types. Use `{ type: "blob", data: base64String, mimeType: "image/png" }`.
+
+## Deployment
+
+### Can I deploy to Vercel?
+
+Yes. See the [Deployment guide](/docs/deployment#vercel-serverless) for Vercel serverless setup.
+
+### Can I deploy to Docker?
+
+Yes. See the [Deployment guide](/docs/deployment#docker) for Docker configuration.
+
+### Can I deploy to Railway or Render?
+
+Yes. Both support Node.js environments with environment variable configuration.
+
+## Troubleshooting
+
+### My server starts but the client can't find tools
+
+Make sure you're calling `server.add(tool(...))` before `server.start()`. Tools registered after `start()` won't be available.
+
+### Claude Desktop shows "No tools found"
+
+Check that:
+1. Your server builds without errors (`npm run build`)
+2. The path in `claude_desktop_config.json` is correct
+3. The server file exports a running server
+
+### The inspector shows "Connection refused"
+
+If using stdio, the server runs as a child process — you connect to the process, not a port. Use the inspector command with your server file:
+
+```bash
+npx @modelcontextprotocol/inspector node dist/server.js
+```
+
+If using SSE, ensure your server is running and the URL is accessible.

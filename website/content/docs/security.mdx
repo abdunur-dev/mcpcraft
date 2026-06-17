@@ -1,0 +1,144 @@
+---
+title: Security
+description: Best practices for securing your MCP server — API keys, validation, rate limiting, and more.
+---
+
+# Security
+
+MCP servers handle privileged operations — database queries, file access, API calls — so security should be a first-class concern.
+
+## Environment Variables
+
+Never hardcode secrets. Use environment variables for API keys, tokens, and database credentials.
+
+```typescript
+import { createServer, tool } from "mcpcraft-sdk"
+
+const server = createServer({ name: "secure-server" })
+
+server.add(tool({
+  name: "query_database",
+  input: {
+    query: { type: "string", description: "SQL query" }
+  },
+  run: async ({ query }) => {
+    const db = await connect(process.env.DATABASE_URL!)
+    return db.query(query)
+  }
+}))
+```
+
+```bash
+# .env
+DATABASE_URL=postgres://user:pass@host:5432/db
+API_KEY=sk-proj-...
+```
+
+## Input Validation
+
+MCPCraft auto-generates Zod validators from your `input` definitions, but you should add additional guardrails for sensitive operations.
+
+```typescript
+server.add(tool({
+  name: "send_email",
+  input: {
+    to: { type: "string", description: "Recipient email" },
+    body: { type: "string", description: "Email body" }
+  },
+  run: async ({ to, body }) => {
+    // Additional validation beyond type checking
+    if (!to.includes("@")) {
+      throw new Error("Invalid email address")
+    }
+    if (body.length > 10000) {
+      throw new Error("Email body too long")
+    }
+    return sendMail(to, body)
+  }
+}))
+```
+
+## Rate Limiting
+
+When exposing your server over SSE, protect against abuse with rate limiting.
+
+```typescript
+const rateLimits = new Map<string, number>()
+const RATE_LIMIT = 100 // requests per minute
+
+server.add(tool({
+  name: "expensive_operation",
+  input: {
+    data: { type: "string", description: "Input data" }
+  },
+  run: async ({ data }, context) => {
+    const clientId = context.clientId ?? "unknown"
+    const now = Date.now()
+    const last = rateLimits.get(clientId) ?? 0
+
+    if (now - last < 60000 / RATE_LIMIT) {
+      throw new Error("Rate limit exceeded")
+    }
+    rateLimits.set(clientId, now)
+
+    return process(data)
+  }
+}))
+```
+
+## API Key Authentication
+
+For SSE-based servers, require authentication on every request.
+
+```typescript
+import { createServer } from "mcpcraft-sdk"
+
+const server = createServer({
+  name: "auth-server",
+  authenticate: async (headers) => {
+    const key = headers["x-api-key"]
+    if (!key || key !== process.env.API_KEY) {
+      throw new Error("Unauthorized")
+    }
+  }
+})
+```
+
+## MCP Security Best Practices
+
+| Practice | Recommendation |
+|----------|---------------|
+| **Least privilege** | Give each tool only the access it needs |
+| **Allow lists** | Restrict file system access to specific directories |
+| **Read-only by default** | Make mutating tools opt-in |
+| **Audit logging** | Log all tool invocations with timestamps and client IDs |
+| **Timeouts** | Set per-tool execution time limits |
+| **Error messages** | Don't leak internal details in error responses |
+
+## Example: Secure File Server
+
+```typescript
+const ALLOWED_DIR = process.env.ALLOWED_DIR ?? "./data"
+
+server.add(tool({
+  name: "read_file",
+  description: "Read a file from the allowed directory",
+  input: {
+    path: { type: "string", description: "Relative file path" }
+  },
+  run: async ({ path }) => {
+    // Prevent directory traversal
+    const resolved = path.resolve(ALLOWED_DIR, path)
+    if (!resolved.startsWith(path.resolve(ALLOWED_DIR))) {
+      throw new Error("Access denied")
+    }
+    return readFile(resolved, "utf-8")
+  }
+}))
+```
+
+## Next Steps
+
+- [Authentication](/docs/authentication) — API key and OAuth patterns
+- [Deployment](/docs/deployment) — Production deployment guides
+- [Testing](/docs/testing) — Test your server security

@@ -1,0 +1,97 @@
+---
+title: Resources Example
+description: Expose data through MCP resources — the read-only counterpart to tools.
+---
+
+# Resources Example
+
+Resources are the **read-only** counterpart to tools. While tools let the LLM _do_ things, resources let the LLM _read_ things — files, database records, API responses, or any structured data.
+
+Resources are identified by URIs like `docs://getting-started` or `users://alice`. The LLM can browse and fetch resources without calling a tool.
+
+## Basic Resource
+
+```typescript
+import { createServer, resource } from "mcpcraft-sdk"
+
+const server = createServer({ name: "docs-server" })
+
+server.addResource(resource({
+  name: "docs",
+  uri: "docs://getting-started",
+  description: "Getting started guide",
+  mimeType: "text/markdown",
+  async read() {
+    return "# Getting Started\n\nWelcome to the docs..."
+  }
+}))
+
+server.start()
+```
+
+## Dynamic Resources
+
+Use a handler function to serve content dynamically based on the URI:
+
+```typescript
+server.addResource(resource({
+  name: "user-profile",
+  uri: "users://{userId}",
+  description: "User profile data",
+  mimeType: "application/json",
+  async read(uri) {
+    const userId = uri.pathname.split("/").pop()
+    const user = await db.findUser(userId)
+    return JSON.stringify(user, null, 2)
+  }
+}))
+```
+
+## Resource Templates
+
+Resources support URI templates with path parameters:
+
+| URI Pattern | Matches |
+|-------------|---------|
+| `docs://{slug}` | `docs://getting-started`, `docs://api-reference` |
+| `repos://{owner}/{name}` | `repos://vercel/next.js` |
+| `db://{table}/{id}` | `db://users/42` |
+
+```typescript
+server.addResource(resource({
+  name: "github-repo",
+  uri: "repos://{owner}/{name}",
+  description: "GitHub repository metadata",
+  mimeType: "application/json",
+  async read(uri) {
+    const [, owner, name] = uri.pathname.split("/")
+    const res = await fetch(
+      `https://api.github.com/repos/${owner}/${name}`
+    )
+    return res.text()
+  }
+}))
+```
+
+## Listing Resources
+
+Clients discover resources via `resources/list`. MCPCraft automatically lists all registered resources and their URI templates.
+
+## When to Use Resources vs Tools
+
+| Use Case | Resource | Tool |
+|----------|----------|------|
+| Read a file | ✅ | ❌ |
+| Query a database | ✅ | ❌ |
+| Send an email | ❌ | ✅ |
+| Delete a record | ❌ | ✅ |
+| Fetch weather data | ✅ | ✅ |
+| Update settings | ❌ | ✅ |
+
+**Rule of thumb:** If the operation is read-only and idempotent, use a resource. If it has side effects, use a tool.
+
+## Next Steps
+
+- [API Reference: resource](/docs/api/resource) — Full resource API docs
+- [API Reference: tool](/docs/api/tool) — Compare with tools
+- [Examples: GitHub Server](/docs/examples/github-server) — Real-world resource usage

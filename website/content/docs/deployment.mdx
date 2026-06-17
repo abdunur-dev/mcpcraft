@@ -1,11 +1,30 @@
 ---
 title: Deployment
-description: Deploy your MCP server to production — Vercel, Docker, and bare metal.
+description: Deploy your MCP server to production — Vercel, Docker, Railway, Render, and more.
 ---
 
 # Deployment
 
 MCP servers communicate over **stdio** (standard input/output) or **SSE** (server-sent events). The transport determines where and how you deploy.
+
+---
+
+## Local Development
+
+For local testing, run your server with `ts-node` or `tsx`:
+
+```bash
+npx tsx server.ts
+```
+
+Or compile and run:
+
+```bash
+npm run build
+node dist/server.js
+```
+
+Your server listens on stdio by default. Connect using the [MCP Inspector](/docs/testing#mcp-inspector) or Claude Desktop.
 
 ---
 
@@ -117,7 +136,7 @@ Your server is now live at `https://your-project.vercel.app/api/mcp`.
 
 ## Docker
 
-For full control over runtime and scaling.
+For full control over runtime and scaling, or for deploying to container platforms.
 
 ```dockerfile
 FROM node:20-alpine
@@ -135,6 +154,71 @@ CMD ["node", "dist/server.js"]
 ```bash
 docker build -t mcp-server .
 docker run -e API_KEY=sk-... mcp-server
+```
+
+---
+
+## Railway
+
+[Railway](https://railway.app) provides easy Node.js deployments with automatic HTTPS and environment variable management.
+
+1. **Create a `Dockerfile`** or use Railway's Node.js builder (auto-detected)
+2. **Set environment variables** in the Railway dashboard
+3. **Deploy** by connecting your GitHub repo or using the Railway CLI:
+
+```bash
+railway up
+```
+
+Railway assigns a `*.railway.app` URL. Use this as your SSE endpoint.
+
+---
+
+## Render
+
+[Render](https://render.com) supports Node.js web services with free SSL and auto-deploys from Git.
+
+1. Create a **Web Service** on Render
+2. Connect your repository
+3. Set:
+   - **Build Command:** `npm run build`
+   - **Start Command:** `node dist/server.js`
+4. Add environment variables in the Render dashboard
+5. Deploy
+
+Your server will be available at `https://your-service.onrender.com`.
+
+---
+
+## VPS (Bare Metal)
+
+For maximum control, run your server on any VPS (DigitalOcean, Hetzner, AWS EC2).
+
+```bash
+# Build
+npm run build
+
+# Run with process manager
+npm install -g pm2
+pm2 start dist/server.js --name mcp-server
+pm2 save
+pm2 startup
+```
+
+Use a reverse proxy (nginx, Caddy) if exposing over SSE:
+
+```nginx
+server {
+    listen 80;
+    server_name mcp.example.com;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+}
 ```
 
 ---

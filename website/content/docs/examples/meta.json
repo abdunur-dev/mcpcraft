@@ -5,6 +5,9 @@
     "gmail-server",
     "api-fetch",
     "ai-agent",
-    "file-system"
+    "file-system",
+    "database-server",
+    "github-server",
+    "resources"
   ]
 }

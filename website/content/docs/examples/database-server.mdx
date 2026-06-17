@@ -1,0 +1,184 @@
+---
+title: Database Server
+description: Build an MCP server that queries a PostgreSQL or SQLite database.
+---
+
+# Database Server
+
+Expose database queries as MCP tools — let AI assistants run SQL against your database safely.
+
+## Setup
+
+```bash
+npm install mcpcraft-sdk zod
+npm install -D @types/node typescript tsx
+```
+
+For PostgreSQL:
+
+```bash
+npm install pg
+npm install -D @types/pg
+```
+
+For SQLite:
+
+```bash
+npm install better-sqlite3
+npm install -D @types/better-sqlite3
+```
+
+## PostgreSQL Server
+
+```typescript
+import { createServer, tool } from "mcpcraft-sdk"
+import { Pool } from "pg"
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL!
+})
+
+const server = createServer({ name: "database-server" })
+
+server.add(tool({
+  name: "query",
+  description: "Run a SELECT query against the database",
+  input: {
+    sql: { type: "string", description: "SQL SELECT statement" }
+  },
+  run: async ({ sql }) => {
+    const result = await pool.query(sql)
+    return result.rows
+  }
+}))
+
+server.add(tool({
+  name: "get_schema",
+  description: "Get database schema information",
+  input: {
+    table: { type: "string", description: "Table name (optional)" }
+  },
+  run: async ({ table }) => {
+    if (table) {
+      const result = await pool.query(
+        `SELECT column_name, data_type, is_nullable
+         FROM information_schema.columns
+         WHERE table_name = $1`,
+        [table]
+      )
+      return result.rows
+    }
+    const result = await pool.query(
+      `SELECT table_name, table_type
+       FROM information_schema.tables
+       WHERE table_schema = 'public'`
+    )
+    return result.rows
+  }
+}))
+
+server.start()
+```
+
+## SQLite Server
+
+```typescript
+import { createServer, tool } from "mcpcraft-sdk"
+import Database from "better-sqlite3"
+
+const db = new Database(process.env.DB_PATH ?? "./data.db")
+
+const server = createServer({ name: "sqlite-server" })
+
+server.add(tool({
+  name: "query",
+  description: "Run a SELECT query",
+  input: {
+    sql: { type: "string", description: "SQL SELECT statement" }
+  },
+  run: async ({ sql }) => {
+    return db.prepare(sql).all()
+  }
+}))
+
+server.add(tool({
+  name: "get_tables",
+  description: "List all tables in the database",
+  input: {},
+  run: async () => {
+    return db.prepare(
+      `SELECT name FROM sqlite_master WHERE type='table'`
+    ).all()
+  }
+}))
+
+server.start()
+```
+
+## Safe Query Patterns
+
+### Read-only by default
+
+```typescript
+server.add(tool({
+  name: "query",
+  description: "Run a read-only query",
+  input: {
+    sql: { type: "string", description: "SELECT statement" }
+  },
+  run: async ({ sql }) => {
+    const normalized = sql.trim().toUpperCase()
+    if (!normalized.startsWith("SELECT")) {
+      throw new Error("Only SELECT queries are allowed")
+    }
+    return pool.query(sql).rows
+  }
+}))
+```
+
+### Parameterized queries
+
+Never interpolate user input into SQL strings:
+
+```typescript
+// ❌ Dangerous — SQL injection
+run: async ({ id }) => {
+  return pool.query(`SELECT * FROM users WHERE id = ${id}`)
+}
+
+// ✅ Safe — parameterized
+run: async ({ id }) => {
+  return pool.query("SELECT * FROM users WHERE id = $1", [id])
+}
+```
+
+### Row limits
+
+```typescript
+run: async ({ sql }) => {
+  const limited = sql.replace(/;$/, "") + " LIMIT 100"
+  return pool.query(limited).rows
+}
+```
+
+## Configuration
+
+```json
+{
+  "mcpServers": {
+    "database-server": {
+      "command": "node",
+      "args": ["dist/database-server.js"],
+      "env": {
+        "DATABASE_URL": "postgres://user:pass@host:5432/mydb"
+      }
+    }
+  }
+}
+```
+
+## Next Steps
+
+- [Security](/docs/security) — Input validation and access control
+- [Examples: GitHub Server](/docs/examples/github-server) — API-backed server
+- [Examples: File System](/docs/examples/file-system) — File-based server

@@ -1,0 +1,167 @@
+---
+title: GitHub Server
+description: Build an MCP server that integrates with the GitHub API.
+---
+
+# GitHub Server
+
+Create an MCP server that lets AI assistants interact with GitHub — list repos, manage issues, review PRs, and more.
+
+## Setup
+
+```bash
+npm install mcpcraft-sdk zod
+npm install -D @types/node typescript tsx
+```
+
+Create a [GitHub Personal Access Token](https://github.com/settings/tokens) with the scopes you need (`repo`, `issues`, `pull_requests`).
+
+## Server
+
+```typescript
+import { createServer, tool, resource } from "mcpcraft-sdk"
+
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN!
+const GITHUB_API = "https://api.github.com"
+
+const server = createServer({ name: "github-server" })
+
+async function gh(path: string, options?: RequestInit) {
+  const res = await fetch(`${GITHUB_API}${path}`, {
+    ...options,
+    headers: {
+      Authorization: `Bearer ${GITHUB_TOKEN}`,
+      Accept: "application/vnd.github+json",
+      "User-Agent": "mcpcraft-github-server",
+      ...options?.headers,
+    }
+  })
+  if (!res.ok) {
+    throw new Error(`GitHub API error: ${res.status} ${res.statusText}`)
+  }
+  return res.json()
+}
+
+// ─── Tools ───
+
+server.add(tool({
+  name: "create_issue",
+  description: "Create a GitHub issue in a repository",
+  input: {
+    owner: { type: "string", description: "Repository owner" },
+    repo: { type: "string", description: "Repository name" },
+    title: { type: "string", description: "Issue title" },
+    body: { type: "string", description: "Issue body" },
+  },
+  run: async ({ owner, repo, title, body }) => {
+    return gh(`/repos/${owner}/${repo}/issues`, {
+      method: "POST",
+      body: JSON.stringify({ title, body })
+    })
+  }
+}))
+
+server.add(tool({
+  name: "list_issues",
+  description: "List open issues in a repository",
+  input: {
+    owner: { type: "string", description: "Repository owner" },
+    repo: { type: "string", description: "Repository name" },
+    state: { type: "string", description: "Issue state (open, closed, all)" },
+  },
+  run: async ({ owner, repo, state = "open" }) => {
+    return gh(`/repos/${owner}/${repo}/issues?state=${state}`)
+  }
+}))
+
+server.add(tool({
+  name: "get_repo",
+  description: "Get repository information",
+  input: {
+    owner: { type: "string", description: "Repository owner" },
+    repo: { type: "string", description: "Repository name" },
+  },
+  run: async ({ owner, repo }) => {
+    return gh(`/repos/${owner}/${repo}`)
+  }
+}))
+
+server.add(tool({
+  name: "list_pull_requests",
+  description: "List pull requests in a repository",
+  input: {
+    owner: { type: "string", description: "Repository owner" },
+    repo: { type: "string", description: "Repository name" },
+    state: { type: "string", description: "PR state (open, closed, all)" },
+  },
+  run: async ({ owner, repo, state = "open" }) => {
+    return gh(`/repos/${owner}/${repo}/pulls?state=${state}`)
+  }
+}))
+
+server.add(tool({
+  name: "create_review_comment",
+  description: "Add a comment to a pull request",
+  input: {
+    owner: { type: "string", description: "Repository owner" },
+    repo: { type: "string", description: "Repository name" },
+    pullNumber: { type: "number", description: "Pull request number" },
+    body: { type: "string", description: "Comment body" },
+  },
+  run: async ({ owner, repo, pullNumber, body }) => {
+    return gh(`/repos/${owner}/${repo}/issues/${pullNumber}/comments`, {
+      method: "POST",
+      body: JSON.stringify({ body })
+    })
+  }
+}))
+
+// ─── Resources ───
+
+server.addResource(resource({
+  name: "repo-readme",
+  uri: "github://{owner}/{repo}/readme",
+  description: "The repository README content",
+  mimeType: "text/markdown",
+  async read(uri) {
+    const [, owner, repo] = uri.pathname.split("/")
+    const data = await gh(`/repos/${owner}/${repo}/readme`)
+    return Buffer.from(data.content, "base64").toString("utf-8")
+  }
+}))
+
+server.start()
+```
+
+## Configuration
+
+```json
+{
+  "mcpServers": {
+    "github-server": {
+      "command": "node",
+      "args": ["dist/github-server.js"],
+      "env": {
+        "GITHUB_TOKEN": "ghp_..."
+      }
+    }
+  }
+}
+```
+
+## Extending
+
+Add more GitHub API integrations:
+
+- **Search repos** — `GET /search/repositories`
+- **Manage labels** — `POST /repos/{owner}/{repo}/labels`
+- **Get commit history** — `GET /repos/{owner}/{repo}/commits`
+- **List workflows** — `GET /repos/{owner}/{repo}/actions/workflows`
+- **Trigger deployments** — `POST /repos/{owner}/{repo}/deployments`
+
+## Next Steps
+
+- [Authentication](/docs/authentication) — API key management patterns
+- [Security](/docs/security) — Rate limiting and access control
+- [Examples: Database Server](/docs/examples/database-server) — Database-backed server
+- [API Reference: resource](/docs/api/resource) — Resources documentation

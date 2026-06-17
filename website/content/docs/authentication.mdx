@@ -1,0 +1,142 @@
+---
+title: Authentication
+description: Secure your MCP server with API keys, OAuth, and integration tokens.
+---
+
+# Authentication
+
+MCP servers often need to authenticate with external services or authenticate incoming requests. This guide covers both patterns.
+
+## API Key Authentication
+
+The simplest authentication pattern — pass an API key as an environment variable.
+
+### Server-side validation
+
+```typescript
+import { createServer, tool } from "mcpcraft-sdk"
+
+const server = createServer({
+  name: "api-server",
+  authenticate: async (headers) => {
+    const key = headers["x-api-key"]
+    if (!key || key !== process.env.API_KEY) {
+      throw new Error("Invalid API key")
+    }
+  }
+})
+```
+
+### Client configuration
+
+Configure your MCP client to pass the key:
+
+```json
+{
+  "mcpServers": {
+    "my-server": {
+      "command": "node",
+      "args": ["dist/server.js"],
+      "env": {
+        "API_KEY": "sk-..."
+      }
+    }
+  }
+}
+```
+
+## OAuth 2.0
+
+For servers that act on behalf of users, implement OAuth 2.0 with a token exchange.
+
+```typescript
+import { createServer, tool } from "mcpcraft-sdk"
+
+const server = createServer({
+  name: "oauth-server",
+  authenticate: async (headers) => {
+    const token = headers["authorization"]?.replace("Bearer ", "")
+    if (!token) throw new Error("Missing token")
+
+    // Verify token with your auth provider
+    const user = await verifyOAuthToken(token)
+    if (!user) throw new Error("Invalid token")
+
+    // Attach user context for downstream tools
+    return { user }
+  }
+})
+
+server.add(tool({
+  name: "list_repos",
+  description: "List the authenticated user's repositories",
+  input: {},
+  run: async (_args, context) => {
+    // Access the authenticated user from context
+    const repos = await fetchGithubRepos(context.user.token)
+    return repos
+  }
+}))
+```
+
+## Service-to-Service Authentication
+
+For machine-to-machine communication, use short-lived JWTs signed with a shared secret.
+
+```typescript
+import { createServer } from "mcpcraft-sdk"
+import jwt from "jsonwebtoken"
+
+const server = createServer({
+  name: "internal-server",
+  authenticate: async (headers) => {
+    const token = headers["authorization"]?.replace("Bearer ", "")
+    if (!token) throw new Error("Missing token")
+
+    try {
+      const payload = jwt.verify(token, process.env.JWT_SECRET!)
+      return { service: payload.sub }
+    } catch {
+      throw new Error("Invalid token")
+    }
+  }
+})
+```
+
+## Per-Tool Authorization
+
+Not all tools need the same level of access. Gate sensitive operations by role or scope.
+
+```typescript
+const ADMIN_TOOLS = new Set(["delete_user", "upgrade_plan"])
+
+server.add(tool({
+  name: "delete_user",
+  description: "Delete a user account",
+  input: {
+    userId: { type: "string", description: "User ID to delete" }
+  },
+  run: async ({ userId }, context) => {
+    if (!context.user?.roles?.includes("admin")) {
+      throw new Error("Admin access required")
+    }
+    return deleteUser(userId)
+  }
+}))
+```
+
+## Best Practices
+
+| Practice | Why |
+|----------|-----|
+| **Rotate keys regularly** | Limits blast radius of leaked credentials |
+| **Use short-lived tokens** | Reduces window for token reuse |
+| **Validate on every request** | Tokens can be revoked between calls |
+| **Log auth failures** | Detect brute force attempts |
+| **Rate limit auth endpoints** | Prevent credential stuffing |
+
+## Next Steps
+
+- [Security](/docs/security) — General security best practices
+- [Deployment](/docs/deployment) — Environment variable management
+- [API Reference: createServer](/docs/api/create-server) — Server configuration options

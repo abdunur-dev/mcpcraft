@@ -4,7 +4,11 @@
     "installation",
     "quick-start",
     "deployment",
+    "security",
+    "authentication",
+    "testing",
     "comparison",
+    "faq",
     "api",
     "examples"
   ]

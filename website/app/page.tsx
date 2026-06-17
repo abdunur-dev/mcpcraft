@@ -280,6 +280,9 @@ export default function Home() {
                   <span style={{ fontFamily: "var(--font-geist-pixel-grid)", fontSize: "clamp(2rem,5.5vw,4.5rem)" }}>MCP Servers,</span>{" "}
                   <span className="bg-gradient-to-r from-white via-white/80 to-white/40 bg-clip-text text-transparent" style={{ fontFamily: "var(--font-geist-mono)" }}>Zero Boilerplate</span>
                 </h1>
+                <p className="text-[13px] sm:text-sm text-white/50 leading-relaxed mb-1" style={{ transition: "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)", transitionDelay: "275ms", opacity: mounted ? undefined : 0, transform: mounted ? "translateY(0)" : "translateY(24px)" }}>
+                  Build tools once &mdash; use them from Claude, Cursor, VS Code, ChatGPT, and any MCP-compatible client.
+                </p>
                 <p className="text-[13px] sm:text-base lg:text-lg text-white/60 leading-relaxed mb-3 sm:mb-8" style={{ transition: "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)", transitionDelay: "300ms", opacity: mounted ? undefined : 0, transform: mounted ? "translateY(0)" : "translateY(24px)" }}>
                   TypeScript SDK for the Model Context Protocol. Define tools with plain objects &mdash; full type safety, auto-generated schemas, zero protocol boilerplate.
                 </p>

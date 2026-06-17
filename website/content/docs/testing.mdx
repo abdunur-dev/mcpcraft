@@ -1,0 +1,127 @@
+---
+title: Testing
+description: Test your MCP server using the official MCP Inspector and automated test suites.
+---
+
+# Testing
+
+Test your MCP server locally before deploying. The MCP ecosystem provides tools to inspect, debug, and validate your server.
+
+## MCP Inspector
+
+The [MCP Inspector](https://github.com/modelcontextprotocol/inspector) is the official testing tool. It connects to your server and lets you browse tools, call them, and inspect responses.
+
+### Install
+
+```bash
+npm install -g @modelcontextprotocol/inspector
+```
+
+### Usage
+
+Point the inspector at your compiled server:
+
+```bash
+npx @modelcontextprotocol/inspector node dist/server.js
+```
+
+This opens a web UI at `http://localhost:5173` where you can:
+
+- View all registered tools and their input schemas
+- Call tools with custom arguments
+- Inspect JSON-RPC request/response bodies
+- Monitor error handling
+
+### Testing SSE servers
+
+For servers deployed over SSE:
+
+```bash
+npx @modelcontextprotocol/inspector https://your-server.com/api/mcp
+```
+
+## Automated Tests
+
+Write integration tests using the MCP client SDK directly.
+
+### Setup
+
+```bash
+npm install -D @modelcontextprotocol/sdk vitest
+```
+
+### Test a tool
+
+```typescript
+// server.test.ts
+import { describe, it, expect } from "vitest"
+import { Client } from "@modelcontextprotocol/sdk/client/index.js"
+import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js"
+
+async function createTestClient() {
+  const transport = new StdioClientTransport({
+    command: "node",
+    args: ["dist/server.js"]
+  })
+  const client = new Client({ name: "test-client" })
+  await client.connect(transport)
+  return client
+}
+
+describe("greet tool", () => {
+  it("returns a greeting", async () => {
+    const client = await createTestClient()
+    const result = await client.request(
+      { method: "tools/call", params: { name: "greet", arguments: { name: "Alice" } } }
+    )
+    expect(result.content[0].text).toBe("Hello, Alice!")
+  })
+
+  it("rejects missing arguments", async () => {
+    const client = await createTestClient()
+    await expect(
+      client.request(
+        { method: "tools/call", params: { name: "greet", arguments: {} } }
+      )
+    ).rejects.toThrow()
+  })
+})
+```
+
+### Run tests
+
+```bash
+npx vitest run
+```
+
+## Testing with Claude Desktop
+
+Add your server to Claude Desktop's config to test in a real environment:
+
+```json
+{
+  "mcpServers": {
+    "my-server": {
+      "command": "node",
+      "args": ["dist/server.js"]
+    }
+  }
+}
+```
+
+Open Claude Desktop and look for the hammer icon — that shows your tools are available.
+
+## Common Issues
+
+| Issue | Cause | Fix |
+|-------|-------|-----|
+| `ConnectException` | Server not running | Build first: `npm run build` |
+| `Tool not found` | Tool not registered | Check `server.add()` calls |
+| `Invalid params` | Schema mismatch | Verify input types match Zod schema |
+| `Timeout` | Handler too slow | Add `maxDuration` to serverless config |
+
+## Next Steps
+
+- [Deployment](/docs/deployment) — Deploy to production
+- [Security](/docs/security) — Secure your server
+- [Examples](/docs/examples/basic-server) — See working examples
