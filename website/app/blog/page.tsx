@@ -15,7 +15,8 @@ export default function BlogPage() {
   return (
     <div className="min-h-screen bg-black text-white font-sans selection:bg-white/10 selection:text-white">
       <div className="fixed top-0 left-0 right-0 z-50 flex items-center border-b border-white/10 bg-black/80 backdrop-blur-md h-14 px-4 sm:px-6">
-        <Link href="/" className="font-mono text-sm uppercase tracking-wider font-bold text-white hover:opacity-80 transition-opacity">
+        <Link href="/" className="flex items-center gap-2 font-mono text-sm uppercase tracking-wider font-bold text-white hover:opacity-80 transition-opacity">
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" /></svg>
           MCPCRAFT
         </Link>
       </div>
