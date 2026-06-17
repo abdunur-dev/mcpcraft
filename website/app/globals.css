@@ -8,8 +8,8 @@ body {
   color: #ffffff;
 }
 .light body {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: #ffffff !important;
+  color: #000000 !important;
 }
 
 :root:not(.dark) {

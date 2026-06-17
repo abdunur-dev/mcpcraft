@@ -38,8 +38,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} ${GeistPixelSquare.variable} ${GeistPixelGrid.variable} h-full`} suppressHydrationWarning style={{ backgroundColor: "#000000" }}>
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} ${GeistPixelSquare.variable} ${GeistPixelGrid.variable} h-full`} suppressHydrationWarning>
       <body className="min-h-full flex flex-col antialiased">
+        <style dangerouslySetInnerHTML={{
+          __html: 'html,body{background-color:#000!important}'
+        }} />
         <RootProvider
           theme={{
             attribute: "class",
