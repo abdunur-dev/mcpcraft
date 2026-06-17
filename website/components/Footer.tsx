@@ -14,8 +14,8 @@ interface LinkItem {
 const footerLinks: Record<string, LinkItem[]> = {
   Build: [
     { label: "Docs", href: "/docs" },
-    { label: "API", href: "/docs/api" },
-    { label: "Examples", href: "/docs/examples" },
+    { label: "API", href: "/docs/api/tool" },
+    { label: "Examples", href: "/docs/examples/basic-server" },
   ],
   Resources: [
     { label: "GitHub", href: "https://github.com/abdunur-dev/mcpcraft", external: true },
