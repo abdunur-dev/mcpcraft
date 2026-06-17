@@ -14,17 +14,19 @@ interface LinkItem {
 const footerLinks: Record<string, LinkItem[]> = {
   Build: [
     { label: "Docs", href: "/docs" },
-    { label: "Changelog", href: "/docs" },
     { label: "API", href: "/docs/api" },
+    { label: "Examples", href: "/docs/examples" },
   ],
   Resources: [
     { label: "GitHub", href: "https://github.com/abdunur-dev/mcpcraft", external: true },
     { label: "npm", href: "https://npmjs.com/package/mcpcraft-sdk", external: true },
-    { label: "Examples", href: "/docs/examples" },
+    { label: "Blog", href: "/blog" },
+    { label: "Changelog", href: "/changelog" },
   ],
   Company: [
-    { label: "MIT License", href: "https://github.com/abdunur-dev/mcpcraft/blob/main/LICENSE", external: true },
-    { label: "GitHub Profile", href: "https://github.com/abdunur-dev", external: true },
+    { label: "Privacy Policy", href: "/privacy" },
+    { label: "Terms of Service", href: "/terms" },
+    { label: "Cookie Policy", href: "/cookies" },
     { label: VERSION, href: "https://npmjs.com/package/mcpcraft-sdk", external: true },
   ],
 };
