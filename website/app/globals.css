@@ -2,6 +2,16 @@
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
 
+/* ─── Base body colors (black default to prevent white flash) ─── */
+body {
+  background-color: #000000;
+  color: #ffffff;
+}
+.light body {
+  background-color: #ffffff;
+  color: #000000;
+}
+
 :root:not(.dark) {
   --color-scheme: light;
 
